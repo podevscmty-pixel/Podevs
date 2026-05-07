@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Layout, Database, Server, Terminal, PenTool } from "lucide-react";
+import { ArrowRight, Code, Layout, Database, Server, Terminal, PenTool, BookOpen, MessageCircle, Users, Smartphone, Heart, Target, Eye, Book } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import Link from "next/link";
 
@@ -51,6 +51,12 @@ const roadmaps = [
   }
 ];
 
+const resources = [
+  { icon: <Code size={20} />, title: "YouTube Tutorials", desc: "Hands-on project builds and tech deep-dives.", link: "#", color: "#FF0000" },
+  { icon: <BookOpen size={20} />, title: "Medium Blogs", desc: "Technical articles and community success stories.", link: "#", color: "#00ab6c" },
+  { icon: <MessageCircle size={20} />, title: "PODEVS Podcast", desc: "Interviews with builders and industry experts.", link: "#", color: "var(--orange)" },
+];
+
 const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -62,28 +68,79 @@ const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   </motion.div>
 );
 
-export default function RoadmapsPage() {
+export default function WhatWeDoPage() {
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
-      {/* Header Section */}
-      <section style={{ padding: "80px 0 60px", position: "relative", overflow: "hidden" }}>
-        
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1, textAlign: "center" }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="section-label" style={{ margin: "0 auto 20px" }}>Curated Paths</span>
-            <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: 20 }}>
-              Stop guessing. <br /> <span style={{ color: "var(--orange)" }}>Start building.</span>
-            </h1>
-            <p style={{ color: "var(--muted)", fontSize: "1.1rem", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>
-              Our step-by-step roadmaps take you from absolute beginner to job-ready developer. Follow the path that fits your goals.
-            </p>
-          </motion.div>
+      {/* WHO WE ARE & MISSION SECTION */}
+      <section style={{ padding: "80px 0 100px", position: "relative" }}>
+        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ textAlign: "center", marginBottom: 80 }}>
+            <Reveal>
+              <span className="section-label" style={{ margin: "0 auto 20px" }}>Who We Are</span>
+              <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 24 }}>About <span style={{ color: "var(--orange)" }}>PODEVS</span></h1>
+              <p style={{ color: "var(--muted)", fontSize: "1.2rem", lineHeight: 1.6, maxWidth: 700, margin: "0 auto" }}>
+                A student-first EdTech community built on the belief that education should be accessible, joyful, and empowering.
+              </p>
+            </Reveal>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
+            <Reveal delay={0.1}>
+              <div className="card" style={{ padding: "40px", height: "100%" }}>
+                <Target className="text-orange-500 mb-6" size={32} style={{ color: "var(--orange)", marginBottom: 24 }} />
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16 }}>Our Mission</h3>
+                <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+                  To democratize tech education for students — offering free workshops, community events, and affordable services so every learner can build and launch their ideas regardless of background or budget.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div className="card" style={{ padding: "40px", height: "100%" }}>
+                <Eye className="text-orange-500 mb-6" size={32} style={{ color: "var(--orange)", marginBottom: 24 }} />
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16 }}>Our Vision</h3>
+                <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+                  A world where every student is a creator — where the next generation of builders, designers, and founders get their start through community, not just classrooms.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24, marginTop: 24 }}>
+            <Reveal delay={0.3}>
+              <div className="card-static" style={{ padding: "40px", height: "100%" }}>
+                <Book className="text-white mb-6" size={32} style={{ color: "#fff", marginBottom: 24 }} />
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16, color: "#fff" }}>Our Story</h3>
+                <p style={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.7 }}>
+                  PODEVS started from a simple frustration: great tech education was either too expensive or too boring. We built the community we wished existed — student-run, community-powered, free to join.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.4}>
+              <div className="card" style={{ padding: "40px", height: "100%" }}>
+                <Heart className="text-orange-500 mb-6" size={32} style={{ color: "var(--orange)", marginBottom: 24 }} />
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16 }}>Our Values</h3>
+                <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+                  Openness. Warmth. Ambition. We believe learning is a community sport. Every member matters. Every idea deserves a chance. The Smile of Education is not just a tagline — it's our promise.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* Roadmaps Grid */}
-      <section style={{ padding: "0 0 120px" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 1, background: "var(--border)" }} />
+      </div>
+
+      {/* ROADMAPS SECTION */}
+      <section style={{ padding: "100px 0 80px" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <Reveal>
+              <h2 style={{ fontSize: "2.5rem", fontWeight: 900, marginBottom: 16 }}>Choose Your Path</h2>
+              <p style={{ color: "var(--muted)", maxWidth: 500, margin: "0 auto" }}>Technical roadmaps designed to take you from beginner to professional.</p>
+            </Reveal>
+          </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 32 }}>
             {roadmaps.map((map, i) => (
               <Reveal key={map.id} delay={i * 0.1}>
@@ -125,21 +182,26 @@ export default function RoadmapsPage() {
         </div>
       </section>
 
-      {/* FAQ or Next Steps CTA */}
+      {/* RESOURCES SECTION */}
       <section style={{ padding: "0 0 120px" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
-          <Reveal>
-            <div style={{ padding: "60px 40px", background: "var(--bg2)", borderRadius: 24, border: "1px solid var(--border)" }}>
-              <h2 style={{ fontSize: "2rem", fontWeight: 700, marginBottom: 16 }}>Ready to level up?</h2>
-              <p style={{ color: "var(--muted)", fontSize: "1.05rem", marginBottom: 32, maxWidth: 500, margin: "0 auto 32px" }}>
-                Join 2,000+ students who are actively learning and building projects every day.
-              </p>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-                <Link href="/join" className="btn-primary" style={{ padding: "12px 32px" }}>Join Community Free</Link>
-                <Link href="/events" className="btn-secondary" style={{ padding: "12px 32px" }}>View Events</Link>
-              </div>
-            </div>
-          </Reveal>
+        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ height: 1, background: "var(--border)", marginBottom: 64 }} />
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <h2 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 12 }}>Explore More Content</h2>
+            <p style={{ color: "var(--muted)" }}>Beyond roadmaps, we produce content across all major platforms.</p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+            {resources.map((r, i) => (
+              <Reveal key={r.title} delay={i * 0.1}>
+                <div className="card" style={{ padding: "32px", display: "flex", flexDirection: "column", gap: 16, alignItems: "center", textAlign: "center" }}>
+                  <div style={{ width: 50, height: 50, borderRadius: 12, background: "rgba(0,0,0,0.05)", display: "flex", alignItems: "center", justifyContent: "center", color: r.color }}>{r.icon}</div>
+                  <h3 style={{ fontWeight: 700 }}>{r.title}</h3>
+                  <p style={{ color: "var(--muted)", fontSize: "0.875rem", lineHeight: 1.6 }}>{r.desc}</p>
+                  <a href={r.link} className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 20px" }}>Explore Now</a>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
     </div>

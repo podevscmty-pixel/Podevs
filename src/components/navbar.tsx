@@ -10,11 +10,12 @@ import { createClient } from "@/utils/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const navLinks = [
-  { label: "Overview", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Events", href: "/events" },
+  { label: "Home", href: "/" },
+  { label: "What We Do", href: "/what-we-do" },
+  { label: "Projects", href: "/projects" },
   { label: "Services", href: "/services" },
-  { label: "Blog", href: "/blog" },
+  { label: "Events", href: "/events" },
+  { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ];
 

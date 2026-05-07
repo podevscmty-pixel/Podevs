@@ -5,12 +5,12 @@ import * as React from "react";
 
 const plans = [
   {
-    tag: "Website", name: "Portfolio / Blog", price: "₹999", sub: "Starting from",
+    tag: "Website", name: "Starter (for students)", price: "₹999", sub: "Starting from",
     features: ["Custom responsive design", "Up to 5 pages", "Mobile optimized", "SEO basics included", "Free deployment"],
     popular: false,
   },
   {
-    tag: "Full Website", name: "Club / Business Site", price: "₹2,499", sub: "Starting from",
+    tag: "Full Website", name: "Business (for startups)", price: "₹2,499", sub: "Starting from",
     features: ["Everything in Portfolio", "Up to 10 pages", "Contact form integration", "Admin dashboard", "1 month free support", "Custom domain setup"],
     popular: true,
   },

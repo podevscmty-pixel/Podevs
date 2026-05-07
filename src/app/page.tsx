@@ -183,8 +183,8 @@ export default function HomePage() {
               PODEVS is the community where students learn in-demand skills, build real projects, and grow into confident developers — completely free to start.
             </motion.p>
             <motion.div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "flex-start" }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
-              <Link href="/join" className="btn-primary">Start Learning <ArrowRight size={15} /></Link>
-              <Link href="/events" className="btn-outline">Join Community</Link>
+              <Link href="/join" className="btn-primary">🎓 Join Community</Link>
+              <Link href="/services" className="btn-outline">💼 Get a Website Built</Link>
             </motion.div>
 
             {/* Stats */}
