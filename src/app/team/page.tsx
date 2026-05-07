@@ -4,14 +4,14 @@ import { Globe, Mail, MessageCircle } from "lucide-react";
 import * as React from "react";
 
 const core = [
-  { init: "AK", name: "Arun Kumar", role: "Founder & Lead", bio: "CS undergrad by day, builder by night. Started PODEVS to fix what was broken in student tech education.", grad: "#FF8A00, #FFC247" },
-  { init: "PR", name: "Priya Raj", role: "Community Lead", bio: "Believes the best learning happens with other people. Runs our events, Discord, and partnerships.", grad: "#6c63ff, #FF8A00" },
-  { init: "KS", name: "Karthik S", role: "Tech & Content", bio: "Full-stack developer and educator. Builds our platform, records tutorials, and leads workshops.", grad: "#00C9FF, #FFC247" },
-  { init: "DM", name: "Divya M", role: "Design & Brand", bio: "UI/UX designer who makes sure everything at PODEVS looks and feels premium — even when it's free.", grad: "#FF8A00, #ff6b6b" },
-  { init: "RV", name: "Ravi Varma", role: "Engineering Lead", bio: "Architecture enthusiast focusing on scalable student platforms and open-source contributions.", grad: "#43e97b, #38f9d7" },
-  { init: "SN", name: "Sneha Nair", role: "Content Strategy", bio: "Crafting the educational voice of PODEVS. Expert in simplifying complex technical roadmaps.", grad: "#f093fb, #f5576c" },
-  { init: "MK", name: "Mani K", role: "Growth & Ops", bio: "Scaling the PODEVS mission to colleges nationwide. Managing logistics for our major hackathons.", grad: "#4facfe, #00f2fe" },
-  { init: "LR", name: "Latha Rao", role: "Events Director", bio: "Ensuring every PODEVS event is a masterclass in student engagement and technical value.", grad: "#fa709a, #fee140" },
+  { init: "AK", name: "Arun Kumar", role: "Founder & Lead", image: "/images/team/arun.jpg", bio: "CS undergrad by day, builder by night. Started PODEVS to fix what was broken in student tech education.", grad: "#FF8A00, #FFC247" },
+  { init: "PR", name: "Priya Raj", role: "Community Lead", image: "/images/team/priya.jpg", bio: "Believes the best learning happens with other people. Runs our events, Discord, and partnerships.", grad: "#6c63ff, #FF8A00" },
+  { init: "KS", name: "Karthik S", role: "Tech & Content", image: "/images/team/karthik.jpg", bio: "Full-stack developer and educator. Builds our platform, records tutorials, and leads workshops.", grad: "#00C9FF, #FFC247" },
+  { init: "DM", name: "Divya M", role: "Design & Brand", image: "/images/team/divya.jpg", bio: "UI/UX designer who makes sure everything at PODEVS looks and feels premium — even when it's free.", grad: "#FF8A00, #ff6b6b" },
+  { init: "RV", name: "Ravi Varma", role: "Engineering Lead", image: "/images/team/ravi.jpg", bio: "Architecture enthusiast focusing on scalable student platforms and open-source contributions.", grad: "#43e97b, #38f9d7" },
+  { init: "SN", name: "Sneha Nair", role: "Content Strategy", image: "/images/team/sneha.jpg", bio: "Crafting the educational voice of PODEVS. Expert in simplifying complex technical roadmaps.", grad: "#f093fb, #f5576c" },
+  { init: "MK", name: "Mani K", role: "Growth & Ops", image: "/images/team/mani.jpg", bio: "Scaling the PODEVS mission to colleges nationwide. Managing logistics for our major hackathons.", grad: "#4facfe, #00f2fe" },
+  { init: "LR", name: "Latha Rao", role: "Events Director", image: "/images/team/latha.jpg", bio: "Ensuring every PODEVS event is a masterclass in student engagement and technical value.", grad: "#fa709a, #fee140" },
 ];
 
 function TeamCard({ member, showBio = false }: { member: typeof core[0]; showBio?: boolean }) {
@@ -21,6 +21,8 @@ function TeamCard({ member, showBio = false }: { member: typeof core[0]; showBio
         width: 100, 
         height: 100, 
         borderRadius: "50%", 
+        position: "relative",
+        overflow: "hidden",
         background: `linear-gradient(135deg, ${member.grad})`, 
         display: "flex", 
         alignItems: "center", 
@@ -31,7 +33,16 @@ function TeamCard({ member, showBio = false }: { member: typeof core[0]; showBio
         boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
         border: "4px solid var(--bg2)"
       }}>
-        {member.init}
+        {member.image ? (
+          <img 
+            src={member.image} 
+            alt={member.name} 
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onError={(e) => {
+              (e.target as any).style.display = 'none';
+            }}
+          />
+        ) : member.init}
       </div>
       <div>
         <p style={{ fontWeight: 800, fontSize: "1.25rem", marginBottom: 6 }}>{member.name}</p>
