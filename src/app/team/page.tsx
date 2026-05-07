@@ -4,10 +4,10 @@ import { Globe, Mail, MessageCircle } from "lucide-react";
 import * as React from "react";
 
 const core = [
-  { init: "AK", name: "Arun Kumar", role: "Founder & Lead", image: "/images/team/arun.jpg", bio: "CS undergrad by day, builder by night. Started PODEVS to fix what was broken in student tech education.", grad: "#FF8A00, #FFC247" },
-  { init: "PR", name: "Priya Raj", role: "Community Lead", image: "/images/team/priya.jpg", bio: "Believes the best learning happens with other people. Runs our events, Discord, and partnerships.", grad: "#6c63ff, #FF8A00" },
-  { init: "KS", name: "Karthik S", role: "Tech & Content", image: "/images/team/karthik.jpg", bio: "Full-stack developer and educator. Builds our platform, records tutorials, and leads workshops.", grad: "#00C9FF, #FFC247" },
-  { init: "DM", name: "Divya M", role: "Design & Brand", image: "/images/team/divya.jpg", bio: "UI/UX designer who makes sure everything at PODEVS looks and feels premium — even when it's free.", grad: "#FF8A00, #ff6b6b" },
+  { init: "SR", name: "Sai Rohith", role: "Founder", image: "/images/sai.png", bio: "As CEO of PODEVS Community, I lead a growing student-driven tech ecosystem focused on empowering learners to build real-world skills, leadership, communication, and innovation through hands-on experience and collaborative learning.", grad: "#FF8A00, #FFC247" },
+  { init: "S", name: "Saran", role: "Co-Founder", image: "/images/saran.png", bio: "Believes the best learning happens with other people. Runs our events, Discord, and partnerships.", grad: "#6c63ff, #FF8A00" },
+  { init: "NS", name: "Nithin Srinivasan", role: "Strategist & Content Creator", image: "/images/nithin.png", bio: "Works at the intersection of ideas, strategy, and creative direction and shaping content that engages and grows the PODEVS Community. Focuses on turning ideas into impactful initiatives that enhance learning, visibility, and innovation.", grad: "#00C9FF, #FFC247" },
+    init: "M", name: "Manoj", role: "Developer", image: "/images/team/manoj.jpg", bio: "Full Stack Developer experienced in React, Node.js, Python, and AWS, with hands-on exposure to building and deploying scalable applications. Completed an AWS Virtual Internship and gained industry experience as a Full Stack Developer at IBM. Passionate about data visualization, Generative AI, and developing impactful web applications through efficient and scalable solutions.", grad: "#FF8A00, #ff6b6b" },
   { init: "RV", name: "Ravi Varma", role: "Engineering Lead", image: "/images/team/ravi.jpg", bio: "Architecture enthusiast focusing on scalable student platforms and open-source contributions.", grad: "#43e97b, #38f9d7" },
   { init: "SN", name: "Sneha Nair", role: "Content Strategy", image: "/images/team/sneha.jpg", bio: "Crafting the educational voice of PODEVS. Expert in simplifying complex technical roadmaps.", grad: "#f093fb, #f5576c" },
   { init: "MK", name: "Mani K", role: "Growth & Ops", image: "/images/team/mani.jpg", bio: "Scaling the PODEVS mission to colleges nationwide. Managing logistics for our major hackathons.", grad: "#4facfe, #00f2fe" },
@@ -17,26 +17,26 @@ const core = [
 function TeamCard({ member, showBio = false }: { member: typeof core[0]; showBio?: boolean }) {
   return (
     <div className="card" style={{ padding: "44px 32px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
-      <div style={{ 
-        width: 100, 
-        height: 100, 
-        borderRadius: "50%", 
+      <div style={{
+        width: 100,
+        height: 100,
+        borderRadius: "50%",
         position: "relative",
         overflow: "hidden",
-        background: `linear-gradient(135deg, ${member.grad})`, 
-        display: "flex", 
-        alignItems: "center", 
-        justifyContent: "center", 
-        fontWeight: 800, 
-        fontSize: "1.8rem", 
+        background: `linear-gradient(135deg, ${member.grad})`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontWeight: 800,
+        fontSize: "1.8rem",
         color: "#fff",
         boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
         border: "4px solid var(--bg2)"
       }}>
         {member.image ? (
-          <img 
-            src={member.image} 
-            alt={member.name} 
+          <img
+            src={member.image}
+            alt={member.name}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
             onError={(e) => {
               (e.target as any).style.display = 'none';
