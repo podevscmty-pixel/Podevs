@@ -22,14 +22,9 @@ const col3 = [
 
 export default function Footer() {
   return (
-    <footer style={{ 
-      borderTop: "1px solid var(--border)", 
-      background: "linear-gradient(to top, rgba(255, 138, 0, 0.03), transparent)", 
-      padding: "80px 0 40px",
-      position: "relative"
-    }}>
+    <footer className="border-t border-[var(--border)] bg-gradient-to-t from-[rgba(255,138,0,0.03)] to-transparent py-16 md:py-20 relative">
       <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(320px, 2fr) 1fr 1fr 1fr", gap: "32px", marginBottom: 64 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8 mb-16">
           {/* Brand */}
           <div>
             <Link href="/" style={{ display: "block", marginBottom: 20 }}><Logo /></Link>

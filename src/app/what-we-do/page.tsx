@@ -72,7 +72,7 @@ export default function WhatWeDoPage() {
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
       {/* WHO WE ARE & MISSION SECTION */}
-      <section style={{ padding: "80px 0 100px", position: "relative" }}>
+      <section className="py-16 md:py-24 relative">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 80 }}>
             <Reveal>
@@ -84,9 +84,9 @@ export default function WhatWeDoPage() {
             </Reveal>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Reveal delay={0.1}>
-              <div className="card" style={{ padding: "40px", height: "100%" }}>
+              <div className="card p-8 md:p-10 h-full">
                 <Target className="text-orange-500 mb-6" size={32} style={{ color: "var(--orange)", marginBottom: 24 }} />
                 <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16 }}>Our Mission</h3>
                 <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -95,7 +95,7 @@ export default function WhatWeDoPage() {
               </div>
             </Reveal>
             <Reveal delay={0.2}>
-              <div className="card" style={{ padding: "40px", height: "100%" }}>
+              <div className="card p-8 md:p-10 h-full">
                 <Eye className="text-orange-500 mb-6" size={32} style={{ color: "var(--orange)", marginBottom: 24 }} />
                 <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16 }}>Our Vision</h3>
                 <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -105,9 +105,9 @@ export default function WhatWeDoPage() {
             </Reveal>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24, marginTop: 24 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <Reveal delay={0.3}>
-              <div className="card-static" style={{ padding: "40px", height: "100%" }}>
+              <div className="card-static p-8 md:p-10 h-full">
                 <Book className="text-white mb-6" size={32} style={{ color: "#fff", marginBottom: 24 }} />
                 <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16, color: "#fff" }}>Our Story</h3>
                 <p style={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.7 }}>
@@ -116,7 +116,7 @@ export default function WhatWeDoPage() {
               </div>
             </Reveal>
             <Reveal delay={0.4}>
-              <div className="card" style={{ padding: "40px", height: "100%" }}>
+              <div className="card p-8 md:p-10 h-full">
                 <Heart className="text-orange-500 mb-6" size={32} style={{ color: "var(--orange)", marginBottom: 24 }} />
                 <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16 }}>Our Values</h3>
                 <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -133,7 +133,7 @@ export default function WhatWeDoPage() {
       </div>
 
       {/* ROADMAPS SECTION */}
-      <section style={{ padding: "100px 0 80px" }}>
+      <section className="py-16 md:py-24">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <Reveal>
@@ -141,10 +141,10 @@ export default function WhatWeDoPage() {
               <p style={{ color: "var(--muted)", maxWidth: 500, margin: "0 auto" }}>Technical roadmaps designed to take you from beginner to professional.</p>
             </Reveal>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 32 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {roadmaps.map((map, i) => (
               <Reveal key={map.id} delay={i * 0.1}>
-                <SpotlightCard style={{ padding: 40, height: "100%", display: "flex", flexDirection: "column" }}>
+                <SpotlightCard className="p-8 md:p-10 h-full flex flex-col">
                   <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
                     <div style={{ width: 56, height: 56, borderRadius: 16, background: map.color, color: map.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
                       {map.icon}
@@ -183,14 +183,14 @@ export default function WhatWeDoPage() {
       </section>
 
       {/* RESOURCES SECTION */}
-      <section style={{ padding: "0 0 120px" }}>
+      <section className="pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ height: 1, background: "var(--border)", marginBottom: 64 }} />
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <h2 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 12 }}>Explore More Content</h2>
             <p style={{ color: "var(--muted)" }}>Beyond roadmaps, we produce content across all major platforms.</p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {resources.map((r, i) => (
               <Reveal key={r.title} delay={i * 0.1}>
                 <div className="card" style={{ padding: "32px", display: "flex", flexDirection: "column", gap: 16, alignItems: "center", textAlign: "center" }}>

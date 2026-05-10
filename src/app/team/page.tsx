@@ -16,7 +16,7 @@ const core = [
 
 function TeamCard({ member, showBio = false }: { member: typeof core[0]; showBio?: boolean }) {
   return (
-    <div className="card" style={{ padding: "44px 32px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+    <div className="card p-8 md:p-11 text-center flex flex-col items-center gap-5">
       <div style={{
         width: 100,
         height: 100,
@@ -63,7 +63,7 @@ function TeamCard({ member, showBio = false }: { member: typeof core[0]; showBio
 export default function TeamPage() {
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
-      <section style={{ padding: "80px 0 64px" }}>
+      <section className="py-12 md:py-20">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <span className="section-label">The People</span>
           <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: 20 }}>The <span style={{ color: "var(--orange)" }}>Team</span></h1>
@@ -71,17 +71,17 @@ export default function TeamPage() {
         </div>
       </section>
 
-      <section style={{ padding: "0 0 120px" }}>
+      <section className="pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {core.map((m) => <TeamCard key={m.name} member={m} showBio />)}
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "0 24px 120px" }}>
+      <section className="px-6 pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", textAlign: "center" }}>
-          <div className="card-static" style={{ padding: "64px 48px" }}>
+          <div className="card-static p-10 md:p-16">
             <h2 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: 14 }}>Join the Mission</h2>
             <p style={{ color: "var(--muted)", marginBottom: 28, fontSize: "1.05rem", maxWidth: 400, margin: "0 auto 28px" }}>Want to help shape the future of student-led tech education?</p>
             <Link href="/contact" className="btn-primary">Get In Touch</Link>

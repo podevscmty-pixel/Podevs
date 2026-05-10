@@ -135,7 +135,7 @@ export default function HomePage() {
         </motion.div>
 
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px", textAlign: "left", position: "relative", zIndex: 1 }}>
-          <div style={{ maxWidth: 720 }}>
+          <div className="max-w-[720px] lg:max-w-[800px]">
             <motion.div 
               style={{ 
                 marginBottom: 28, 
@@ -182,14 +182,14 @@ export default function HomePage() {
             >
               PODEVS is the community where students learn in-demand skills, build real projects, and grow into confident developers — completely free to start.
             </motion.p>
-            <motion.div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "flex-start" }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
+            <motion.div className="flex flex-wrap gap-3.5 justify-start" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
               <Link href="/join" className="btn-primary">🎓 Join Community</Link>
               <Link href="/services" className="btn-outline">💼 Get a Website Built</Link>
             </motion.div>
 
             {/* Stats */}
             <motion.div
-              style={{ display: "flex", gap: 40, marginTop: 32, flexWrap: "wrap", paddingTop: 24, borderTop: "1px solid var(--border)" }}
+              className="flex flex-wrap gap-6 md:gap-10 mt-8 pt-6 border-t border-[var(--border)]"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.5 }}
             >
               {stats.map((s, i) => (
@@ -235,7 +235,7 @@ export default function HomePage() {
             <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 850, letterSpacing: "-0.03em", marginBottom: 16 }}>Everything You Need to Grow</h2></Reveal>
             <Reveal delay={0.1}><p style={{ color: "var(--muted)", fontSize: "1.05rem", maxWidth: 520, margin: "0 auto", lineHeight: 1.6 }}>Three core pillars designed to take you from a curious beginner to a confident technical builder.</p></Reveal>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pillars.map((p, i) => (
               <Reveal key={p.title} delay={i * 0.08}>
                 <SpotlightCard style={{ padding: "36px 28px", height: "100%", display: "flex", flexDirection: "column", gap: 18 }}>
@@ -257,7 +257,7 @@ export default function HomePage() {
       {/* ── WHY CHOOSE PODEVS ────────────────────── */}
       <Section style={{ padding: "var(--section-gap) 0" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }} className="grid-cols-1 md:grid-cols-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div>
               <Reveal><span className="section-label">Why PODEVS</span></Reveal>
               <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 14 }}>Built Different.<br />Built for Students.</h2></Reveal>
@@ -266,7 +266,7 @@ export default function HomePage() {
                 <Link href="/about" className="btn-primary" style={{ fontSize: "0.85rem" }}>Learn More <ArrowRight size={14} /></Link>
               </Reveal>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((b, i) => (
                 <Reveal key={b.title} delay={i * 0.07}>
                   <SpotlightCard style={{ padding: "24px 20px", display: "flex", flexDirection: "column", gap: 12 }}>
@@ -291,7 +291,7 @@ export default function HomePage() {
             <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 14 }}>Loved by Students Everywhere</h2></Reveal>
             <Reveal delay={0.1}><p style={{ color: "var(--muted)", fontSize: "1rem", maxWidth: 460, margin: "0 auto", lineHeight: 1.7 }}>Hear from real members who've transformed their skills with PODEVS.</p></Reveal>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 0.08}>
                 <SpotlightCard style={{ padding: "32px 28px", display: "flex", flexDirection: "column", gap: 20 }}>
@@ -316,7 +316,7 @@ export default function HomePage() {
       {/* ── FEATURE HIGHLIGHT (Skill Roadmap) ───────── */}
       <Section style={{ padding: "var(--section-gap) 0" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div style={{ order: 2 }} className="lg:order-1">
               <Reveal>
                 <div style={{ position: "relative", padding: "40px", background: "var(--bg2)", borderRadius: "var(--radius)", border: "1px solid var(--border)", boxShadow: "0 20px 40px rgba(0,0,0,0.05)" }}>
@@ -367,7 +367,7 @@ export default function HomePage() {
             </div>
             <Reveal><Link href="/events" className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 18px" }}>View All →</Link></Reveal>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((ev, i) => (
               <Reveal key={ev.title} delay={i * 0.07}>
                 <SpotlightCard style={{ padding: "28px", display: "flex", flexDirection: "column", height: "100%" }}>
@@ -415,7 +415,7 @@ export default function HomePage() {
             </div>
             <Reveal><Link href="/media" className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 18px" }}>View All →</Link></Reveal>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {videos.map((v, i) => (
               <Reveal key={v.id} delay={i * 0.07}>
                 <SpotlightCard style={{ overflow: "hidden" }}>
@@ -443,8 +443,7 @@ export default function HomePage() {
         <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
           <Reveal>
             <motion.div
-              className="card-static"
-              style={{ padding: "80px 48px", textAlign: "center", position: "relative", overflow: "hidden" }}
+              className="card-static p-10 md:p-20 text-center relative overflow-hidden"
             >
               <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 0%, rgba(255,138,0,0.06) 0%, transparent 60%)", pointerEvents: "none" }} />
               <div style={{ position: "relative", zIndex: 1 }}>

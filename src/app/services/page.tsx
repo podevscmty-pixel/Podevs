@@ -33,7 +33,7 @@ const addons = [
 export default function ServicesPage() {
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
-      <section style={{ padding: "60px 0 48px" }}>
+      <section className="py-12 md:py-20">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <span className="section-label">We Build For You</span>
           <h1 style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)", fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.1, marginBottom: 16 }}>Affordable <span style={{ color: "var(--orange)" }}>Services</span></h1>
@@ -41,16 +41,16 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section style={{ padding: "0 0 80px" }}>
+      <section className="pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 16 }}>
             <span className="tag">Student-Friendly Pricing</span>
             <p style={{ color: "var(--muted)", fontSize: "0.875rem", marginTop: 10 }}>All prices in INR. We work with students, clubs, and early-stage startups.</p>
           </div>
           <br />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, alignItems: "start" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
             {plans.map((p, i) => (
-              <div key={p.name} className={p.popular ? "card-static" : "card"} style={{ padding: "32px 28px", display: "flex", flexDirection: "column", gap: 16, border: `1px solid ${p.popular ? "rgba(255,138,0,0.4)" : "var(--border)"}`, borderRadius: 14, position: "relative", marginTop: p.popular ? -8 : 0 }}>
+              <div key={p.name} className={`${p.popular ? "card-static" : "card"} p-8 md:p-10 flex flex-col gap-4 border ${p.popular ? "border-[var(--orange)]/40" : "border-[var(--border)]"} rounded-[14px] relative ${p.popular ? "mt-0 lg:-mt-2" : "mt-0"}`}>
                 {p.popular && (
                   <div style={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)", background: "var(--orange)", color: "#fff", fontSize: 11, fontWeight: 700, padding: "4px 16px", borderRadius: 99, letterSpacing: "0.07em", whiteSpace: "nowrap" }}>MOST POPULAR</div>
                 )}
@@ -76,14 +76,14 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section style={{ padding: "0 0 96px" }}>
+      <section className="pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ height: 1, background: "var(--border)", marginBottom: 56 }} />
           <span className="section-label">Add-Ons</span>
           <h2 style={{ fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)", fontWeight: 700, letterSpacing: "-0.015em", marginBottom: 28 }}>Additional Services</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {addons.map((a) => (
-              <div key={a.title} className="card" style={{ padding: "26px 22px", display: "flex", gap: 18, alignItems: "flex-start" }}>
+              <div key={a.title} className="card p-6 md:p-8 flex gap-5 items-start">
                 <div style={{ 
                   width: 40, 
                   height: 40, 

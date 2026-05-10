@@ -41,7 +41,7 @@ const projects = [
 export default function ProjectsPage() {
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
-      <section style={{ padding: "80px 0 64px" }}>
+      <section className="py-12 md:py-20">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <span className="section-label">Showcase</span>
           <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: 20 }}>Our <span style={{ color: "var(--orange)" }}>Projects</span></h1>
@@ -49,11 +49,11 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section style={{ padding: "0 0 120px" }}>
+      <section className="pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 24 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((p) => (
-              <div key={p.title} className="card" style={{ padding: "32px", display: "flex", flexDirection: "column", gap: 20 }}>
+              <div key={p.title} className="card p-8 md:p-10 flex flex-col gap-5 h-full">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--orange)" }}>
                     {p.icon}
@@ -79,9 +79,9 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section style={{ padding: "0 24px 120px" }}>
+      <section className="px-6 pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", textAlign: "center" }}>
-          <div className="card-static" style={{ padding: "64px 48px" }}>
+          <div className="card-static p-10 md:p-16">
             <h2 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: 14 }}>Have a Project in Mind?</h2>
             <p style={{ color: "var(--muted)", marginBottom: 28, fontSize: "1.05rem", maxWidth: 400, margin: "0 auto 28px" }}>We help students and startups bring their digital ideas to life.</p>
             <Link href="/services" className="btn-primary">View Our Services</Link>

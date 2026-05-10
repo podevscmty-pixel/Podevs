@@ -80,7 +80,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav style={{ display: "flex", alignItems: "center", gap: 8 }} className="hidden md:flex">
+          <nav className="hidden md:flex items-center gap-2">
             {navLinks.map((l) => {
               const isActive = pathname === l.href;
               return (
@@ -136,10 +136,14 @@ export default function Navbar() {
                 </button>
               </div>
             ) : pathname !== "/join" ? (
-              <Link href="/join" className="btn-primary hidden md:inline-flex" style={{ borderRadius: 8, padding: "10px 24px", fontSize: "0.85rem", fontWeight: 600 }}>Get Started</Link>
+              <Link href="/join" className="btn-primary !hidden md:!inline-flex" style={{ borderRadius: 8, padding: "10px 24px", fontSize: "0.85rem", fontWeight: 600 }}>Get Started</Link>
             ) : null}
 
-            <button onClick={() => setOpen(!open)} className="flex md:hidden" style={{ width: 36, height: 36, borderRadius: 8, border: "1px solid var(--border)", background: "transparent", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--text)" }}>
+            <button 
+              onClick={() => setOpen(!open)} 
+              className="flex md:hidden items-center justify-center" 
+              style={{ width: 36, height: 36, borderRadius: 8, border: "1px solid var(--border)", background: "transparent", cursor: "pointer", color: "var(--text)" }}
+            >
               {open ? <X size={16} /> : <Menu size={16} />}
             </button>
           </div>

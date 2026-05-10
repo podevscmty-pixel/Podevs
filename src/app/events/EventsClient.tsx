@@ -50,7 +50,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
       {/* Header Section */}
-      <section style={{ padding: "80px 0 60px", position: "relative", overflow: "hidden" }}>
+      <section className="py-16 md:py-20 relative overflow-hidden">
         <div style={{ position: "absolute", top: -100, left: "50%", transform: "translateX(-50%)", width: "100%", maxWidth: 800, height: 400, background: "radial-gradient(ellipse at top, rgba(255,138,0,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
         
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
@@ -63,7 +63,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
       </section>
 
       {/* Upcoming Events */}
-      <section style={{ padding: "0 0 100px" }}>
+      <section className="pb-16 md:pb-24">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
@@ -73,12 +73,12 @@ export default function EventsClient({ events }: { events: Event[] }) {
             <h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.015em", marginBottom: 40 }}>Don't Miss These</h2>
           </motion.div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 20 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {upcoming.length === 0 ? (
               <p style={{ color: "var(--muted)" }}>No upcoming events right now. Check back soon!</p>
             ) : upcoming.map((ev, i) => (
               <Reveal key={ev.id} delay={i * 0.1}>
-                <SpotlightCard style={{ padding: "32px", display: "flex", flexDirection: "column", height: "100%" }}>
+                <SpotlightCard className="p-8 md:p-10 flex flex-col h-full">
                   {/* 1. Header: Date & Tag */}
                   <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, marginBottom: "32px" }}>
                     <div style={{ width: 60, height: 60, borderRadius: 14, background: "rgba(255,138,0,0.08)", border: "1px solid rgba(255,138,0,0.2)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -122,7 +122,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
       </section>
 
       {/* Past Events */}
-      <section style={{ padding: "0 0 120px" }}>
+      <section className="pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ height: 1, background: "linear-gradient(90deg, var(--border), transparent)", marginBottom: 64 }} />
           
@@ -131,12 +131,12 @@ export default function EventsClient({ events }: { events: Event[] }) {
             <h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.015em", marginBottom: 32 }}>Past Events</h2>
           </Reveal>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {past.length === 0 ? (
               <p style={{ color: "var(--muted)" }}>No past events.</p>
             ) : past.map((ev, i) => (
               <Reveal key={ev.id} delay={i * 0.05}>
-                <SpotlightCard style={{ padding: "24px 28px", opacity: 0.85, display: "flex", flexDirection: "column", gap: 16, borderStyle: "dashed" }}>
+                <SpotlightCard className="p-6 md:p-8 opacity-85 flex flex-col gap-4 border-dashed">
                   <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                     <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(255,138,0,0.05)", border: "1px solid rgba(255,138,0,0.1)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                       <span style={{ fontWeight: 800, fontSize: "1rem", color: "var(--orange)", lineHeight: 1 }}>{formatDay(ev.start_time)}</span>
