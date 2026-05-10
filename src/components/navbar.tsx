@@ -29,6 +29,8 @@ export default function Navbar() {
   const supabase = createClient();
 
   React.useEffect(() => {
+    if (!supabase) return;
+
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -40,9 +42,10 @@ export default function Navbar() {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, [supabase]);
 
   const handleLogout = async () => {
+    if (!supabase) return;
     await supabase.auth.signOut();
     window.location.reload();
   };

@@ -19,6 +19,12 @@ export default function JoinPage() {
     setIsLoading(true);
     setMessage("");
 
+    if (!supabase) {
+      setMessage("Database not connected. Please check your settings.");
+      setIsLoading(false);
+      return;
+    }
+
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
@@ -35,6 +41,10 @@ export default function JoinPage() {
   };
 
   const handleGithubLogin = async () => {
+    if (!supabase) {
+      setMessage("Database not connected.");
+      return;
+    }
     await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {

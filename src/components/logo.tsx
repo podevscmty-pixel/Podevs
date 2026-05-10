@@ -14,14 +14,20 @@ export function Logo() {
       />
       <span
         style={{
-          fontSize: "1.3rem",
-          fontWeight: 800,
-          letterSpacing: "0.03em",
+          fontFamily: "var(--font-bruno), sans-serif",
+          fontSize: "1.1rem",
+          fontWeight: 400,
+          letterSpacing: "0.02em",
           color: "var(--text)",
           lineHeight: 1,
+          textTransform: "uppercase",
+          textShadow: "0 0 15px rgba(var(--bg-rgb), 0.5)",
         }}
       >
-        <span style={{ color: "var(--orange)" }}>P</span>ODEVS
+        <span style={{ 
+          color: "var(--orange)",
+          textShadow: "0 0 12px rgba(255, 138, 0, 0.5), 0 0 25px rgba(255, 138, 0, 0.2)"
+        }}>P</span>ODEVS
       </span>
     </div>
   );

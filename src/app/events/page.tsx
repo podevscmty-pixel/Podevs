@@ -7,6 +7,10 @@ export const revalidate = 60; // revalidate every minute
 export default async function EventsPage() {
   const supabase = await createClient();
   
+  if (!supabase) {
+    return <EventsClient events={[]} />;
+  }
+
   // Fetch events ordered by start time
   const { data: events, error } = await supabase
     .from("events")
