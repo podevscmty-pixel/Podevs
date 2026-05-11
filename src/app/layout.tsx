@@ -19,7 +19,10 @@ const syncopate = Syncopate({ weight: ["400", "700"], subsets: ["latin"], variab
 const bruno = Bruno_Ace_SC({ weight: "400", subsets: ["latin"], variable: "--font-bruno", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "PODEVS — The Smile of Education",
+  title: {
+    default: "PODEVS | Smile of Education",
+    template: "%s | PODEVS"
+  },
   description: "A student-first EdTech community. Learn, build, and launch through workshops, hackathons, and affordable web services.",
   keywords: "EdTech, students, workshops, hackathons, web development, community, Chennai",
 };

@@ -2,17 +2,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
-import { createClient } from "@/utils/supabase/client";
-import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "What We Do", href: "/what-we-do" },
-  { label: "Projects", href: "/projects" },
+  { label: "Our Works", href: "/projects" },
   { label: "Services", href: "/services" },
   { label: "Events", href: "/events" },
   { label: "Team", href: "/team" },
@@ -24,31 +22,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [scrollProgress, setScrollProgress] = React.useState(0);
-  const [user, setUser] = React.useState<SupabaseUser | null>(null);
-
-  const supabase = createClient();
-
-  React.useEffect(() => {
-    if (!supabase) return;
-
-    // Check initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [supabase]);
-
-  const handleLogout = async () => {
-    if (!supabase) return;
-    await supabase.auth.signOut();
-    window.location.reload();
-  };
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -125,22 +98,15 @@ export default function Navbar() {
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <ThemeToggle />
             
-            {user ? (
-              <div className="hidden md:flex items-center gap-2">
-                <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg2)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                  {user.user_metadata?.avatar_url ? (
-                    <img src={user.user_metadata.avatar_url} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  ) : (
-                    <User size={16} color="var(--muted)" />
-                  )}
-                </div>
-                <button onClick={handleLogout} style={{ background: "transparent", border: "none", cursor: "pointer", color: "var(--muted)", display: "flex", alignItems: "center", padding: 8 }} title="Sign out">
-                  <LogOut size={16} className="hover:text-[var(--text)] transition-colors" />
-                </button>
-              </div>
-            ) : pathname !== "/join" ? (
-              <Link href="/join" className="btn-primary !hidden md:!inline-flex" style={{ borderRadius: 8, padding: "10px 24px", fontSize: "0.85rem", fontWeight: 600 }}>Get Started</Link>
-            ) : null}
+            <a 
+              href="https://linkedin.com/company/podevs" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="btn-primary !hidden md:!inline-flex" 
+              style={{ borderRadius: 8, padding: "10px 24px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}
+            >
+              Join Us
+            </a>
 
             <button 
               onClick={() => setOpen(!open)} 
@@ -175,11 +141,15 @@ export default function Navbar() {
               </motion.div>
             ))}
             <div style={{ marginTop: 8, paddingTop: 12, borderTop: "1px solid var(--border)" }}>
-              {user ? (
-                <button onClick={handleLogout} className="btn-secondary" style={{ width: "100%", justifyContent: "center", borderRadius: 8 }}>Sign Out</button>
-              ) : (
-                <Link href="/join" className="btn-primary" style={{ width: "100%", justifyContent: "center", borderRadius: 8 }}>Join Free</Link>
-              )}
+              <a 
+                href="https://linkedin.com/company/podevs" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn-primary" 
+                style={{ width: "100%", justifyContent: "center", borderRadius: 8, textDecoration: "none", display: "flex", padding: "12px" }}
+              >
+                Join Us
+              </a>
             </div>
           </motion.div>
         )}

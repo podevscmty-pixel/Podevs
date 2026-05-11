@@ -107,10 +107,10 @@ export default function WhatWeDoPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <Reveal delay={0.3}>
-              <div className="card-static p-8 md:p-10 h-full">
-                <Book className="text-white mb-6" size={32} style={{ color: "#fff", marginBottom: 24 }} />
-                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16, color: "#fff" }}>Our Story</h3>
-                <p style={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.7 }}>
+              <div className="card p-8 md:p-10 h-full">
+                <Book className="mb-6" size={32} style={{ color: "var(--orange)", marginBottom: 24 }} />
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 16 }}>Our Story</h3>
+                <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
                   PODEVS started from a simple frustration: great tech education was either too expensive or too boring. We built the community we wished existed — student-run, community-powered, free to join.
                 </p>
               </div>

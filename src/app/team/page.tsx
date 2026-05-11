@@ -1,90 +1,213 @@
 "use client";
+
 import Link from "next/link";
-import { Globe, Mail, MessageCircle } from "lucide-react";
+import { Globe, Mail } from "lucide-react";
 import * as React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const core = [
-  { init: "SR", name: "Sai Rohith", role: "Founder", image: "/images/sai.png", bio: "As CEO of PODEVS Community, I lead a growing student-driven tech ecosystem focused on empowering learners to build real-world skills, leadership, communication, and innovation through hands-on experience and collaborative learning.", grad: "#FF8A00, #FFC247" },
-  { init: "S", name: "Saran", role: "Co-Founder", image: "/images/saran.png", bio: "Believes the best learning happens with other people. Runs our events, Discord, and partnerships.", grad: "#6c63ff, #FF8A00" },
-  { init: "NS", name: "Nithin Srinivasan", role: "Strategist & Creator", image: "/images/nithin.png", bio: "I work at the intersection of ideas, strategy, and creative direction, shaping content that engages and grows the PODEVS Community. I focus on turning ideas into impactful initiatives that enhance learning, visibility, and innovation.", grad: "#00C9FF, #FFC247" },
-  { init: "M", name: "Manoj", role: "Developer", image: "/images/manoj.png", bio: "I am a Full Stack Developer experienced in React, Node.js, Python, and AWS, with hands-on experience in building and deploying scalable applications. I completed an AWS Virtual Internship and gained industry experience as a Full Stack Developer at IBM. I am passionate about data visualization, Generative AI, and developing impactful web applications through efficient and scalable solutions.", grad: "#FF8A00, #ff6b6b" },
-  { init: "NN", name: "Nilofar Nisha", role: "Developer", image: "/images/nilofar.png", bio: "I am Nilofar Nisha, pursuing B.Sc. Computer Science with Artificial Intelligence at S.A. College of Arts and Science. I have skills in programming, data analysis, and core AI concepts, along with strong communication and collaboration abilities. I am a quick learner with a problem-solving mindset, passionate about emerging technologies and continuous growth.", grad: "#43e97b, #38f9d7" },
-  { init: "M", name: "Madhav", role: "Graphic Designer", image: "/images/madhav.png", bio: "I design the visual identity of PODEVS, ensuring our brand is consistent, engaging, and memorable. My focus is on creating high-quality graphics that reflect our values and mission.", grad: "#f093fb, #f5576c" },
-  { init: "PD", name: "Priyadarshini", role: "Member", image: "/images/priya.png", bio: "Scaling the PODEVS mission to colleges nationwide. Managing logistics for our major hackathons.", grad: "#4facfe, #00f2fe" },
-  { init: "RR", name: "Raguraman", role: "Video Editor", image: "/images/ragu.png", bio: "Ensuring every PODEVS event is a masterclass in student engagement and technical value.", grad: "#fa709a, #fee140" },
+  { init: "SR", name: "Sai Rohith", role: "Founder", image: "/images/sai.png", bio: "As CEO of PODEVS Community, I lead a growing student-driven tech ecosystem focused on empowering learners to build real-world skills.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "S", name: "Saran", role: "Co-Founder", image: "/images/saran.png", bio: "Believes the best learning happens with other people. Runs our events, community, and partnerships.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "NS", name: "Nithin Srinivasan", role: "Strategist & Creator", image: "/images/nithin.png", bio: "I work at the intersection of ideas, strategy, and creative direction, shaping content that engages and grows the PODEVS Community.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "M", name: "Manoj", role: "Developer", image: "/images/manoj.png", bio: "Full Stack Developer experienced in React, Node.js, Python, and AWS. Passionate about scalable solutions and Gen AI.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "NN", name: "Nilofar Nisha", role: "Developer", image: "/images/nilofar.png", bio: "Computer Science student with skills in programming and AI. Passionate about emerging technologies.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "M", name: "Madhav", role: "Graphic Designer", image: "/images/madhav.png", bio: "I design the visual identity of PODEVS, ensuring our brand is consistent, engaging, and memorable.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "PD", name: "Priyadarshini", role: "Member", image: "/images/priya.png", bio: "Scaling the PODEVS mission to colleges nationwide and managing logistics for major hackathons.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "RR", name: "Raguraman", role: "Video Editor", image: "/images/ragu.png", bio: "Ensuring every PODEVS event is a masterclass in student engagement and technical value.", linkedin: "#", mail: "hello@podevs.org" },
 ];
 
-function TeamCard({ member, showBio = false }: { member: typeof core[0]; showBio?: boolean }) {
+function TeamCard({ member, onClick }: { member: typeof core[0]; onClick: () => void }) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
-    <div className="card p-8 md:p-11 text-center flex flex-col items-center gap-5">
-      <div style={{
-        width: 100,
-        height: 100,
-        borderRadius: "50%",
-        position: "relative",
-        overflow: "hidden",
-        background: `linear-gradient(135deg, ${member.grad})`,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontWeight: 800,
-        fontSize: "1.8rem",
-        color: "#fff",
-        boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-        border: "4px solid var(--bg2)"
-      }}>
-        {member.image ? (
-          <img
-            src={member.image}
-            alt={member.name}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            onError={(e) => {
-              (e.target as any).style.display = 'none';
-            }}
-          />
-        ) : member.init}
+    <motion.div 
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      onClick={onClick}
+      whileHover={{ y: -6, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className="card flex flex-col cursor-pointer overflow-hidden group"
+      style={{ 
+        borderRadius: 20, 
+        background: "var(--card)", 
+        border: "1px solid var(--border)",
+        transition: "box-shadow 0.4s ease"
+      }}
+    >
+      <div style={{ position: "relative", width: "100%", aspectRatio: "1/1", overflow: "hidden", background: "var(--bg2)" }}>
+        <motion.div
+          animate={{ scale: isHovered ? 1.08 : 1 }}
+          transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
+          style={{ width: "100%", height: "100%" }}
+        >
+          {member.image ? (
+            <img
+              src={member.image}
+              alt={member.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              onError={(e) => { (e.target as any).style.display = 'none'; }}
+            />
+          ) : (
+            <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", fontWeight: 800, color: "var(--muted)", background: "rgba(var(--bg-rgb), 0.3)" }}>
+              {member.init}
+            </div>
+          )}
+        </motion.div>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)", opacity: isHovered ? 1 : 0, transition: "opacity 0.3s ease" }} />
       </div>
-      <div>
-        <p style={{ fontWeight: 800, fontSize: "1.25rem", marginBottom: 6 }}>{member.name}</p>
-        <p style={{ fontSize: "0.85rem", color: "var(--orange)", fontWeight: 700, fontFamily: "monospace", letterSpacing: "0.06em", textTransform: "uppercase" }}>{member.role}</p>
+
+      <div style={{ padding: "16px", textAlign: "center" }}>
+        <h3 style={{ fontWeight: 800, fontSize: "1rem", color: "var(--text)", marginBottom: 2 }}>{member.name}</h3>
+        <p style={{ fontSize: "0.65rem", color: "var(--orange)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em" }}>{member.role}</p>
       </div>
-      {showBio && <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.7 }}>{member.bio}</p>}
-      <div style={{ display: "flex", gap: 10, paddingTop: 12, borderTop: "1px solid var(--border)", width: "100%", justifyContent: "center" }}>
-        {[Globe, MessageCircle, Mail].map((Icon, i) => (
-          <a key={i} href="#" style={{ width: 36, height: 36, borderRadius: 10, border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--muted)", transition: "all var(--trans)" }} className="hover:text-[var(--orange)] hover:border-[var(--orange)] hover:bg-[rgba(255,138,0,0.05)]">
-            <Icon size={16} />
-          </a>
-        ))}
-      </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function TeamPage() {
-  return (
-    <div style={{ paddingTop: "var(--nav-h)" }}>
-      <section className="py-12 md:py-20">
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <span className="section-label">The People</span>
-          <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: 20 }}>The <span style={{ color: "var(--orange)" }}>Team</span></h1>
-          <p style={{ color: "var(--muted)", fontSize: "1.1rem", lineHeight: 1.7, maxWidth: 540 }}>The students and builders behind the Smile of Education.</p>
-        </div>
-      </section>
+  const [selectedMember, setSelectedMember] = React.useState<typeof core[0] | null>(null);
 
-      <section className="pb-20 md:pb-32">
+  React.useEffect(() => {
+    if (selectedMember) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = "10px"; // Prevent layout shift
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "0px";
+    }
+    return () => { 
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "0px";
+    };
+  }, [selectedMember]);
+
+  return (
+    <div style={{ paddingTop: "var(--nav-h)", background: "var(--bg)" }}>
+      <section className="py-12 md:py-16">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {core.map((m) => <TeamCard key={m.name} member={m} showBio />)}
+          <div style={{ maxWidth: 600 }}>
+            <span className="section-label">The People</span>
+            <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 16 }}>The <span style={{ color: "var(--orange)" }}>Team</span></h1>
+            <p style={{ color: "var(--muted)", fontSize: "1rem", lineHeight: 1.6 }}>The builders and creators behind PODEVS. Click on any member to learn more about them.</p>
           </div>
         </div>
       </section>
 
-      <section className="px-6 pb-20 md:pb-32">
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", textAlign: "center" }}>
-          <div className="card-static p-10 md:p-16">
-            <h2 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: 14 }}>Join the Mission</h2>
-            <p style={{ color: "var(--muted)", marginBottom: 28, fontSize: "1.05rem", maxWidth: 400, margin: "0 auto 28px" }}>Want to help shape the future of student-led tech education?</p>
-            <Link href="/contact" className="btn-primary">Get In Touch</Link>
+      <section className="pb-20">
+        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+            {core.map((m) => <TeamCard key={m.name} member={m} onClick={() => setSelectedMember(m)} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* Modal - The "Pop" using Portal */}
+      {selectedMember && typeof document !== 'undefined' && (
+        require('react-dom').createPortal(
+          <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" }}>
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedMember(null)}
+              style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(15px)" }}
+            />
+            
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 30 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              style={{ 
+                position: "relative",
+                width: "100%",
+                maxWidth: 1000,
+                maxHeight: "min(800px, 90vh)",
+                background: "var(--card)",
+                borderRadius: 32,
+                overflow: "hidden",
+                border: "1px solid var(--border)",
+                display: "flex",
+                boxShadow: "0 50px 100px rgba(0,0,0,0.8)",
+                pointerEvents: "auto",
+              }}
+              className="flex-col md:flex-row"
+            >
+              {/* Close Button */}
+              <button 
+                onClick={() => setSelectedMember(null)}
+                style={{ position: "absolute", top: 20, right: 20, zIndex: 10, width: 40, height: 40, borderRadius: "50%", background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
+                className="hover:bg-white/10 transition-colors"
+              >
+                ✕
+              </button>
+
+              {/* Left: Image */}
+              <div style={{ flex: "1 1 45%", position: "relative", minHeight: 300, background: "var(--bg2)" }}>
+                {selectedMember.image ? (
+                  <img 
+                    src={selectedMember.image} 
+                    alt={selectedMember.name} 
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                ) : (
+                  <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg2)", fontSize: "4rem", fontWeight: 900, color: "var(--muted)" }}>{selectedMember.init}</div>
+                )}
+              </div>
+
+              {/* Right: Info */}
+              <div style={{ 
+                flex: "1 1 55%", 
+                padding: "48px 40px", 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: 24, 
+                overflowY: "auto",
+                background: "var(--card)",
+                minHeight: 0
+              }}>
+                <div>
+                  <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 900, marginBottom: 8, letterSpacing: "-0.02em" }}>{selectedMember.name}</h2>
+                  <p style={{ fontSize: "0.9rem", color: "var(--orange)", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em" }}>{selectedMember.role}</p>
+                </div>
+
+                <div style={{ height: 1, background: "var(--border)", width: 40 }} />
+
+                <div style={{ flex: 1 }}>
+                  <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.8 }}>
+                    {selectedMember.bio}
+                  </p>
+                </div>
+
+                <div style={{ marginTop: "auto", display: "flex", gap: 12, paddingTop: 20 }}>
+                  <a href={selectedMember.linkedin} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ borderRadius: 14, padding: "10px 20px" }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    LinkedIn
+                  </a>
+                  <a href={`mailto:${selectedMember.mail}`} className="btn-outline" style={{ borderRadius: 14, padding: "10px 20px" }}>
+                    <Mail size={18} />
+                    Email
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>,
+          document.body
+        )
+      )}
+
+      <section className="px-6 pb-24">
+        <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
+          <div className="card p-12 md:p-20 text-center relative overflow-hidden" style={{ borderRadius: 32, background: "var(--bg2)", border: "1px solid var(--border)" }}>
+             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "100%", background: "radial-gradient(circle at 50% 0%, rgba(255,138,0,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
+             <h2 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 16, position: "relative" }}>Join the Mission</h2>
+             <p style={{ color: "var(--muted)", marginBottom: 32, fontSize: "1.05rem", maxWidth: 440, margin: "0 auto 32px", position: "relative" }}>Want to help shape the future of student-led tech education?</p>
+             <Link href="/contact" className="btn-primary" style={{ position: "relative" }}>Get In Touch</Link>
           </div>
         </div>
       </section>

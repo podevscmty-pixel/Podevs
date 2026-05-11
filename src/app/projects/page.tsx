@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ExternalLink, Code, Layout, Globe, Smartphone } from "lucide-react";
+import { ExternalLink, Layout, Globe, Smartphone } from "lucide-react";
 import * as React from "react";
 
 const projects = [
@@ -14,25 +14,25 @@ const projects = [
   },
   {
     title: "Student Dashboard",
-    desc: "A centralized dashboard for students to track their course progress, event registrations, and certificates.",
-    tags: ["React", "Supabase", "UI/UX"],
-    link: "#",
+    desc: "A centralized dashboard for students to track their learning progress, build portfolios, and earn certificates.",
+    tags: ["React", "UI/UX", "Vercel"],
+    link: "https://dashboard.podevs.org",
     type: "Dashboard",
     icon: <Layout size={18} />
   },
   {
-    title: "Community Discord Bot",
-    desc: "Automation bot for managing thousands of students, roles, and automated event notifications.",
-    tags: ["Node.js", "Discord.js", "APIs"],
-    link: "#",
-    type: "Tool",
-    icon: <Code size={18} />
+    title: "EdTech Roadmap API",
+    desc: "A high-performance API serving structured learning paths for thousands of students across multiple languages.",
+    tags: ["Node.js", "APIs", "Cloud"],
+    link: "https://api.podevs.org",
+    type: "Backend",
+    icon: <Globe size={18} />
   },
   {
     title: "Local Business Showcase",
     desc: "A high-performance landing page built for a local startup to showcase their services and team.",
     tags: ["Next.js", "Framer Motion"],
-    link: "#",
+    link: "https://showcase-demo.podevs.org",
     type: "Client Work",
     icon: <Smartphone size={18} />
   }
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
       <section className="py-12 md:py-20">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <span className="section-label">Showcase</span>
-          <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: 20 }}>Our <span style={{ color: "var(--orange)" }}>Projects</span></h1>
+          <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: 20 }}>Our <span style={{ color: "var(--orange)" }}>Works</span></h1>
           <p style={{ color: "var(--muted)", fontSize: "1.1rem", lineHeight: 1.7, maxWidth: 540 }}>Websites we've built, demo projects, and high-impact student work.</p>
         </div>
       </section>
@@ -70,8 +70,7 @@ export default function ProjectsPage() {
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: 12, marginTop: "auto" }}>
-                  <a href={p.link} className="btn-primary" style={{ flex: 1, justifyContent: "center", fontSize: "0.85rem" }}>View Project <ExternalLink size={14} /></a>
-                  <a href="#" className="btn-outline" style={{ padding: "10px" }}><Code size={18} /></a>
+                  <a href={p.link} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "0.85rem", textDecoration: "none" }}>View Work <ExternalLink size={14} /></a>
                 </div>
               </div>
             ))}

@@ -26,7 +26,7 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 /* ── Data ──────────────────────────────────────── */
 const stats = [
   { icon: <Users size={20} />, value: "2,000+", label: "Students" },
-  { icon: <Code size={20} />, value: "150+", label: "Projects" },
+  { icon: <Code size={20} />, value: "150+", label: "Works" },
   { icon: <Calendar size={20} />, value: "12+", label: "Events/Month" },
 ];
 
@@ -171,7 +171,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Learn Skills.<br />Build Projects.<br />
+              Learn Skills.<br />Build Works.<br />
               <span style={{ background: "linear-gradient(135deg, var(--orange), #FFC247)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", filter: "drop-shadow(0 0 15px rgba(255, 138, 0, 0.15))" }}>
                 Earn Confidence.
               </span>
@@ -180,10 +180,10 @@ export default function HomePage() {
               style={{ fontSize: "1.1rem", color: "var(--muted)", lineHeight: 1.75, maxWidth: 520, marginBottom: 40 }}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }}
             >
-              PODEVS is the community where students learn in-demand skills, build real projects, and grow into confident developers — completely free to start.
+              PODEVS is the community where students learn in-demand skills, build real works, and grow into confident developers — completely free to start.
             </motion.p>
             <motion.div className="flex flex-wrap gap-3.5 justify-start" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.35 }}>
-              <Link href="/join" className="btn-primary">🎓 Join Community</Link>
+              <a href="https://linkedin.com/company/podevs" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ textDecoration: "none" }}>🎓 Join Us</a>
               <Link href="/services" className="btn-outline">💼 Get a Website Built</Link>
             </motion.div>
 
@@ -455,7 +455,7 @@ export default function HomePage() {
                   Join 2,000+ students already learning, building, and launching with PODEVS — completely free to start.
                 </p>
                 <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-                  <Link href="/join" className="btn-primary">Join Free Today <ArrowRight size={15} /></Link>
+                  <a href="https://linkedin.com/company/podevs" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ textDecoration: "none" }}>Join Us on LinkedIn <ArrowRight size={15} /></a>
                   <Link href="/about" className="btn-outline">Learn About Us</Link>
                 </div>
               </div>

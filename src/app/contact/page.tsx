@@ -8,7 +8,7 @@ const contactInfo = [
   { icon: <Clock size={18} />, label: "Response Time", value: "Within 24–48 hours" },
 ];
 
-const socials = ["Twitter", "LinkedIn", "YouTube", "Discord", "Instagram"];
+const socials = ["LinkedIn", "YouTube", "Instagram"];
 
 const inputStyle: React.CSSProperties = { height: 42, padding: "0 14px", borderRadius: 8, border: "1px solid var(--border)", background: "var(--bg2)", color: "var(--text)", fontSize: "0.875rem", outline: "none", width: "100%", transition: "border-color 0.2s ease" };
 
