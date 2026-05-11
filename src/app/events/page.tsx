@@ -10,6 +10,8 @@ const STATIC_EVENTS = [
     end_time: new Date(Date.now() + 86400000 * 2 + 7200000).toISOString(),
     location: "Online / Virtual Hub",
     image_url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+    event_type: "Workshop",
+    price: "Free",
   },
   {
     id: "2",
@@ -19,6 +21,8 @@ const STATIC_EVENTS = [
     end_time: new Date(Date.now() + 86400000 * 16).toISOString(),
     location: "PODEVS Chennai Campus",
     image_url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800",
+    event_type: "Hackathon",
+    price: "₹99",
   }
 ];
 
