@@ -3,12 +3,11 @@ import { Inter, Outfit, Bebas_Neue, Syne, Unbounded, Syncopate, Bruno_Ace_SC } f
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PageLoader } from "@/components/page-loader";
-
+import { CustomCursor } from "@/components/ui/custom-cursor";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import * as React from "react";
 import { Suspense } from "react";
-
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit", display: "swap" });
@@ -32,6 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable} ${bebas.variable} ${syne.variable} ${unbounded.variable} ${syncopate.variable} ${bruno.variable}`}>
       <body className="min-h-screen flex flex-col antialiased">
         <ThemeProvider>
+          <CustomCursor />
           <Suspense fallback={null}>
             <PageLoader />
           </Suspense>

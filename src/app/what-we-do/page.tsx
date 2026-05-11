@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Layout, Database, Server, Terminal, PenTool, BookOpen, MessageCircle, Users, Smartphone, Heart, Target, Eye, Book } from "lucide-react";
+import { ArrowRight, Code, Layout, Database, Server, Terminal, PenTool, BookOpen, MessageCircle, Users, Smartphone, Heart, Target, Eye, Book, Zap } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import Link from "next/link";
 
@@ -124,6 +124,42 @@ export default function WhatWeDoPage() {
                 </p>
               </div>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 1, background: "var(--border)" }} />
+      </div>
+
+      {/* CORE VALUES SECTION */}
+      <section className="py-20 md:py-32 section-glow">
+        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <Reveal>
+              <span className="section-label" style={{ margin: "0 auto 16px" }}>Our DNA</span>
+              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 16 }}>The Core <span style={{ color: "var(--orange)" }}>Values</span></h2>
+              <p style={{ color: "var(--muted)", maxWidth: 520, margin: "0 auto", fontSize: "1.1rem" }}>The principles that drive every workshop, every line of code, and every community event we host.</p>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: <Zap size={24} />, title: "Accessibility", desc: "High-quality tech education should be a right, not a luxury. We keep our core learning 100% free." },
+              { icon: <Users size={24} />, title: "Community", desc: "We are stronger together. Our platform is built on peer-to-peer support and collaborative growth." },
+              { icon: <Target size={24} />, title: "Ambition", desc: "We don't just teach tutorials; we build real-world works. We push students to launch their ideas." },
+              { icon: <Eye size={24} />, title: "Openness", desc: "Transparency and open-source thinking are at our heart. We share our knowledge and our process." },
+            ].map((v, i) => (
+              <Reveal key={v.title} delay={i * 0.1}>
+                <SpotlightCard className="p-8 h-full flex flex-col gap-5 border border-[var(--border)] rounded-[20px]">
+                  <div style={{ width: 48, height: 48, borderRadius: 12, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--orange)" }}>
+                    {v.icon}
+                  </div>
+                  <h3 style={{ fontSize: "1.25rem", fontWeight: 800 }}>{v.title}</h3>
+                  <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.7 }}>{v.desc}</p>
+                </SpotlightCard>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>

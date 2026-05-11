@@ -30,7 +30,57 @@ const addons = [
   { icon: <Zap size={20} />, title: "Deployment Setup", body: "We set up CI/CD, configure your domain, and deploy your existing project. One-time fee starting at ₹499." },
 ];
 
+function EstimatorRow({ label, price, value, active, onClick }: { label: string; price: string; value: number; active: boolean; onClick: () => void }) {
+  return (
+    <button 
+      onClick={onClick}
+      style={{ 
+        width: "100%", 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        padding: "16px 20px", 
+        borderRadius: 14, 
+        background: active ? "rgba(255,138,0,0.08)" : "rgba(255,255,255,0.02)", 
+        border: active ? "1px solid var(--orange)" : "1px solid var(--border)",
+        cursor: "pointer",
+        textAlign: "left",
+        transition: "all 0.2s ease"
+      }}
+      className="hover:bg-white/5"
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ width: 20, height: 20, borderRadius: 6, border: "2px solid var(--orange)", background: active ? "var(--orange)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {active && <CheckCircle size={14} color="#fff" strokeWidth={3} />}
+        </div>
+        <span style={{ fontSize: "0.95rem", fontWeight: 600, color: active ? "#fff" : "var(--muted)" }}>{label}</span>
+      </div>
+      <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--orange)" }}>{price}</span>
+    </button>
+  );
+}
+
 export default function ServicesPage() {
+  const [selectedAddons, setSelectedAddons] = React.useState<number[]>([]);
+  const basePrice = 2499;
+  
+  const estimatorItems = [
+    { id: 1, label: "Additional Pages (x5)", price: "₹999", value: 999 },
+    { id: 2, label: "Custom Animations", price: "₹499", value: 499 },
+    { id: 3, label: "Contact Form Integration", price: "₹299", value: 299 },
+    { id: 4, label: "CMS / Admin Dashboard", price: "₹1,999", value: 1999 },
+  ];
+
+  const toggleAddon = (value: number) => {
+    if (selectedAddons.includes(value)) {
+      setSelectedAddons(selectedAddons.filter(v => v !== value));
+    } else {
+      setSelectedAddons([...selectedAddons, value]);
+    }
+  };
+
+  const totalPrice = basePrice + selectedAddons.reduce((a, b) => a + b, 0);
+
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
       <section className="py-12 md:py-20">
@@ -72,6 +122,48 @@ export default function ServicesPage() {
                 </Link>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-20 md:pb-32">
+        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+          <div className="card-static p-8 md:p-16 relative overflow-hidden">
+            <div style={{ position: "absolute", top: 0, right: 0, width: "30%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(255,138,0,0.03))", pointerEvents: "none" }} />
+            
+            <div className="flex flex-col lg:flex-row gap-12 items-center">
+              <div style={{ flex: 1 }}>
+                <span className="tag" style={{ marginBottom: 16 }}>Calculator</span>
+                <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 850, letterSpacing: "-0.02em", marginBottom: 16 }}>Estimate Your <span style={{ color: "var(--orange)" }}>Project</span></h2>
+                <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.7, marginBottom: 28, maxWidth: 460 }}>Choose the features you need and get a transparent estimate for your vision instantly.</p>
+                
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  {estimatorItems.map((item) => (
+                    <EstimatorRow 
+                      key={item.id} 
+                      label={item.label} 
+                      price={item.price} 
+                      value={item.value} 
+                      active={selectedAddons.includes(item.value)}
+                      onClick={() => toggleAddon(item.value)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ flex: "0 0 320px", width: "100%" }}>
+                <div style={{ background: "var(--bg2)", borderRadius: 24, padding: 32, border: "1px solid var(--border)", boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}>
+                  <p style={{ fontSize: "0.8rem", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: 8 }}>Estimated Total</p>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 24 }}>
+                    <span style={{ fontSize: "2.5rem", fontWeight: 900, color: "#fff" }}>₹{totalPrice.toLocaleString()}</span>
+                    <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>*</span>
+                  </div>
+                  <div style={{ height: 1, background: "var(--border)", marginBottom: 24 }} />
+                  <p style={{ fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.6, marginBottom: 32 }}>* Final pricing depends on project complexity. Contact us for a precise quote.</p>
+                  <Link href="/contact" className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>Book a Free Call</Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

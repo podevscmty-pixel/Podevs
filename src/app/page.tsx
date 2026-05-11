@@ -7,6 +7,7 @@ import { Marquee } from "@/components/marquee";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
+import { ScrambleText } from "@/components/ui/scramble-text";
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
@@ -171,9 +172,10 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Learn Skills.<br />Build Works.<br />
+              <ScrambleText text="Learn Skills." delay={0.2} /><br />
+              <ScrambleText text="Build Works." delay={0.4} /><br />
               <span style={{ background: "linear-gradient(135deg, var(--orange), #FFC247)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", filter: "drop-shadow(0 0 15px rgba(255, 138, 0, 0.15))" }}>
-                Earn Confidence.
+                <ScrambleText text="Earn Confidence." delay={0.6} />
               </span>
             </motion.h1>
             <motion.p
