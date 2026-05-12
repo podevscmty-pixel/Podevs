@@ -24,13 +24,14 @@ export default function ContactPage() {
     setStatus("sending");
     
     const form = e.currentTarget;
-    const data = new FormData(form);
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
     
     try {
-      const response = await fetch("https://formspree.io/f/xoqogpze", {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        body: data,
-        headers: { 'Accept': 'application/json' }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
       });
       
       if (response.ok) {

@@ -5,6 +5,7 @@ import { ArrowRight, Users, Code, Calendar, BookOpen, TrendingUp, Zap, Target, A
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Marquee } from "@/components/marquee";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
+import * as React from "react";
 import { useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { ScrambleText } from "@/components/ui/scramble-text";
@@ -61,6 +62,87 @@ const videos = [
   { id: "v2", title: "React Hooks Explained Simply", views: "8.4K views · 1 month ago" },
   { id: "v3", title: "Deploy Your First App on Vercel", views: "5.2K views · 2 months ago" },
 ];
+
+import { supabase } from "@/lib/supabase";
+
+function OngoingEventHighlight() {
+  const [ongoingEvent, setOngoingEvent] = React.useState<any | null>(null);
+
+  const fallbackOngoingEvent = {
+    id: "demo-ongoing",
+    title: "Live Student Builder Hackathon",
+    description: "48 hours of pure building. Form teams, solve real-world problems, and win prizes. Join the livestream and get started now!",
+    start_time: new Date(Date.now() - 3600000).toISOString(), // Started 1 hour ago
+    end_time: new Date(Date.now() + 86400000 * 2).toISOString(), // Ends in 2 days
+    location: "PODEVS Chennai Campus / Online",
+    registration_link: "#",
+  };
+
+  useEffect(() => {
+    async function fetchOngoing() {
+      try {
+        const { data, error } = await supabase.from('events').select('*');
+        if (data && data.length > 0) {
+          const now = new Date();
+          const ongoing = data.filter((e: any) => {
+            const start = new Date(e.start_time);
+            const end = e.end_time ? new Date(e.end_time) : new Date(start.getTime() + 4 * 60 * 60 * 1000);
+            return start <= now && end >= now;
+          });
+          if (ongoing.length > 0) {
+            setOngoingEvent(ongoing[0]);
+            return;
+          }
+        }
+        // If no data or no ongoing events, set fallback for preview
+        setOngoingEvent(fallbackOngoingEvent);
+      } catch (err) {
+        console.warn("Error fetching ongoing event:", err);
+        setOngoingEvent(fallbackOngoingEvent);
+      }
+    }
+    fetchOngoing();
+  }, []);
+
+  if (!ongoingEvent) return null;
+
+  const formatTime = (dateString: string) => new Date(dateString).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  return (
+    <Section style={{ padding: "var(--section-gap) 0" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+        <SpotlightCard className="p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center border border-[var(--orange)] relative overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.05)" }}>
+          <div style={{ position: "absolute", top: -50, right: -50, width: 200, height: 200, background: "radial-gradient(circle, rgba(255,138,0,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+              </span>
+              <span className="section-label" style={{ marginBottom: 0, color: "var(--orange)" }}>Happening Now</span>
+            </div>
+            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, lineHeight: 1.2, marginBottom: 16 }}>{ongoingEvent.title}</h2>
+            <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 500 }}>{ongoingEvent.description}</p>
+          </div>
+          <div className="flex-shrink-0 flex flex-col gap-3 w-full md:w-auto">
+            <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text)", fontWeight: 600 }}>
+              <Calendar size={18} color="var(--orange)" />
+              {formatTime(ongoingEvent.start_time)} - {ongoingEvent.end_time ? formatTime(ongoingEvent.end_time) : 'TBD'}
+            </div>
+            <Link 
+              href={ongoingEvent.registration_link ? ongoingEvent.registration_link : `/events/${ongoingEvent.id}`}
+              target={ongoingEvent.registration_link ? "_blank" : undefined}
+              className="btn-primary" 
+              style={{ padding: "16px 32px", fontSize: "1.05rem", justifyContent: "center", boxShadow: "0 0 20px rgba(255,138,0,0.4)" }}
+            >
+              Join the Event
+            </Link>
+          </div>
+        </SpotlightCard>
+      </div>
+    </Section>
+  );
+}
 
 /* ── Page ──────────────────────────────────────── */
 export default function HomePage() {
@@ -358,6 +440,9 @@ export default function HomePage() {
       </Section>
 
       <div className="section-divider" />
+
+      {/* ── ONGOING EVENT HIGHLIGHT ───────────────── */}
+      <OngoingEventHighlight />
 
       {/* ── EVENTS PREVIEW ───────────────────────── */}
       <Section style={{ padding: "var(--section-gap) 0" }}>

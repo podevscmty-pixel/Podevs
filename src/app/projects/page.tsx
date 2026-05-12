@@ -3,7 +3,9 @@ import Link from "next/link";
 import { ExternalLink, Layout, Globe, Smartphone } from "lucide-react";
 import * as React from "react";
 
-const projects = [
+import { supabase } from "@/lib/supabase";
+
+const projectsFallback = [
   {
     title: "PODEVS Platform",
     desc: "The very platform you are browsing. Built with Next.js, Framer Motion, and Tailwind CSS for a premium student experience.",
@@ -39,6 +41,34 @@ const projects = [
 ];
 
 export default function ProjectsPage() {
+  const [projectList, setProjectList] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          setProjectList(data);
+        } else {
+          setProjectList(projectsFallback);
+        }
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+        setProjectList(projectsFallback);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
+  }, []);
+
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
       <section className="py-12 md:py-20">
@@ -51,30 +81,36 @@ export default function ProjectsPage() {
 
       <section className="pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {projects.map((p) => (
-              <div key={p.title} className="card p-8 md:p-10 flex flex-col gap-5 h-full">
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--orange)" }}>
-                    {p.icon}
+          {loading ? (
+            <div style={{ display: "flex", justifyContent: "center", padding: "40px 0" }}>
+              <div className="animate-spin" style={{ width: 30, height: 30, border: "3px solid var(--border)", borderTopColor: "var(--orange)", borderRadius: "50%" }} />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {projectList.map((p) => (
+                <div key={p.title} className="card p-8 md:p-10 flex flex-col gap-5 h-full">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--orange)" }}>
+                      {p.icon || <Layout size={18} />}
+                    </div>
+                    <span className="tag">{p.type || p.category}</span>
                   </div>
-                  <span className="tag">{p.type}</span>
-                </div>
-                <div>
-                  <h3 style={{ fontSize: "1.3rem", fontWeight: 800, marginBottom: 12 }}>{p.title}</h3>
-                  <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.7, marginBottom: 20 }}>{p.desc}</p>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
-                    {p.tags.map(t => (
-                      <span key={t} style={{ fontSize: "0.75rem", padding: "4px 10px", borderRadius: 6, background: "var(--border)", color: "var(--muted)" }}>{t}</span>
-                    ))}
+                  <div>
+                    <h3 style={{ fontSize: "1.3rem", fontWeight: 800, marginBottom: 12 }}>{p.title}</h3>
+                    <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.7, marginBottom: 20 }}>{p.desc || p.description}</p>
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+                      {p.tags?.map((t: string) => (
+                        <span key={t} style={{ fontSize: "0.75rem", padding: "4px 10px", borderRadius: 6, background: "var(--border)", color: "var(--muted)" }}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 12, marginTop: "auto" }}>
+                    <a href={p.link} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "0.85rem", textDecoration: "none" }}>View Work <ExternalLink size={14} /></a>
                   </div>
                 </div>
-                <div style={{ display: "flex", gap: 12, marginTop: "auto" }}>
-                  <a href={p.link} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "0.85rem", textDecoration: "none" }}>View Work <ExternalLink size={14} /></a>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

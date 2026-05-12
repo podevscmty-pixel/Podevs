@@ -32,10 +32,25 @@ type Event = {
 };
 
 export default function EventsClient({ events }: { events: Event[] }) {
-  // Process events: split into upcoming and past based on start_time
+  // Process events: split into ongoing, upcoming, and past
   const now = new Date();
-  const upcoming = events.filter((e) => new Date(e.start_time) >= now);
-  const past = events.filter((e) => new Date(e.start_time) < now);
+  
+  const ongoing = events.filter((e) => {
+    const start = new Date(e.start_time);
+    const end = e.end_time ? new Date(e.end_time) : new Date(start.getTime() + 4 * 60 * 60 * 1000); // assume 4 hours if no end_time
+    return start <= now && end >= now;
+  });
+
+  const upcoming = events.filter((e) => {
+    const start = new Date(e.start_time);
+    return start > now;
+  });
+
+  const past = events.filter((e) => {
+    const start = new Date(e.start_time);
+    const end = e.end_time ? new Date(e.end_time) : new Date(start.getTime() + 4 * 60 * 60 * 1000);
+    return end < now;
+  });
 
   const formatDay = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', { day: '2-digit' });
@@ -61,6 +76,62 @@ export default function EventsClient({ events }: { events: Event[] }) {
           </motion.div>
         </div>
       </section>
+
+      {/* Ongoing Events */}
+      {ongoing.length > 0 && (
+        <section className="pb-16 md:pb-24">
+          <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+                </span>
+                <span className="section-label" style={{ marginBottom: 0, color: "var(--orange)" }}>Happening Now</span>
+              </div>
+              <h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.015em", marginBottom: 32 }}>Ongoing Event</h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {ongoing.map((ev, i) => (
+                <Reveal key={ev.id} delay={i * 0.1}>
+                  <SpotlightCard className="p-8 md:p-12 flex flex-col h-full border border-[var(--orange)]" style={{ background: "rgba(255, 138, 0, 0.03)" }}>
+                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, marginBottom: "32px" }}>
+                      <div style={{ width: 60, height: 60, borderRadius: 14, background: "var(--orange)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#fff" }}>
+                        <span style={{ fontWeight: 800, fontSize: "1.3rem", lineHeight: 1 }}>{formatDay(ev.start_time)}</span>
+                        <span style={{ fontSize: 10, fontFamily: "monospace", letterSpacing: "0.05em", marginTop: 2 }}>{formatMonth(ev.start_time)}</span>
+                      </div>
+                      <span className="tag" style={{ marginTop: 4, background: "var(--orange)", color: "#fff" }}>{ev.event_type}</span>
+                    </div>
+                    
+                    <div style={{ marginBottom: "20px" }}>
+                      <h3 style={{ fontWeight: 800, fontSize: "1.5rem", lineHeight: 1.4, marginBottom: 12 }}>{ev.title}</h3>
+                      <p style={{ color: "var(--muted)", fontSize: "1rem", lineHeight: 1.6 }}>{ev.description}</p>
+                    </div>
+
+                    <div style={{ display: "flex", flexWrap: "wrap", columnGap: 20, rowGap: 12, marginBottom: "32px" }}>
+                      <span style={{ fontSize: "0.9rem", color: "var(--text)", display: "flex", alignItems: "center", gap: 6, fontWeight: 600 }}><Clock size={16} color="var(--orange)" />{formatTime(ev.start_time)} - {ev.end_time ? formatTime(ev.end_time) : 'TBD'}</span>
+                      <span style={{ fontSize: "0.9rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 6 }}><MapPin size={16} />{ev.location}</span>
+                    </div>
+
+                    <div style={{ marginTop: "auto" }}>
+                      <Link 
+                        href={ev.registration_link ? ev.registration_link : `/events/${ev.id}`} 
+                        target={ev.registration_link ? "_blank" : undefined} 
+                        rel={ev.registration_link ? "noopener noreferrer" : undefined} 
+                        className="btn-primary" 
+                        style={{ width: "100%", justifyContent: "center", fontSize: "1rem", padding: "16px 24px", borderRadius: "12px", boxShadow: "0 0 20px rgba(255,138,0,0.4)" }}
+                      >
+                        Join Event Now
+                      </Link>
+                    </div>
+                  </SpotlightCard>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Upcoming Events */}
       <section className="pb-16 md:pb-24">

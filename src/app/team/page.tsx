@@ -5,19 +5,11 @@ import { Globe, Mail } from "lucide-react";
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const core = [
-  { init: "SR", name: "Sai Rohith", role: "Founder & CEO", image: "/images/sai.png", bio: "Leading the vision of PODEVS to build a global, student-driven tech ecosystem. I focus on strategic growth and empowering the next generation of builders.", linkedin: "https://www.linkedin.com/in/sairohith-harinath-25846a245?utm_source=share_via&utm_content=profile&utm_medium=member_android", mail: "sairohith250704@gmail.com" },
-  { init: "S", name: "Saran", role: "Co-founder & CTO", image: "/images/saran.png", bio: "Driving the technical architecture and innovation at PODEVS. I ensure our platforms are scalable and our developer community has the best tools to grow.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "NS", name: "Nithin Srinivasan", role: "Strategist & Creator", image: "/images/nithin.png", bio: "Shaping the PODEVS brand through creative strategy and direction. I bridge the gap between complex ideas and engaging, community-focused content.", linkedin: "#", mail: "marvelnithin123@gmail.com" },
-  { init: "M", name: "Madhav", role: "Management Lead", image: "/images/madhav.png", bio: "Overseeing operational excellence and team coordination. I ensure that every PODEVS project moves from vision to execution with precision and impact.", linkedin: "https://www.linkedin.com/in/j-madhav23?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", mail: "madhavmadhav57907@gmail.com" },
-  { init: "M", name: "Manoj", role: "Developer", image: "/images/manoj.png", bio: "Full Stack Developer specializing in high-performance web applications. I focus on building robust, scalable solutions that power the PODEVS experience.", linkedin: "https://www.linkedin.com/in/manoj-m-mohan", mail: "m.manoj292607@gmail.com" },
-  { init: "NN", name: "Nilofar Nisha", role: "Developer", image: "/images/nilofar.png", bio: "Bringing technical ideas to life with a focus on AI and modern frontend frameworks. I'm passionate about writing clean, efficient, and user-centric code.", linkedin: "https://www.linkedin.com/in/s-nilofar-nisha1504/", mail: "snilofarnisha10amat@gmail.com" },
-  { init: "PD", name: "Priyadarshini", role: "Content creator", image: "/images/priya.png", bio: "Crafting the digital narrative of PODEVS. I create high-impact content that resonates with our community and highlights the builder journey.", linkedin: "#", insta: "https://instagram.com/priya_dharshini28", mail: "priyadharshinijp2512@gmail.com" },
-  { init: "RR", name: "Raguraman", role: "Video Editor", image: "/images/ragu.png", bio: "Transforming PODEVS moments into cinematic stories. I specialize in high-end video production that captures the energy and value of our workshops.", linkedin: "https://www.linkedin.com/in/raguraman-v-4264823b7?utm_source=share_via&utm_content=profile&utm_medium=member_android", mail: "raguramanv97@gmail.com" },
-  { init: "J", name: "Jayasurya", role: "Associate", image: "/images/jayasurya.png", bio: "Supporting strategic initiatives and operational workflows across the platform, ensuring every PODEVS project is delivered with excellence.", linkedin: "#", mail: "hello@podevs.org" },
-];
+import { supabase } from "@/lib/supabase";
 
-function TeamCard({ member, onClick }: { member: typeof core[0]; onClick: () => void }) {
+const coreFallback: any[] = [];
+
+function TeamCard({ member, onClick }: { member: any; onClick: () => void }) {
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
@@ -50,7 +42,7 @@ function TeamCard({ member, onClick }: { member: typeof core[0]; onClick: () => 
             />
           ) : (
             <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", fontWeight: 800, color: "var(--muted)", background: "rgba(var(--bg-rgb), 0.3)" }}>
-              {member.init}
+              {member.init || member.name?.substring(0, 2).toUpperCase() || "?"}
             </div>
           )}
         </motion.div>
@@ -66,7 +58,30 @@ function TeamCard({ member, onClick }: { member: typeof core[0]; onClick: () => 
 }
 
 export default function TeamPage() {
-  const [selectedMember, setSelectedMember] = React.useState<typeof core[0] | null>(null);
+  const [selectedMember, setSelectedMember] = React.useState<any | null>(null);
+  const [teamList, setTeamList] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    async function fetchTeam() {
+      try {
+        const { data, error } = await supabase.from('team').select('*').order('created_at', { ascending: true });
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          setTeamList(data);
+        } else {
+          setTeamList(coreFallback);
+        }
+      } catch (err) {
+        console.error("Error fetching team data:", err);
+        setTeamList(coreFallback);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTeam();
+  }, []);
 
   React.useEffect(() => {
     if (selectedMember) {
@@ -86,7 +101,7 @@ export default function TeamPage() {
   }, [selectedMember]);
 
   return (
-    <div style={{ paddingTop: "var(--nav-h)", background: "var(--bg)" }}>
+    <div style={{ paddingTop: "var(--nav-h)" }}>
       <section className="py-12 md:py-16">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ maxWidth: 600 }}>
@@ -99,9 +114,15 @@ export default function TeamPage() {
 
       <section className="pb-20">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-            {core.map((m) => <TeamCard key={m.name} member={m} onClick={() => setSelectedMember(m)} />)}
-          </div>
+          {loading ? (
+            <div style={{ display: "flex", justifyContent: "center", padding: "40px 0" }}>
+              <div className="animate-spin" style={{ width: 30, height: 30, border: "3px solid var(--border)", borderTopColor: "var(--orange)", borderRadius: "50%" }} />
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+              {teamList.map((m) => <TeamCard key={m.name} member={m} onClick={() => setSelectedMember(m)} />)}
+            </div>
+          )}
         </div>
       </section>
 

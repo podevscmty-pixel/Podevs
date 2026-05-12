@@ -97,20 +97,20 @@ export default function Navbar() {
           {/* Actions */}
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <ThemeToggle />
-            
-            <a 
-              href="https://linkedin.com/company/podevs" 
-              target="_blank" 
+
+            <a
+              href="https://linkedin.com/company/podevs"
+              target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary !hidden md:!inline-flex" 
+              className="btn-primary !hidden md:!inline-flex"
               style={{ borderRadius: 8, padding: "10px 24px", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}
             >
               Join Us
             </a>
 
-            <button 
-              onClick={() => setOpen(!open)} 
-              className="flex md:hidden items-center justify-center" 
+            <button
+              onClick={() => setOpen(!open)}
+              className="flex md:hidden items-center justify-center"
               style={{ width: 36, height: 36, borderRadius: 8, border: "1px solid var(--border)", background: "transparent", cursor: "pointer", color: "var(--text)" }}
             >
               {open ? <X size={16} /> : <Menu size={16} />}
@@ -141,11 +141,11 @@ export default function Navbar() {
               </motion.div>
             ))}
             <div style={{ marginTop: 8, paddingTop: 12, borderTop: "1px solid var(--border)" }}>
-              <a 
-                href="https://linkedin.com/company/podevs" 
-                target="_blank" 
+              <a
+                href="https://linkedin.com/company/podevs"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary" 
+                className="btn-primary"
                 style={{ width: "100%", justifyContent: "center", borderRadius: 8, textDecoration: "none", display: "flex", padding: "12px" }}
               >
                 Join Us
