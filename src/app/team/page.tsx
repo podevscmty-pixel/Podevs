@@ -6,15 +6,15 @@ import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const core = [
-  { init: "SR", name: "Sai Rohith", role: "Founder", image: "/images/sai.png", bio: "As CEO of PODEVS Community, I lead a growing student-driven tech ecosystem focused on empowering learners to build real-world skills.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "S", name: "Saran", role: "Co-Founder", image: "/images/saran.png", bio: "Believes the best learning happens with other people. Runs our events, community, and partnerships.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "SR", name: "Sai Rohith", role: "Founder & CEO", image: "/images/sai.png", bio: "As CEO of PODEVS Community, I lead a growing student-driven tech ecosystem focused on empowering learners to build real-world skills.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "S", name: "Saran", role: "Co-founder & CTO", image: "/images/saran.png", bio: "Believes the best learning happens with other people. Runs our events, community, and partnerships.", linkedin: "#", mail: "hello@podevs.org" },
   { init: "NS", name: "Nithin Srinivasan", role: "Strategist & Creator", image: "/images/nithin.png", bio: "I work at the intersection of ideas, strategy, and creative direction, shaping content that engages and grows the PODEVS Community.", linkedin: "#", mail: "hello@podevs.org" },
   { init: "M", name: "Manoj", role: "Developer", image: "/images/manoj.png", bio: "Full Stack Developer experienced in React, Node.js, Python, and AWS. Passionate about scalable solutions and Gen AI.", linkedin: "#", mail: "hello@podevs.org" },
   { init: "NN", name: "Nilofar Nisha", role: "Developer", image: "/images/nilofar.png", bio: "Computer Science student with skills in programming and AI. Passionate about emerging technologies.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "M", name: "Madhav", role: "Graphic Designer", image: "/images/madhav.png", bio: "I design the visual identity of PODEVS, ensuring our brand is consistent, engaging, and memorable.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "PD", name: "Priyadarshini", role: "Member", image: "/images/priya.png", bio: "Scaling the PODEVS mission to colleges nationwide and managing logistics for major hackathons.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "M", name: "Madhav", role: "Management Lead", image: "/images/madhav.png", bio: "I design the visual identity of PODEVS, ensuring our brand is consistent, engaging, and memorable.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "PD", name: "Priyadarshini", role: "Content creator", image: "/images/priya.png", bio: "Scaling the PODEVS mission to colleges nationwide and managing logistics for major hackathons.", linkedin: "#", mail: "hello@podevs.org" },
   { init: "RR", name: "Raguraman", role: "Video Editor", image: "/images/ragu.png", bio: "Ensuring every PODEVS event is a masterclass in student engagement and technical value.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "J", name: "Jayasurya", role: "Developer", image: "/images/jayasurya.png", bio: "Focused on building the next generation of technical tools for the PODEVS community.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "J", name: "Jayasurya", role: "Associate", image: "/images/jayasurya.png", bio: "Focused on building the next generation of technical tools for the PODEVS community.", linkedin: "#", mail: "hello@podevs.org" },
 ];
 
 function TeamCard({ member, onClick }: { member: typeof core[0]; onClick: () => void }) {
