@@ -3,17 +3,47 @@ import * as React from "react";
 import { Mail, MapPin, Clock, Send } from "lucide-react";
 
 const contactInfo = [
-  { icon: <Mail size={18} />, label: "Email", value: "hello@podevs.com" },
-  { icon: <MapPin size={18} />, label: "Location", value: "Chennai, Tamil Nadu" },
-  { icon: <Clock size={18} />, label: "Response Time", value: "Within 24–48 hours" },
+  { icon: <Mail size={18} />, label: "Email", value: "podevs.cmty@gmail.com", href: "mailto:podevs.cmty@gmail.com" },
+  { icon: <MapPin size={18} />, label: "Location", value: "Chennai, Tamil Nadu", href: "#" },
+  { icon: <Clock size={18} />, label: "Response Time", value: "Within 24–48 hours", href: "#" },
 ];
 
-const socials = ["LinkedIn", "YouTube", "Instagram"];
+const socials = [
+  { name: "LinkedIn", href: "https://linkedin.com/company/podevs" },
+  { name: "YouTube", href: "https://youtube.com/@podevs" },
+  { name: "Instagram", href: "https://instagram.com/podevs.cmty" },
+];
 
 const inputStyle: React.CSSProperties = { height: 42, padding: "0 14px", borderRadius: 8, border: "1px solid var(--border)", background: "var(--bg2)", color: "var(--text)", fontSize: "0.875rem", outline: "none", width: "100%", transition: "border-color 0.2s ease" };
 
 export default function ContactPage() {
-  const [done, setDone] = React.useState(false);
+  const [status, setStatus] = React.useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("sending");
+    
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/xoqogpze", {
+        method: "POST",
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      
+      if (response.ok) {
+        setStatus("success");
+        form.reset();
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      setStatus("error");
+    }
+  };
 
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
@@ -34,7 +64,7 @@ export default function ContactPage() {
               <h2 style={{ fontSize: "1.6rem", fontWeight: 700, letterSpacing: "-0.015em", marginBottom: 28 }}>Reach Out</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 36 }}>
                 {contactInfo.map((c) => (
-                  <div key={c.label} className="card-static" style={{ padding: "16px 18px", display: "flex", alignItems: "center", gap: 14 }}>
+                  <a key={c.label} href={c.href} className="card-static group" style={{ padding: "16px 18px", display: "flex", alignItems: "center", gap: 14, textDecoration: "none" }}>
                     <div style={{ 
                       width: 36, 
                       height: 36, 
@@ -51,15 +81,15 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p style={{ fontSize: "0.72rem", color: "var(--muted)", marginBottom: 2 }}>{c.label}</p>
-                      <p style={{ fontWeight: 600, fontSize: "0.9rem" }}>{c.value}</p>
+                      <p style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--text)" }}>{c.value}</p>
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
               <span className="section-label">Follow Us</span>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 12 }}>
                 {socials.map((s) => (
-                  <a key={s} href="#" style={{ padding: "6px 14px", borderRadius: 99, border: "1px solid var(--border)", fontSize: "0.8rem", color: "var(--muted)", transition: "color var(--trans), border-color var(--trans)" }} className="hover:text-[var(--orange)] hover:border-[var(--orange)]">{s}</a>
+                  <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" style={{ padding: "6px 14px", borderRadius: 99, border: "1px solid var(--border)", fontSize: "0.8rem", color: "var(--muted)", transition: "color var(--trans), border-color var(--trans)", textDecoration: "none" }} className="hover:text-[var(--orange)] hover:border-[var(--orange)]">{s.name}</a>
                 ))}
               </div>
             </div>
@@ -67,30 +97,43 @@ export default function ContactPage() {
             {/* Right */}
             <div className="card-static" style={{ padding: "36px 32px" }}>
               <h3 style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: 24 }}>Send a Message</h3>
-              <form style={{ display: "flex", flexDirection: "column", gap: 16 }} onSubmit={(e) => { e.preventDefault(); setDone(true); setTimeout(() => setDone(false), 3000); }}>
+              <form style={{ display: "flex", flexDirection: "column", gap: 16 }} onSubmit={handleSubmit}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                  {["Name", "Email"].map((label) => (
-                    <div key={label} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      <label style={{ fontSize: "0.78rem", fontWeight: 500, color: "var(--muted)" }}>{label}</label>
-                      <input type={label === "Email" ? "email" : "text"} placeholder={label === "Email" ? "your@email.com" : "Your name"} style={inputStyle} onFocus={(e) => e.target.style.borderColor = "var(--orange)"} onBlur={(e) => e.target.style.borderColor = "var(--border)"} />
-                    </div>
-                  ))}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    <label style={{ fontSize: "0.78rem", fontWeight: 500, color: "var(--muted)" }}>Name</label>
+                    <input name="name" required type="text" placeholder="Your name" style={inputStyle} onFocus={(e) => e.target.style.borderColor = "var(--orange)"} onBlur={(e) => e.target.style.borderColor = "var(--border)"} />
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    <label style={{ fontSize: "0.78rem", fontWeight: 500, color: "var(--muted)" }}>Email</label>
+                    <input name="email" required type="email" placeholder="your@email.com" style={inputStyle} onFocus={(e) => e.target.style.borderColor = "var(--orange)"} onBlur={(e) => e.target.style.borderColor = "var(--border)"} />
+                  </div>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <label style={{ fontSize: "0.78rem", fontWeight: 500, color: "var(--muted)" }}>Subject</label>
-                  <select style={{ ...inputStyle, appearance: "none" }}>
+                  <select name="subject" style={{ ...inputStyle, appearance: "none" }}>
                     {["General Inquiry", "Services / Pricing", "Workshop / Event", "Collaboration / Partnership", "Join the Team", "Other"].map((o) => <option key={o}>{o}</option>)}
                   </select>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <label style={{ fontSize: "0.78rem", fontWeight: 500, color: "var(--muted)" }}>Message</label>
-                  <textarea placeholder="Tell us what's on your mind..." rows={5} style={{ ...inputStyle, height: "auto", padding: "12px 14px", resize: "vertical" }} onFocus={(e) => e.target.style.borderColor = "var(--orange)"} onBlur={(e) => e.target.style.borderColor = "var(--border)"} />
+                  <textarea name="message" required placeholder="Tell us what's on your mind..." rows={5} style={{ ...inputStyle, height: "auto", padding: "12px 14px", resize: "vertical" }} onFocus={(e) => e.target.style.borderColor = "var(--orange)"} onBlur={(e) => e.target.style.borderColor = "var(--border)"} />
                 </div>
 
-                <button type="submit" className="btn-primary" style={{ width: "100%", justifyContent: "center", height: 44, background: done ? "#22c55e" : "var(--orange)" }}>
-                  {done ? "✓ Message Sent!" : <><Send size={15} /> Send Message</>}
+                <button 
+                  type="submit" 
+                  disabled={status === "sending"}
+                  className="btn-primary" 
+                  style={{ 
+                    width: "100%", 
+                    justifyContent: "center", 
+                    height: 44, 
+                    background: status === "success" ? "#22c55e" : status === "error" ? "#ef4444" : "var(--orange)",
+                    opacity: status === "sending" ? 0.7 : 1
+                  }}
+                >
+                  {status === "sending" ? "Sending..." : status === "success" ? "✓ Message Sent!" : status === "error" ? "✕ Error, try again" : <><Send size={15} /> Send Message</>}
                 </button>
               </form>
             </div>

@@ -6,15 +6,15 @@ import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const core = [
-  { init: "SR", name: "Sai Rohith", role: "Founder & CEO", image: "/images/sai.png", bio: "As CEO of PODEVS Community, I lead a growing student-driven tech ecosystem focused on empowering learners to build real-world skills.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "S", name: "Saran", role: "Co-founder & CTO", image: "/images/saran.png", bio: "Believes the best learning happens with other people. Runs our events, community, and partnerships.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "NS", name: "Nithin Srinivasan", role: "Strategist & Creator", image: "/images/nithin.png", bio: "I work at the intersection of ideas, strategy, and creative direction, shaping content that engages and grows the PODEVS Community.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "M", name: "Manoj", role: "Developer", image: "/images/manoj.png", bio: "Full Stack Developer experienced in React, Node.js, Python, and AWS. Passionate about scalable solutions and Gen AI.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "NN", name: "Nilofar Nisha", role: "Developer", image: "/images/nilofar.png", bio: "Computer Science student with skills in programming and AI. Passionate about emerging technologies.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "M", name: "Madhav", role: "Management Lead", image: "/images/madhav.png", bio: "I design the visual identity of PODEVS, ensuring our brand is consistent, engaging, and memorable.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "PD", name: "Priyadarshini", role: "Content creator", image: "/images/priya.png", bio: "Scaling the PODEVS mission to colleges nationwide and managing logistics for major hackathons.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "RR", name: "Raguraman", role: "Video Editor", image: "/images/ragu.png", bio: "Ensuring every PODEVS event is a masterclass in student engagement and technical value.", linkedin: "#", mail: "hello@podevs.org" },
-  { init: "J", name: "Jayasurya", role: "Associate", image: "/images/jayasurya.png", bio: "Focused on building the next generation of technical tools for the PODEVS community.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "SR", name: "Sai Rohith", role: "Founder & CEO", image: "/images/sai.png", bio: "Leading the vision of PODEVS to build a global, student-driven tech ecosystem. I focus on strategic growth and empowering the next generation of builders.", linkedin: "https://www.linkedin.com/in/sairohith-harinath-25846a245?utm_source=share_via&utm_content=profile&utm_medium=member_android", mail: "sairohith250704@gmail.com" },
+  { init: "S", name: "Saran", role: "Co-founder & CTO", image: "/images/saran.png", bio: "Driving the technical architecture and innovation at PODEVS. I ensure our platforms are scalable and our developer community has the best tools to grow.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "NS", name: "Nithin Srinivasan", role: "Strategist & Creator", image: "/images/nithin.png", bio: "Shaping the PODEVS brand through creative strategy and direction. I bridge the gap between complex ideas and engaging, community-focused content.", linkedin: "#", mail: "marvelnithin123@gmail.com" },
+  { init: "M", name: "Madhav", role: "Management Lead", image: "/images/madhav.png", bio: "Overseeing operational excellence and team coordination. I ensure that every PODEVS project moves from vision to execution with precision and impact.", linkedin: "https://www.linkedin.com/in/j-madhav23?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", mail: "madhavmadhav57907@gmail.com" },
+  { init: "M", name: "Manoj", role: "Developer", image: "/images/manoj.png", bio: "Full Stack Developer specializing in high-performance web applications. I focus on building robust, scalable solutions that power the PODEVS experience.", linkedin: "https://www.linkedin.com/in/manoj-m-mohan", mail: "m.manoj292607@gmail.com" },
+  { init: "NN", name: "Nilofar Nisha", role: "Developer", image: "/images/nilofar.png", bio: "Bringing technical ideas to life with a focus on AI and modern frontend frameworks. I'm passionate about writing clean, efficient, and user-centric code.", linkedin: "https://www.linkedin.com/in/s-nilofar-nisha1504/", mail: "snilofarnisha10amat@gmail.com" },
+  { init: "PD", name: "Priyadarshini", role: "Content creator", image: "/images/priya.png", bio: "Crafting the digital narrative of PODEVS. I create high-impact content that resonates with our community and highlights the builder journey.", linkedin: "#", insta: "https://instagram.com/priya_dharshini28", mail: "priyadharshinijp2512@gmail.com" },
+  { init: "RR", name: "Raguraman", role: "Video Editor", image: "/images/ragu.png", bio: "Transforming PODEVS moments into cinematic stories. I specialize in high-end video production that captures the energy and value of our workshops.", linkedin: "https://www.linkedin.com/in/raguraman-v-4264823b7?utm_source=share_via&utm_content=profile&utm_medium=member_android", mail: "raguramanv97@gmail.com" },
+  { init: "J", name: "Jayasurya", role: "Associate", image: "/images/jayasurya.png", bio: "Supporting strategic initiatives and operational workflows across the platform, ensuring every PODEVS project is delivered with excellence.", linkedin: "#", mail: "hello@podevs.org" },
 ];
 
 function TeamCard({ member, onClick }: { member: typeof core[0]; onClick: () => void }) {
@@ -185,11 +185,17 @@ export default function TeamPage() {
                   </p>
                 </div>
 
-                <div style={{ marginTop: "auto", display: "flex", gap: 12, paddingTop: 20 }}>
+                <div style={{ marginTop: "auto", display: "flex", flexWrap: "wrap", gap: 12, paddingTop: 20 }}>
                   <a href={selectedMember.linkedin} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ borderRadius: 14, padding: "10px 20px" }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                     LinkedIn
                   </a>
+                  {(selectedMember as any).insta && (
+                    <a href={(selectedMember as any).insta} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ borderRadius: 14, padding: "10px 20px" }}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                      Instagram
+                    </a>
+                  )}
                   <a href={`mailto:${selectedMember.mail}`} className="btn-outline" style={{ borderRadius: 14, padding: "10px 20px" }}>
                     <Mail size={18} />
                     Email
@@ -207,7 +213,8 @@ export default function TeamPage() {
           <div className="card p-12 md:p-20 text-center relative overflow-hidden" style={{ borderRadius: 32, background: "var(--bg2)", border: "1px solid var(--border)" }}>
              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "100%", background: "radial-gradient(circle at 50% 0%, rgba(255,138,0,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
              <h2 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 16, position: "relative" }}>Join the Mission</h2>
-             <p style={{ color: "var(--muted)", marginBottom: 32, fontSize: "1.05rem", maxWidth: 440, margin: "0 auto 32px", position: "relative" }}>Want to help shape the future of student-led tech education?</p>
+             <p style={{ color: "var(--muted)", marginBottom: 12, fontSize: "1.05rem", maxWidth: 440, margin: "0 auto 12px", position: "relative" }}>Want to help shape the future of student-led tech education?</p>
+             <p style={{ color: "var(--orange)", marginBottom: 32, fontSize: "0.9rem", fontWeight: 700, position: "relative" }}>podevs.cmty@gmail.com</p>
              <Link href="/contact" className="btn-primary" style={{ position: "relative" }}>Get In Touch</Link>
           </div>
         </div>
