@@ -14,6 +14,7 @@ const core = [
   { init: "M", name: "Madhav", role: "Graphic Designer", image: "/images/madhav.png", bio: "I design the visual identity of PODEVS, ensuring our brand is consistent, engaging, and memorable.", linkedin: "#", mail: "hello@podevs.org" },
   { init: "PD", name: "Priyadarshini", role: "Member", image: "/images/priya.png", bio: "Scaling the PODEVS mission to colleges nationwide and managing logistics for major hackathons.", linkedin: "#", mail: "hello@podevs.org" },
   { init: "RR", name: "Raguraman", role: "Video Editor", image: "/images/ragu.png", bio: "Ensuring every PODEVS event is a masterclass in student engagement and technical value.", linkedin: "#", mail: "hello@podevs.org" },
+  { init: "J", name: "Jayasurya", role: "Developer", image: "/images/jayasurya.png", bio: "Focused on building the next generation of technical tools for the PODEVS community.", linkedin: "#", mail: "hello@podevs.org" },
 ];
 
 function TeamCard({ member, onClick }: { member: typeof core[0]; onClick: () => void }) {
