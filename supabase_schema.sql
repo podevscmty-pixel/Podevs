@@ -52,9 +52,10 @@ CREATE TABLE events (
   location TEXT NOT NULL,
   price TEXT DEFAULT 'Free',
   start_time TIMESTAMP WITH TIME ZONE NOT NULL,
-  end_time TIMESTAMP WITH TIME ZONE,
+  end_time TIMESTAMP WITH TIME ZONE NOT NULL, -- Required for Ongoing/Past logic
   max_seats INTEGER,
   registration_link TEXT,
+  image_url TEXT, -- Added for event posters
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
@@ -65,7 +66,7 @@ ALTER TABLE events ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Events are viewable by everyone." ON events
   FOR SELECT USING (true);
 
--- Only admins can modify events (Requires you to set your role to 'admin' manually in the database)
+-- Only admins can modify events
 CREATE POLICY "Admins can insert events." ON events
   FOR INSERT WITH CHECK (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'));
 
@@ -75,8 +76,15 @@ CREATE POLICY "Admins can update events." ON events
 CREATE POLICY "Admins can delete events." ON events
   FOR DELETE USING (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'));
 
--- Insert some dummy events data
-INSERT INTO events (title, description, event_type, location, start_time, end_time, max_seats, registration_link) VALUES
-('Full-Stack Bootcamp: Next.js + Supabase', 'Build and deploy a full-stack app from scratch in one session. Perfect for beginners.', 'Workshop', 'Online (Zoom)', NOW() + INTERVAL '10 days', NOW() + INTERVAL '10 days 4 hours', 100, 'https://forms.google.com/...'),
-('BuildFast Hackathon — 24hr Sprint', 'Form a team, pick a problem, and ship a working product in 24 hours.', 'Hackathon', 'Chennai Campus', NOW() + INTERVAL '15 days', NOW() + INTERVAL '16 days', 300, 'https://lu.ma/...'),
-('DevTalks: Open Source & Your Career', 'Hear from engineers who started with open source contributions. Q&A session included.', 'Talk', 'Online (YouTube Live)', NOW() + INTERVAL '25 days', NOW() + INTERVAL '25 days 2 hours', NULL, NULL);
+-- Insert fresh sample events with correct logic
+-- 1. Ongoing Event (starts 1 hour ago, ends in 3 hours)
+INSERT INTO events (title, description, event_type, location, start_time, end_time, registration_link, image_url) VALUES
+('Live Student Builder Hackathon', '48 hours of pure building. Form teams, solve real-world problems, and win prizes. Join the livestream and get started now!', 'Hackathon', 'PODEVS Chennai Campus / Online', NOW() - INTERVAL '1 hour', NOW() + INTERVAL '3 hours', '#', 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop');
+
+-- 2. Upcoming Event (starts in 5 days)
+INSERT INTO events (title, description, event_type, location, start_time, end_time, registration_link, image_url) VALUES
+('Full-Stack Bootcamp: Next.js + Supabase', 'Build and deploy a full-stack app from scratch in one session. Perfect for beginners.', 'Workshop', 'Online (Zoom)', NOW() + INTERVAL '5 days', NOW() + INTERVAL '5 days 4 hours', 'https://forms.google.com/...', 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2062&auto=format&fit=crop');
+
+-- 3. Another Upcoming Event (starts in 12 days)
+INSERT INTO events (title, description, event_type, location, start_time, end_time, registration_link, image_url) VALUES
+('DevTalks: Open Source & Your Career Path', 'Hear from engineers who started with open source contributions. Q&A session included.', 'Talk', 'Online (YouTube Live)', NOW() + INTERVAL '12 days', NOW() + INTERVAL '12 days 2 hours', '#', 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop');

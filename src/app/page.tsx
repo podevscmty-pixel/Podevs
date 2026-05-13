@@ -9,6 +9,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { ScrambleText } from "@/components/ui/scramble-text";
+import { supabase } from "@/lib/supabase";
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
@@ -51,54 +52,102 @@ const testimonials = [
   { name: "Karthik S.", role: "Open Source Contributor", text: "The hackathons pushed me out of my comfort zone. I landed my first internship thanks to the portfolio I built here.", avatar: "KS" },
 ];
 
-const events = [
-  { day: "15", mo: "JUN", type: "Workshop", title: "Full-Stack Bootcamp: Next.js + Supabase", time: "2:00 PM IST", location: "Online", price: "Free" },
-  { day: "22", mo: "JUN", type: "Hackathon", title: "BuildFast Hackathon — 24hr Sprint", time: "All Day", location: "Chennai", price: "₹99" },
-  { day: "01", mo: "JUL", type: "Talk", title: "DevTalks: Open Source & Your Career Path", time: "6:00 PM IST", location: "Online", price: "Free" },
-];
-
 const videos = [
   { id: "v1", title: "Introduction to Web Development", views: "12K views · 2 weeks ago" },
   { id: "v2", title: "React Hooks Explained Simply", views: "8.4K views · 1 month ago" },
   { id: "v3", title: "Deploy Your First App on Vercel", views: "5.2K views · 2 months ago" },
 ];
 
-import { supabase } from "@/lib/supabase";
+function EventsPreview() {
+  const [upcomingEvents, setUpcomingEvents] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const { data } = await supabase.from('events').select('*').order('created_at', { ascending: false });
+        if (data) {
+          // Reflection Logic: Mirror the 'status' column
+          const filtered = data.filter((e: any) => e.status === 'upcoming');
+          setUpcomingEvents(filtered.slice(0, 3));
+        }
+      } catch (err) {
+        console.warn("Error fetching events:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEvents();
+  }, []);
+
+  if (loading) return null;
+
+  return (
+    <Section style={{ padding: "var(--section-gap) 0" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12, marginBottom: 36 }}>
+          <div>
+            <Reveal><span className="section-label">Upcoming</span></Reveal>
+            <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>Events & Hackathons</h2></Reveal>
+          </div>
+          <Reveal><Link href="/events" className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 18px" }}>View All →</Link></Reveal>
+        </div>
+
+        {upcomingEvents.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "40px", background: "var(--bg2)", borderRadius: 16, border: "1px dashed var(--border)" }}>
+            <p style={{ color: "var(--muted)" }}>No upcoming events right now. Check back soon!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {upcomingEvents.map((ev, i) => (
+              <Reveal key={ev.id} delay={i * 0.07}>
+                <SpotlightCard style={{ padding: "28px", display: "flex", flexDirection: "column", height: "100%" }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "28px" }}>
+                    <div style={{ width: 52, height: 52, borderRadius: 12, background: "rgba(255,138,0,0.08)", border: "1px solid rgba(255,138,0,0.18)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <span style={{ fontWeight: 800, fontSize: "1.1rem", color: "var(--orange)", lineHeight: 1 }}>{ev.day || ev.date?.split(' ')[0] || "01"}</span>
+                      <span style={{ fontSize: 9, color: "var(--orange)", fontFamily: "monospace", letterSpacing: "0.05em", marginTop: 2 }}>{ev.mo || ev.date?.split(' ')[1] || "JUN"}</span>
+                    </div>
+                    <span className="tag" style={{ marginTop: 2 }}>{ev.event_type}</span>
+                  </div>
+                  {ev.image_url && (
+                    <div style={{ position: "relative", width: "100%", height: 220, borderRadius: 12, overflow: "hidden", marginBottom: 20, background: "rgba(0,0,0,0.2)" }}>
+                      <img src={`${ev.image_url}?v=${ev.id}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                    </div>
+                  )}
+                  <div style={{ marginBottom: "20px" }}>
+                    <h3 style={{ fontWeight: 600, fontSize: "1rem", lineHeight: 1.4 }}>{ev.title}</h3>
+                  </div>
+                  <div style={{ display: "flex", columnGap: 16, rowGap: 8, flexWrap: "wrap", marginBottom: "28px" }}>
+                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}><Calendar size={12} />{ev.time || "TBD"}</span>
+                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}>📍 {ev.location}</span>
+                  </div>
+                  <div style={{ marginTop: "auto" }}>
+                    <Link href={ev.registration_link || "/events"} className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "0.85rem", padding: "12px 18px", borderRadius: "10px" }}>Register</Link>
+                  </div>
+                </SpotlightCard>
+              </Reveal>
+            ))}
+          </div>
+        )}
+      </div>
+    </Section>
+  );
+}
 
 function OngoingEventHighlight() {
   const [ongoingEvent, setOngoingEvent] = React.useState<any | null>(null);
 
-  const fallbackOngoingEvent = {
-    id: "demo-ongoing",
-    title: "Live Student Builder Hackathon",
-    description: "48 hours of pure building. Form teams, solve real-world problems, and win prizes. Join the livestream and get started now!",
-    start_time: new Date(Date.now() - 3600000).toISOString(), // Started 1 hour ago
-    end_time: new Date(Date.now() + 86400000 * 2).toISOString(), // Ends in 2 days
-    location: "PODEVS Chennai Campus / Online",
-    registration_link: "#",
-  };
-
   useEffect(() => {
     async function fetchOngoing() {
       try {
-        const { data, error } = await supabase.from('events').select('*');
-        if (data && data.length > 0) {
-          const now = new Date();
-          const ongoing = data.filter((e: any) => {
-            const start = new Date(e.start_time);
-            const end = e.end_time ? new Date(e.end_time) : new Date(start.getTime() + 4 * 60 * 60 * 1000);
-            return start <= now && end >= now;
-          });
-          if (ongoing.length > 0) {
-            setOngoingEvent(ongoing[0]);
-            return;
-          }
+        const { data } = await supabase.from('events').select('*');
+        if (data) {
+          // Reflection Logic: Mirror the 'status' column
+          const ongoing = data.filter((e: any) => e.status === 'ongoing');
+          if (ongoing.length > 0) setOngoingEvent(ongoing[0]);
         }
-        // If no data or no ongoing events, set fallback for preview
-        setOngoingEvent(fallbackOngoingEvent);
       } catch (err) {
         console.warn("Error fetching ongoing event:", err);
-        setOngoingEvent(fallbackOngoingEvent);
       }
     }
     fetchOngoing();
@@ -106,37 +155,46 @@ function OngoingEventHighlight() {
 
   if (!ongoingEvent) return null;
 
-  const formatTime = (dateString: string) => new Date(dateString).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
   return (
     <Section style={{ padding: "var(--section-gap) 0" }}>
       <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-        <SpotlightCard className="p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center border border-[var(--orange)] relative overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.05)" }}>
+        <SpotlightCard className="p-8 md:p-12 border border-[var(--orange)] relative overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.05)" }}>
           <div style={{ position: "absolute", top: -50, right: -50, width: 200, height: 200, background: "radial-gradient(circle, rgba(255,138,0,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
-          <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
-              </span>
-              <span className="section-label" style={{ marginBottom: 0, color: "var(--orange)" }}>Happening Now</span>
+          
+          <div className="flex flex-col md:flex-row gap-10 items-center justify-between">
+            <div style={{ flex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+                </span>
+                <span className="section-label" style={{ marginBottom: 0, color: "var(--orange)" }}>Happening Now</span>
+              </div>
+              <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, lineHeight: 1.2, marginBottom: 16 }}>{ongoingEvent.title}</h2>
+              <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 500, marginBottom: 24 }}>{ongoingEvent.description}</p>
+              
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginBottom: 32 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text)", fontWeight: 600 }}>
+                  <Calendar size={18} color="var(--orange)" />
+                  {ongoingEvent.date} | {ongoingEvent.time}
+                </div>
+                <span style={{ fontSize: "0.85rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 6 }}>📍 {ongoingEvent.location}</span>
+              </div>
+
+              <Link 
+                href={ongoingEvent.registration_link || "/events"} 
+                className="btn-primary" 
+                style={{ padding: "16px 36px", fontSize: "1.05rem", display: "inline-flex", boxShadow: "0 0 25px rgba(255,138,0,0.3)" }}
+              >
+                Join the Event Now →
+              </Link>
             </div>
-            <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, lineHeight: 1.2, marginBottom: 16 }}>{ongoingEvent.title}</h2>
-            <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 500 }}>{ongoingEvent.description}</p>
-          </div>
-          <div className="flex-shrink-0 flex flex-col gap-3 w-full md:w-auto">
-            <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text)", fontWeight: 600 }}>
-              <Calendar size={18} color="var(--orange)" />
-              {formatTime(ongoingEvent.start_time)} - {ongoingEvent.end_time ? formatTime(ongoingEvent.end_time) : 'TBD'}
-            </div>
-            <Link 
-              href={ongoingEvent.registration_link ? ongoingEvent.registration_link : `/events/${ongoingEvent.id}`}
-              target={ongoingEvent.registration_link ? "_blank" : undefined}
-              className="btn-primary" 
-              style={{ padding: "16px 32px", fontSize: "1.05rem", justifyContent: "center", boxShadow: "0 0 20px rgba(255,138,0,0.4)" }}
-            >
-              Join the Event
-            </Link>
+
+            {ongoingEvent.image_url && (
+              <div style={{ position: "relative", width: "100%", maxWidth: 460, aspectRatio: "16/9", borderRadius: 20, overflow: "hidden", flexShrink: 0, boxShadow: "0 20px 40px rgba(0,0,0,0.3)", border: "1px solid rgba(255,138,0,0.2)", background: "rgba(0,0,0,0.3)" }}>
+                <img src={`${ongoingEvent.image_url}?v=${ongoingEvent.id}`} alt={ongoingEvent.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+              </div>
+            )}
           </div>
         </SpotlightCard>
       </div>
@@ -171,31 +229,30 @@ export default function HomePage() {
       {/* HERO SECTION */}
       <section style={{ paddingTop: "calc(var(--nav-h) + 32px)", paddingBottom: 80, position: "relative", overflow: "hidden" }}>
         <div className="hero-gradient" />
-        
-        {/* Animated Network Background - Dual Layer for Wave + Parallax */}
-        <motion.div 
-          style={{ 
-            position: "absolute", 
-            inset: -60, 
+
+        <motion.div
+          style={{
+            position: "absolute",
+            inset: -60,
             zIndex: 0,
             pointerEvents: "none",
             mixBlendMode: theme === "dark" ? "screen" : "multiply",
           }}
-          animate={{ 
+          animate={{
             x: [0, 20, -20, 15, -15, 0],
             y: [0, -15, 15, -10, 10, 0],
             rotate: [0, 0.5, -0.5, 0.3, -0.3, 0],
           }}
-          transition={{ 
-            duration: 25, 
-            repeat: Infinity, 
-            ease: "linear" 
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
           }}
         >
-          <motion.img 
+          <motion.img
             key={theme}
             src={theme === "dark" ? "/images/hero-network.png" : "/images/white.png"}
-            style={{ 
+            style={{
               width: "100%",
               height: "100%",
               objectFit: "cover",
@@ -206,33 +263,33 @@ export default function HomePage() {
               mixBlendMode: theme === "dark" ? "color-dodge" : "multiply",
             }}
             initial={{ opacity: 0 }}
-            animate={{ 
+            animate={{
               opacity: theme === "dark" ? [0.8, 1, 0.9, 1, 0.8] : [0.6, 0.8, 0.7, 0.8, 0.6]
             }}
-            transition={{ 
-              duration: 10, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
             }}
           />
         </motion.div>
 
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px", textAlign: "left", position: "relative", zIndex: 1 }}>
           <div className="max-w-[720px] lg:max-w-[800px]">
-            <motion.div 
-              style={{ 
-                marginBottom: 28, 
-                display: "inline-flex", 
-                alignItems: "center", 
-                gap: 8, 
-                padding: "6px 14px", 
-                borderRadius: 100, 
-                background: "rgba(255, 138, 0, 0.08)", 
+            <motion.div
+              style={{
+                marginBottom: 28,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "6px 14px",
+                borderRadius: 100,
+                background: "rgba(255, 138, 0, 0.08)",
                 border: "1px solid rgba(255, 138, 0, 0.2)",
                 backdropFilter: "blur(10px)"
               }}
-              initial={{ opacity: 0, y: -10 }} 
-              animate={{ opacity: 1, y: 0 }} 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--orange)", boxShadow: "0 0 8px var(--orange)" }} />
@@ -240,18 +297,18 @@ export default function HomePage() {
                 Student-First EdTech Platform
               </span>
             </motion.div>
-            
+
             <motion.h1
-              style={{ 
-                fontSize: "clamp(3rem, 7vw, 5rem)", 
-                fontWeight: 900, 
-                lineHeight: 0.95, 
-                letterSpacing: "-0.05em", 
+              style={{
+                fontSize: "clamp(3rem, 7vw, 5rem)",
+                fontWeight: 900,
+                lineHeight: 0.95,
+                letterSpacing: "-0.05em",
                 marginBottom: 32,
                 color: theme === "dark" ? "#fff" : "#000"
               }}
-              initial={{ opacity: 0, y: 30 }} 
-              animate={{ opacity: 1, y: 0 }} 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               <ScrambleText text="Learn Skills." delay={0.2} /><br />
@@ -271,7 +328,6 @@ export default function HomePage() {
               <Link href="/services" className="btn-outline">💼 Get a Website Built</Link>
             </motion.div>
 
-            {/* Stats */}
             <motion.div
               className="flex flex-wrap gap-6 md:gap-10 mt-8 pt-6 border-t border-[var(--border)]"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.5 }}
@@ -297,23 +353,9 @@ export default function HomePage() {
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <Reveal>
-              <div 
-                style={{ 
-                  marginBottom: 20, 
-                  display: "inline-flex", 
-                  alignItems: "center", 
-                  gap: 8, 
-                  padding: "4px 12px", 
-                  borderRadius: 100, 
-                  background: "rgba(255, 138, 0, 0.05)", 
-                  border: "1px solid rgba(255, 138, 0, 0.15)",
-                  margin: "0 auto"
-                }}
-              >
+              <div style={{ marginBottom: 20, display: "inline-flex", alignItems: "center", gap: 8, padding: "4px 12px", borderRadius: 100, background: "rgba(255, 138, 0, 0.05)", border: "1px solid rgba(255, 138, 0, 0.15)", margin: "0 auto" }}>
                 <div style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--orange)" }} />
-                <span style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--orange)" }}>
-                  What We Do
-                </span>
+                <span style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--orange)" }}>What We Do</span>
               </div>
             </Reveal>
             <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 850, letterSpacing: "-0.03em", marginBottom: 16 }}>Everything You Need to Grow</h2></Reveal>
@@ -326,9 +368,7 @@ export default function HomePage() {
                   <div style={{ width: 48, height: 48, borderRadius: 12, background: p.color, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--orange)" }}>{p.icon}</div>
                   <h3 style={{ fontSize: "1.2rem", fontWeight: 700 }}>{p.title}</h3>
                   <p style={{ color: "var(--muted)", fontSize: "0.9rem", lineHeight: 1.7, flex: 1 }}>{p.body}</p>
-                  <Link href={p.href} style={{ color: "var(--orange)", fontSize: "0.85rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}>
-                    Explore <ArrowRight size={13} />
-                  </Link>
+                  <Link href={p.href} style={{ color: "var(--orange)", fontSize: "0.85rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}>Explore <ArrowRight size={13} /></Link>
                 </SpotlightCard>
               </Reveal>
             ))}
@@ -338,7 +378,7 @@ export default function HomePage() {
 
       <div className="section-divider" />
 
-      {/* ── WHY CHOOSE PODEVS ────────────────────── */}
+      {/* WHY CHOOSE SECTION */}
       <Section style={{ padding: "var(--section-gap) 0" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -346,9 +386,7 @@ export default function HomePage() {
               <Reveal><span className="section-label">Why PODEVS</span></Reveal>
               <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 14 }}>Built Different.<br />Built for Students.</h2></Reveal>
               <Reveal delay={0.1}><p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.75, marginBottom: 32, maxWidth: 440 }}>Unlike traditional courses, PODEVS focuses on real outcomes — projects you can show, skills you can use, and a network that supports you.</p></Reveal>
-              <Reveal delay={0.15}>
-                <Link href="/about" className="btn-primary" style={{ fontSize: "0.85rem" }}>Learn More <ArrowRight size={14} /></Link>
-              </Reveal>
+              <Reveal delay={0.15}><Link href="/about" className="btn-primary" style={{ fontSize: "0.85rem" }}>Learn More <ArrowRight size={14} /></Link></Reveal>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((b, i) => (
@@ -367,7 +405,7 @@ export default function HomePage() {
 
       <div className="section-divider" />
 
-      {/* ── TESTIMONIALS / SOCIAL PROOF ──────────── */}
+      {/* TESTIMONIALS SECTION */}
       <Section style={{ padding: "var(--section-gap) 0" }} className="section-glow">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
@@ -397,14 +435,13 @@ export default function HomePage() {
 
       <div className="section-divider" />
 
-      {/* ── FEATURE HIGHLIGHT (Skill Roadmap) ───────── */}
+      {/* ROADMAP SECTION */}
       <Section style={{ padding: "var(--section-gap) 0" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div style={{ order: 2 }} className="lg:order-1">
               <Reveal>
                 <div style={{ position: "relative", padding: "40px", background: "var(--bg2)", borderRadius: "var(--radius)", border: "1px solid var(--border)", boxShadow: "0 20px 40px rgba(0,0,0,0.05)" }}>
-                  <div style={{ position: "absolute", top: -20, right: -20, width: 100, height: 100, background: "radial-gradient(circle, rgba(255,138,0,0.15) 0%, transparent 70%)" }} />
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     {[
                       { step: 1, title: "Fundamentals", desc: "HTML, CSS, JavaScript basics." },
@@ -431,9 +468,7 @@ export default function HomePage() {
               <Reveal><span className="section-label">Skill Roadmaps</span></Reveal>
               <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 14 }}>A Clear Path to Proficiency</h2></Reveal>
               <Reveal delay={0.1}><p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.75, marginBottom: 32, maxWidth: 440 }}>Stop wondering what to learn next. Our curated roadmaps guide you step-by-step from beginner to full-stack developer.</p></Reveal>
-              <Reveal delay={0.15}>
-                <Link href="/what-we-do" className="btn-primary" style={{ fontSize: "0.85rem" }}>Explore Roadmaps <ArrowRight size={14} /></Link>
-              </Reveal>
+              <Reveal delay={0.15}><Link href="/what-we-do" className="btn-primary" style={{ fontSize: "0.85rem" }}>Explore Roadmaps <ArrowRight size={14} /></Link></Reveal>
             </div>
           </div>
         </div>
@@ -445,54 +480,11 @@ export default function HomePage() {
       <OngoingEventHighlight />
 
       {/* ── EVENTS PREVIEW ───────────────────────── */}
-      <Section style={{ padding: "var(--section-gap) 0" }}>
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12, marginBottom: 36 }}>
-            <div>
-              <Reveal><span className="section-label">Upcoming</span></Reveal>
-              <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>Events & Hackathons</h2></Reveal>
-            </div>
-            <Reveal><Link href="/events" className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 18px" }}>View All →</Link></Reveal>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((ev, i) => (
-              <Reveal key={ev.title} delay={i * 0.07}>
-                <SpotlightCard style={{ padding: "28px", display: "flex", flexDirection: "column", height: "100%" }}>
-                  {/* 1. Header: Date & Tag */}
-                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "28px" }}>
-                    <div style={{ width: 52, height: 52, borderRadius: 12, background: "rgba(255,138,0,0.08)", border: "1px solid rgba(255,138,0,0.18)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <span style={{ fontWeight: 800, fontSize: "1.1rem", color: "var(--orange)", lineHeight: 1 }}>{ev.day}</span>
-                      <span style={{ fontSize: 9, color: "var(--orange)", fontFamily: "monospace", letterSpacing: "0.05em", marginTop: 2 }}>{ev.mo}</span>
-                    </div>
-                    <span className="tag" style={{ marginTop: 2 }}>{ev.type}</span>
-                  </div>
-                  
-                  {/* 2. Content: Title */}
-                  <div style={{ marginBottom: "20px" }}>
-                    <h3 style={{ fontWeight: 600, fontSize: "1rem", lineHeight: 1.4 }}>{ev.title}</h3>
-                  </div>
-
-                  {/* 3. Meta Info: Icons */}
-                  <div style={{ display: "flex", columnGap: 16, rowGap: 8, flexWrap: "wrap", marginBottom: "28px" }}>
-                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}><Calendar size={12} />{ev.time}</span>
-                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}>📍 {ev.location}</span>
-                    <span style={{ fontSize: "0.8rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}>🎟 {ev.price}</span>
-                  </div>
-
-                  {/* 4. Button: Pinned to bottom */}
-                  <div style={{ marginTop: "auto" }}>
-                    <Link href="/events" className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "0.85rem", padding: "12px 18px", borderRadius: "10px" }}>Register</Link>
-                  </div>
-                </SpotlightCard>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
+      <EventsPreview />
 
       <div className="section-divider" />
 
-      {/* ── YOUTUBE PREVIEW ──────────────────────── */}
+      {/* YOUTUBE SECTION */}
       <Section style={{ padding: "var(--section-gap) 0" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 12, marginBottom: 36 }}>
@@ -507,9 +499,9 @@ export default function HomePage() {
               <Reveal key={v.id} delay={i * 0.07}>
                 <SpotlightCard style={{ overflow: "hidden" }}>
                   <div style={{ position: "relative", aspectRatio: "16/9", background: "var(--bg2)", overflow: "hidden" }}>
-                    <Image src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`} alt={v.title} fill sizes="(max-width: 768px) 100vw, 33vw" style={{ objectFit: "cover", transition: "transform 0.4s ease" }} />
+                    <Image src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`} alt={v.title} fill sizes="(max-width: 768px) 100vw, 33vw" style={{ objectFit: "cover" }} />
                     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.3)" }}>
-                      <div style={{ width: 48, height: 48, borderRadius: "50%", background: "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(255,138,0,0.3)" }}>
+                      <div style={{ width: 48, height: 48, borderRadius: "50%", background: "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5l10 5.5-10 5.5V2.5z" fill="#fff" /></svg>
                       </div>
                     </div>
@@ -525,22 +517,16 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ── FINAL CTA ────────────────────────────── */}
+      {/* FINAL CTA */}
       <Section style={{ padding: "0 24px var(--section-gap)" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
           <Reveal>
-            <motion.div
-              className="card-static p-10 md:p-20 text-center relative overflow-hidden"
-            >
+            <motion.div className="card-static p-10 md:p-20 text-center relative overflow-hidden">
               <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 0%, rgba(255,138,0,0.06) 0%, transparent 60%)", pointerEvents: "none" }} />
               <div style={{ position: "relative", zIndex: 1 }}>
                 <span className="tag" style={{ marginBottom: 20 }}>The Smile of Education</span>
-                <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 16, marginTop: 16 }}>
-                  Ready to Start Your Builder Journey?
-                </h2>
-                <p style={{ color: "var(--muted)", fontSize: "1rem", marginBottom: 36, maxWidth: 460, margin: "0 auto 36px", lineHeight: 1.7 }}>
-                  Join 2,000+ students already learning, building, and launching with PODEVS — completely free to start.
-                </p>
+                <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 16, marginTop: 16 }}>Ready to Start Your Builder Journey?</h2>
+                <p style={{ color: "var(--muted)", fontSize: "1rem", marginBottom: 36, maxWidth: 460, margin: "0 auto 36px", lineHeight: 1.7 }}>Join 2,000+ students already learning, building, and launching with PODEVS — completely free to start.</p>
                 <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
                   <a href="https://linkedin.com/company/podevs" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ textDecoration: "none" }}>Join Us on LinkedIn <ArrowRight size={15} /></a>
                   <Link href="/about" className="btn-outline">Learn About Us</Link>

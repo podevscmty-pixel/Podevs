@@ -20,7 +20,7 @@ const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 );
 
 type Event = {
-  id: number;
+  id: string | number;
   title: string;
   description: string;
   event_type: string;
@@ -34,7 +34,7 @@ type Event = {
 };
 
 export default function EventsClient({ events }: { events: Event[] }) {
-  // Filter by status field from DB
+  // Reflection Logic: Mirror the 'status' column from DB
   const ongoing = events.filter((e) => e.status === "ongoing");
   const upcoming = events.filter((e) => e.status === "upcoming");
   const past = events.filter((e) => e.status === "past");
@@ -73,11 +73,10 @@ export default function EventsClient({ events }: { events: Event[] }) {
               {ongoing.map((ev, i) => (
                 <Reveal key={ev.id} delay={i * 0.1}>
                   <SpotlightCard className="flex flex-col h-full border border-[var(--orange)] overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.03)", padding: 0 }}>
-                    {/* Poster image */}
                     {ev.image_url && (
-                      <div style={{ position: "relative", width: "100%", height: 400, flexShrink: 0 }}>
-                        <Image src={ev.image_url} alt={ev.title} fill style={{ objectFit: "cover" }} />
-                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%)" }} />
+                      <div style={{ position: "relative", width: "100%", height: 400, flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
+                        <img src={`${ev.image_url}?v=${ev.id}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.4) 100%)", pointerEvents: "none" }} />
                         <span className="tag" style={{ position: "absolute", top: 16, right: 16, background: "var(--orange)", color: "#fff", padding: "6px 14px" }}>{ev.event_type}</span>
                       </div>
                     )}
@@ -90,7 +89,6 @@ export default function EventsClient({ events }: { events: Event[] }) {
                       <Link 
                         href={ev.registration_link ?? `/events/${ev.id}`}
                         target={ev.registration_link ? "_blank" : undefined}
-                        rel={ev.registration_link ? "noopener noreferrer" : undefined}
                         className="hover:text-[var(--orange)] transition-colors inline-block"
                       >
                         <h3 style={{ fontWeight: 800, fontSize: "1.75rem", lineHeight: 1.3, marginBottom: 12 }}>{ev.title}</h3>
@@ -104,7 +102,6 @@ export default function EventsClient({ events }: { events: Event[] }) {
                       <Link
                         href={ev.registration_link ?? `/events/${ev.id}`}
                         target={ev.registration_link ? "_blank" : undefined}
-                        rel={ev.registration_link ? "noopener noreferrer" : undefined}
                         className="btn-primary"
                         style={{ width: "100%", justifyContent: "center", fontSize: "1rem", padding: "16px 24px", borderRadius: "12px", boxShadow: "0 0 20px rgba(255,138,0,0.4)" }}
                       >
@@ -137,9 +134,9 @@ export default function EventsClient({ events }: { events: Event[] }) {
               <Reveal key={ev.id} delay={i * 0.1}>
                 <SpotlightCard className="flex flex-col h-full overflow-hidden" style={{ padding: 0 }}>
                   {ev.image_url && (
-                    <div style={{ position: "relative", width: "100%", height: 280, flexShrink: 0 }}>
-                      <Image src={ev.image_url} alt={ev.title} fill style={{ objectFit: "cover" }} />
-                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 100%)" }} />
+                    <div style={{ position: "relative", width: "100%", height: 280, flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
+                      <img src={`${ev.image_url}?v=${ev.id}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.2) 100%)", pointerEvents: "none" }} />
                     </div>
                   )}
                   <div style={{ padding: "28px 32px 32px", display: "flex", flexDirection: "column", flex: 1 }}>
@@ -149,7 +146,6 @@ export default function EventsClient({ events }: { events: Event[] }) {
                     <Link 
                       href={ev.registration_link ?? `/events/${ev.id}`}
                       target={ev.registration_link ? "_blank" : undefined}
-                      rel={ev.registration_link ? "noopener noreferrer" : undefined}
                       className="hover:text-[var(--orange)] transition-colors"
                     >
                       <h3 style={{ fontWeight: 700, fontSize: "1.25rem", lineHeight: 1.4, marginBottom: 12 }}>{ev.title}</h3>
@@ -164,7 +160,6 @@ export default function EventsClient({ events }: { events: Event[] }) {
                       <Link
                         href={ev.registration_link ?? `/events/${ev.id}`}
                         target={ev.registration_link ? "_blank" : undefined}
-                        rel={ev.registration_link ? "noopener noreferrer" : undefined}
                         className="btn-primary"
                         style={{ width: "100%", justifyContent: "center", fontSize: "0.9rem", padding: "14px 24px", borderRadius: "12px" }}
                       >
