@@ -7,12 +7,30 @@ import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
 
-const navLinks = [
+import { ChevronDown } from "lucide-react";
+
+type NavLink = {
+  label: string;
+  href?: string;
+  subItems?: { label: string; href: string }[];
+};
+
+const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "What We Do", href: "/what-we-do" },
+  { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Our Works", href: "/projects" },
   { label: "Events", href: "/events" },
+  {
+    label: "Explore",
+    subItems: [
+      { label: "Roadmaps", href: "/roadmaps" },
+      { label: "YouTube Media", href: "/media" },
+      { label: "Medium Articles", href: "/medium" },
+      { label: "Podcast", href: "/podcast" },
+      { label: "Newsletter", href: "/blog" },
+    ]
+  },
   { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ];
@@ -56,13 +74,57 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-2">
+          <nav className="hidden md:flex items-center gap-2 relative">
             {navLinks.map((l) => {
+              if (l.subItems) {
+                return (
+                  <div key={l.label} className="relative group">
+                    <button
+                      style={{
+                        padding: "8px 12px",
+                        fontSize: "0.85rem",
+                        fontWeight: 500,
+                        color: "var(--muted)",
+                        transition: "color var(--trans)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      className="hover:text-[var(--text)]"
+                    >
+                      {l.label}
+                      <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
+                    </button>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 p-2 flex flex-col gap-1">
+                      {l.subItems.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          style={{
+                            padding: "10px 12px",
+                            fontSize: "0.85rem",
+                            color: "var(--muted)",
+                            borderRadius: 8,
+                            transition: "all var(--trans)",
+                          }}
+                          className="hover:text-[var(--orange)] hover:bg-[rgba(255,138,0,0.05)]"
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+
               const isActive = pathname === l.href;
               return (
                 <Link
                   key={l.href}
-                  href={l.href}
+                  href={l.href!}
                   style={{
                     padding: "8px 12px",
                     fontSize: "0.85rem",
@@ -130,16 +192,38 @@ export default function Navbar() {
             style={{ position: "fixed", top: "var(--nav-h)", left: 0, right: 0, zIndex: 40, background: "var(--bg)", borderBottom: "1px solid var(--border)", padding: "12px 16px", display: "flex", flexDirection: "column", gap: 4, backdropFilter: "blur(16px)" }}
             className="md:hidden"
           >
-            {navLinks.map((l, i) => (
-              <motion.div
-                key={l.href}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.04, duration: 0.2 }}
-              >
-                <Link href={l.href} style={{ padding: "12px 14px", borderRadius: 8, fontSize: "0.95rem", fontWeight: 500, color: pathname === l.href ? "var(--text)" : "var(--muted)", background: pathname === l.href ? "var(--bg2)" : "transparent", display: "block" }}>{l.label}</Link>
-              </motion.div>
-            ))}
+            {navLinks.map((l, i) => {
+              if (l.subItems) {
+                return (
+                  <motion.div
+                    key={l.label}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.04, duration: 0.2 }}
+                  >
+                    <div style={{ padding: "12px 14px", fontSize: "0.95rem", fontWeight: 600, color: "var(--text)" }}>{l.label}</div>
+                    <div className="flex flex-col gap-2 pl-4 border-l border-[var(--border)] ml-4">
+                      {l.subItems.map(sub => (
+                        <Link key={sub.href} href={sub.href} style={{ padding: "8px 12px", borderRadius: 8, fontSize: "0.9rem", color: pathname === sub.href ? "var(--text)" : "var(--muted)", background: pathname === sub.href ? "var(--bg2)" : "transparent", display: "block" }}>
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                );
+              }
+
+              return (
+                <motion.div
+                  key={l.href}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04, duration: 0.2 }}
+                >
+                  <Link href={l.href!} style={{ padding: "12px 14px", borderRadius: 8, fontSize: "0.95rem", fontWeight: 500, color: pathname === l.href ? "var(--text)" : "var(--muted)", background: pathname === l.href ? "var(--bg2)" : "transparent", display: "block" }}>{l.label}</Link>
+                </motion.div>
+              );
+            })}
             <div style={{ marginTop: 8, paddingTop: 12, borderTop: "1px solid var(--border)" }}>
               <a
                 href="https://linkedin.com/company/podevs"

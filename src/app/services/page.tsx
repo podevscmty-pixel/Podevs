@@ -65,10 +65,10 @@ export default function ServicesPage() {
   const basePrice = 2499;
   
   const estimatorItems = [
-    { id: 1, label: "Additional Pages (x5)", price: "₹999", value: 999 },
+    { id: 1, label: "Additional Pages", price: "₹699", value: 699 },
     { id: 2, label: "Custom Animations", price: "₹499", value: 499 },
-    { id: 3, label: "Contact Form Integration", price: "₹299", value: 299 },
-    { id: 4, label: "CMS / Admin Dashboard", price: "₹1,999", value: 1999 },
+    { id: 3, label: "Contact Form Integration", price: "₹199", value: 199 },
+    { id: 4, label: "CMS / Admin Dashboard", price: "₹1,499", value: 1499 },
   ];
 
   const toggleAddon = (value: number) => {

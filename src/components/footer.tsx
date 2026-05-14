@@ -3,21 +3,23 @@ import { Logo } from "@/components/logo";
 
 const col1 = [
   { label: "About", href: "/about" },
-  { label: "What We Do", href: "/what-we-do" },
+  { label: "Roadmaps", href: "/roadmaps" },
   { label: "Team", href: "/team" },
-  { label: "Blog", href: "/blog" },
+  { label: "Newsletter", href: "/blog" },
 ];
 const col2 = [
   { label: "Events", href: "/events" },
+  { label: "Podcast", href: "/podcast" },
   { label: "Media", href: "/media" },
+  { label: "Medium", href: "/medium" },
   { label: "Join Us", href: "https://linkedin.com/company/podevs" },
-  { label: "Contact", href: "/contact" },
 ];
 const col3 = [
   { label: "Web Development", href: "/services" },
   { label: "Deployment", href: "/services" },
   { label: "Hosting", href: "/services" },
   { label: "Design (Figma)", href: "/services" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Footer() {

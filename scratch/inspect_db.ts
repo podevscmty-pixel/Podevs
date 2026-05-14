@@ -1,4 +1,4 @@
-import { supabase } from "./src/lib/supabase";
+import { supabase } from "../src/lib/supabase";
 
 async function inspectTable() {
   const { data, error } = await supabase.from('events').select('*').limit(1);

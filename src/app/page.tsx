@@ -34,7 +34,7 @@ const stats = [
 ];
 
 const pillars = [
-  { icon: <BookOpen size={24} />, title: "Learn", body: "Free workshops, structured YouTube content, and curated roadmaps so every student can upskill — zero cost, zero barriers.", href: "/what-we-do", color: "rgba(255,138,0,0.1)" },
+  { icon: <BookOpen size={24} />, title: "Learn", body: "Free workshops, structured YouTube content, and curated roadmaps so every student can upskill — zero cost, zero barriers.", href: "/about", color: "rgba(255,138,0,0.1)" },
   { icon: <Users size={24} />, title: "Community", body: "Join hackathons, meetups, and events that connect you with peers, mentors, and real-world opportunities.", href: "/events", color: "rgba(255,194,71,0.1)" },
   { icon: <TrendingUp size={24} />, title: "Growth", body: "Affordable web services, deployment & hosting so you can launch your ideas and build a real portfolio.", href: "/services", color: "rgba(255,138,0,0.08)" },
 ];
@@ -104,14 +104,18 @@ function EventsPreview() {
                 <SpotlightCard style={{ padding: "28px", display: "flex", flexDirection: "column", height: "100%" }}>
                   <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "28px" }}>
                     <div style={{ width: 52, height: 52, borderRadius: 12, background: "rgba(255,138,0,0.08)", border: "1px solid rgba(255,138,0,0.18)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <span style={{ fontWeight: 800, fontSize: "1.1rem", color: "var(--orange)", lineHeight: 1 }}>{ev.day || ev.date?.split(' ')[0] || "01"}</span>
-                      <span style={{ fontSize: 9, color: "var(--orange)", fontFamily: "monospace", letterSpacing: "0.05em", marginTop: 2 }}>{ev.mo || ev.date?.split(' ')[1] || "JUN"}</span>
+                      <span style={{ fontWeight: 800, fontSize: "1.1rem", color: "var(--orange)", lineHeight: 1 }}>
+                        {ev.day || (ev.date?.includes(',') ? ev.date?.split(' ')[1] : ev.date?.split(' ')[0]) || "01"}
+                      </span>
+                      <span style={{ fontSize: 9, color: "var(--orange)", fontFamily: "monospace", letterSpacing: "0.05em", marginTop: 2, textTransform: "uppercase" }}>
+                        {ev.mo || (ev.date?.includes(',') ? ev.date?.split(' ')[0] : "JUN").substring(0, 3)}
+                      </span>
                     </div>
                     <span className="tag" style={{ marginTop: 2 }}>{ev.event_type}</span>
                   </div>
                   {ev.image_url && (
                     <div style={{ position: "relative", width: "100%", height: 220, borderRadius: 12, overflow: "hidden", marginBottom: 20, background: "rgba(0,0,0,0.2)" }}>
-                      <img src={`${ev.image_url}?v=${ev.id}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                      <img src={`${ev.image_url}?v=${new Date(ev.created_at).getTime()}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     </div>
                   )}
                   <div style={{ marginBottom: "20px" }}>
@@ -192,7 +196,7 @@ function OngoingEventHighlight() {
 
             {ongoingEvent.image_url && (
               <div style={{ position: "relative", width: "100%", maxWidth: 460, aspectRatio: "16/9", borderRadius: 20, overflow: "hidden", flexShrink: 0, boxShadow: "0 20px 40px rgba(0,0,0,0.3)", border: "1px solid rgba(255,138,0,0.2)", background: "rgba(0,0,0,0.3)" }}>
-                <img src={`${ongoingEvent.image_url}?v=${ongoingEvent.id}`} alt={ongoingEvent.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                <img src={`${ongoingEvent.image_url}?v=${new Date(ongoingEvent.created_at).getTime()}`} alt={ongoingEvent.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             )}
           </div>
@@ -468,7 +472,7 @@ export default function HomePage() {
               <Reveal><span className="section-label">Skill Roadmaps</span></Reveal>
               <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: 14 }}>A Clear Path to Proficiency</h2></Reveal>
               <Reveal delay={0.1}><p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.75, marginBottom: 32, maxWidth: 440 }}>Stop wondering what to learn next. Our curated roadmaps guide you step-by-step from beginner to full-stack developer.</p></Reveal>
-              <Reveal delay={0.15}><Link href="/what-we-do" className="btn-primary" style={{ fontSize: "0.85rem" }}>Explore Roadmaps <ArrowRight size={14} /></Link></Reveal>
+              <Reveal delay={0.15}><Link href="/roadmaps" className="btn-primary" style={{ fontSize: "0.85rem" }}>Explore Roadmaps <ArrowRight size={14} /></Link></Reveal>
             </div>
           </div>
         </div>

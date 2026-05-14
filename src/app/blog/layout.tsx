@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Read the latest news, tutorials, and stories from the PODEVS community.",
+  title: "Newsletter | PODEVS",
+  description: "Subscribe to the PODEVS newsletter for the latest tech updates, resources, and community news.",
 };
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {

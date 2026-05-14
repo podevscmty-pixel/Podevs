@@ -69,7 +69,27 @@ export default function TeamPage() {
         if (error) throw error;
         
         if (data && data.length > 0) {
-          setTeamList(data);
+          const getPriority = (role: string = "") => {
+            const r = role.toLowerCase();
+            if (r.includes('ceo') || r.includes('founder')) return 1;
+            if (r.includes('cto')) return 2;
+            if (r.includes('manage')) return 3; // catches manager, management
+            if (r.includes('strategist') || r.includes('stratergist')) return 4;
+            if (r.includes('developer')) return 5;
+            if (r.includes('content') || r.includes('creator')) return 6;
+            if (r.includes('editor')) return 7;
+            return 8; // Default for others
+          };
+          
+          const sortedData = [...data].sort((a, b) => {
+            const pA = getPriority(a.role);
+            const pB = getPriority(b.role);
+            if (pA !== pB) return pA - pB;
+            // Alphabetical tie-breaker
+            return (a.name || "").localeCompare(b.name || "");
+          });
+          
+          setTeamList(sortedData);
         } else {
           setTeamList(coreFallback);
         }

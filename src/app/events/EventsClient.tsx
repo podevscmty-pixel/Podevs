@@ -75,9 +75,9 @@ export default function EventsClient({ events }: { events: Event[] }) {
                   <SpotlightCard className="flex flex-col h-full border border-[var(--orange)] overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.03)", padding: 0 }}>
                     {ev.image_url && (
                       <div style={{ position: "relative", width: "100%", height: 400, flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
-                        <img src={`${ev.image_url}?v=${ev.id}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.4) 100%)", pointerEvents: "none" }} />
-                        <span className="tag" style={{ position: "absolute", top: 16, right: 16, background: "var(--orange)", color: "#fff", padding: "6px 14px" }}>{ev.event_type}</span>
+                        <img src={`${ev.image_url}?v=${new Date(ev.created_at).getTime()}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.6) 100%)", pointerEvents: "none" }} />
+                        <span className="tag" style={{ position: "absolute", top: 16, right: 16, background: "var(--orange)", color: "#fff", padding: "6px 14px", fontWeight: 700 }}>{ev.event_type}</span>
                       </div>
                     )}
                     <div style={{ padding: "32px 40px 40px" }}>
@@ -135,8 +135,8 @@ export default function EventsClient({ events }: { events: Event[] }) {
                 <SpotlightCard className="flex flex-col h-full overflow-hidden" style={{ padding: 0 }}>
                   {ev.image_url && (
                     <div style={{ position: "relative", width: "100%", height: 280, flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
-                      <img src={`${ev.image_url}?v=${ev.id}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.2) 100%)", pointerEvents: "none" }} />
+                      <img src={`${ev.image_url}?v=${new Date(ev.created_at).getTime()}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.3) 100%)", pointerEvents: "none" }} />
                     </div>
                   )}
                   <div style={{ padding: "28px 32px 32px", display: "flex", flexDirection: "column", flex: 1 }}>
