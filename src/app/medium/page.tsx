@@ -71,12 +71,11 @@ export default function MediumPage() {
             <p style={{ color: "var(--muted)" }}>No articles found.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-                {articles.map((article, i) => (
+              {articles.map((article, i) => (
                 <Reveal key={article.id} delay={i * 0.1}>
-                  <a 
-                    href={article.external_link} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <Link 
+                    href={article.external_link || `/medium/${article.id}`} 
+                    target={article.external_link?.startsWith('http') ? "_blank" : undefined}
                     className="group" 
                     style={{ 
                       display: "block", 
@@ -108,7 +107,7 @@ export default function MediumPage() {
                     <div style={{ color: "var(--text)", fontSize: "0.9rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }} className="group-hover:text-[var(--orange)] transition-colors">
                       Read on Medium <ArrowRight size={14} />
                     </div>
-                  </a>
+                  </Link>
                 </Reveal>
               ))}
             </div>

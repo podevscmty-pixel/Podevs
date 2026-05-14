@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Play, Mic, Headphones, ArrowRight } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
 const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div
@@ -110,10 +111,9 @@ export default function PodcastPage() {
             <div className="flex flex-col gap-6">
               {episodes.map((ep, i) => (
                 <Reveal key={ep.id} delay={i * 0.1}>
-                  <a 
-                    href={ep.audio_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <Link 
+                    href={ep.audio_url || `/podcast/${ep.id}`} 
+                    target={ep.audio_url?.startsWith('http') ? "_blank" : undefined}
                     style={{ textDecoration: "none", color: "inherit", display: "block" }}
                     className="group"
                   >
@@ -146,7 +146,7 @@ export default function PodcastPage() {
                         </div>
                       </div>
                     </SpotlightCard>
-                  </a>
+                  </Link>
                 </Reveal>
               ))}
             </div>
