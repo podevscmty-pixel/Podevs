@@ -24,7 +24,7 @@ export function Logo() {
           textShadow: "0 0 15px rgba(var(--bg-rgb), 0.5)",
         }}
       >
-        <span style={{ 
+        <span style={{
           color: "var(--orange)",
           textShadow: "0 0 12px rgba(255, 138, 0, 0.5), 0 0 25px rgba(255, 138, 0, 0.2)"
         }}>P</span>ODEVS

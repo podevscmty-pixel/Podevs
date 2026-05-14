@@ -5,7 +5,6 @@ const col1 = [
   { label: "About", href: "/about" },
   { label: "Roadmaps", href: "/roadmaps" },
   { label: "Team", href: "/team" },
-  { label: "Newsletter", href: "/blog" },
 ];
 const col2 = [
   { label: "Events", href: "/events" },

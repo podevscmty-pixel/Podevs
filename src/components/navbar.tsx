@@ -28,7 +28,6 @@ const navLinks: NavLink[] = [
       { label: "YouTube Media", href: "/media" },
       { label: "Medium Articles", href: "/medium" },
       { label: "Podcast", href: "/podcast" },
-      { label: "Newsletter", href: "/blog" },
     ]
   },
   { label: "Team", href: "/team" },
