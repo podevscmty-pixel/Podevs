@@ -4,6 +4,7 @@ import { Logo } from "@/components/logo";
 const col1 = [
   { label: "About", href: "/about" },
   { label: "Roadmaps", href: "/roadmaps" },
+  { label: "Projects", href: "/projects" },
   { label: "Team", href: "/team" },
 ];
 const col2 = [
