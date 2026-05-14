@@ -58,7 +58,7 @@ export default function ContactPage() {
 
       <section style={{ padding: "0 0 96px" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 48, alignItems: "start" }} className="grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr]" style={{ gap: 48, alignItems: "start" }}>
             {/* Left */}
             <div>
               <span className="section-label">Contact Info</span>
@@ -99,7 +99,7 @@ export default function ContactPage() {
             <div className="card-static" style={{ padding: "36px 32px" }}>
               <h3 style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: 24 }}>Send a Message</h3>
               <form style={{ display: "flex", flexDirection: "column", gap: 16 }} onSubmit={handleSubmit}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     <label style={{ fontSize: "0.78rem", fontWeight: 500, color: "var(--muted)" }}>Name</label>
                     <input name="name" required type="text" placeholder="Your name" style={inputStyle} onFocus={(e) => e.target.style.borderColor = "var(--orange)"} onBlur={(e) => e.target.style.borderColor = "var(--border)"} />

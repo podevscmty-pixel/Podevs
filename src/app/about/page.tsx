@@ -14,10 +14,9 @@ const resources = [
 ];
 
 const stats = [
-  { num: "2K+", label: "Community Members" },
-  { num: "50+", label: "Free Workshops" },
-  { num: "20+", label: "Events Organized" },
-  { num: "5+", label: "Hackathons Hosted" },
+  { num: "100+", label: "Community Members" },
+  { num: "2+", label: "Free Workshops" },
+  { num: "2+", label: "Events Organized" },
 ];
 
 const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (

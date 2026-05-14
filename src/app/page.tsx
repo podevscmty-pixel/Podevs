@@ -28,9 +28,9 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 /* ── Data ──────────────────────────────────────── */
 const stats = [
-  { icon: <Users size={20} />, value: "2,000+", label: "Students" },
-  { icon: <Code size={20} />, value: "150+", label: "Works" },
-  { icon: <Calendar size={20} />, value: "12+", label: "Events/Month" },
+  { icon: <Users size={20} />, value: "100+", label: "Students" },
+  { icon: <Code size={20} />, value: "2+", label: "Works" },
+  { icon: <Calendar size={20} />, value: "2+", label: "Events/Month" },
 ];
 
 const pillars = [
@@ -114,7 +114,7 @@ function EventsPreview() {
                     <span className="tag" style={{ marginTop: 2 }}>{ev.event_type}</span>
                   </div>
                   {ev.image_url && (
-                    <div style={{ position: "relative", width: "100%", height: 220, borderRadius: 12, overflow: "hidden", marginBottom: 20, background: "rgba(0,0,0,0.2)" }}>
+                    <div className="relative w-full h-[180px] sm:h-[220px]" style={{ borderRadius: 12, overflow: "hidden", marginBottom: 20, background: "rgba(0,0,0,0.2)" }}>
                       <img src={`${ev.image_url}?v=${ev.created_at ? new Date(ev.created_at).getTime() : '1'}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     </div>
                   )}
@@ -164,7 +164,7 @@ function OngoingEventHighlight() {
       <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
         <SpotlightCard className="p-8 md:p-12 border border-[var(--orange)] relative overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.05)" }}>
           <div style={{ position: "absolute", top: -50, right: -50, width: 200, height: 200, background: "radial-gradient(circle, rgba(255,138,0,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
-          
+
           <div className="flex flex-col md:flex-row gap-10 items-center justify-between">
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
@@ -176,7 +176,7 @@ function OngoingEventHighlight() {
               </div>
               <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, lineHeight: 1.2, marginBottom: 16 }}>{ongoingEvent.title}</h2>
               <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 500, marginBottom: 24 }}>{ongoingEvent.description}</p>
-              
+
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginBottom: 32 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text)", fontWeight: 600 }}>
                   <Calendar size={18} color="var(--orange)" />
@@ -185,9 +185,9 @@ function OngoingEventHighlight() {
                 <span style={{ fontSize: "0.85rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 6 }}>📍 {ongoingEvent.location}</span>
               </div>
 
-              <Link 
-                href={ongoingEvent.registration_link || "/events"} 
-                className="btn-primary" 
+              <Link
+                href={ongoingEvent.registration_link || "/events"}
+                className="btn-primary"
                 style={{ padding: "16px 36px", fontSize: "1.05rem", display: "inline-flex", boxShadow: "0 0 25px rgba(255,138,0,0.3)" }}
               >
                 Join the Event Now →
@@ -195,7 +195,7 @@ function OngoingEventHighlight() {
             </div>
 
             {ongoingEvent.image_url && (
-              <div style={{ position: "relative", width: "100%", maxWidth: 460, aspectRatio: "16/9", borderRadius: 20, overflow: "hidden", flexShrink: 0, boxShadow: "0 20px 40px rgba(0,0,0,0.3)", border: "1px solid rgba(255,138,0,0.2)", background: "rgba(0,0,0,0.3)" }}>
+              <div className="w-full lg:max-w-[460px]" style={{ position: "relative", aspectRatio: "16/9", borderRadius: 20, overflow: "hidden", flexShrink: 0, boxShadow: "0 20px 40px rgba(0,0,0,0.3)", border: "1px solid rgba(255,138,0,0.2)", background: "rgba(0,0,0,0.3)" }}>
                 <img src={`${ongoingEvent.image_url}?v=${ongoingEvent.created_at ? new Date(ongoingEvent.created_at).getTime() : '1'}`} alt={ongoingEvent.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             )}

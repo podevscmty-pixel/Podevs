@@ -40,11 +40,11 @@ export default function PodcastPage() {
                 <p style={{ color: "var(--muted)", fontSize: "1.1rem", lineHeight: 1.7, maxWidth: 540, marginBottom: 32 }}>
                   Real conversations with developers, designers, and founders. Learn the untold stories behind great careers and products.
                 </p>
-                <div className="flex gap-4">
-                  <button className="btn-primary" style={{ padding: "14px 28px", fontSize: "1rem" }}>
+                <div className="flex flex-wrap gap-3 sm:gap-4">
+                  <button className="btn-primary" style={{ padding: "14px 24px", fontSize: "0.95rem" }}>
                     <Play size={18} fill="currentColor" /> Listen to Latest
                   </button>
-                  <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: "14px 28px", fontSize: "1rem" }}>
+                  <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: "14px 24px", fontSize: "0.95rem" }}>
                     <Headphones size={18} /> Follow on Spotify
                   </a>
                 </div>
@@ -52,7 +52,7 @@ export default function PodcastPage() {
             </div>
             
             <Reveal delay={0.2}>
-              <div style={{ width: "100%", maxWidth: 400, aspectRatio: "1/1", borderRadius: 32, background: "linear-gradient(135deg, var(--card), var(--bg2))", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 30px 60px rgba(0,0,0,0.1)", position: "relative", overflow: "hidden" }}>
+              <div className="w-full max-w-[280px] sm:max-w-[350px] md:max-w-[400px] mx-auto md:mx-0" style={{ aspectRatio: "1/1", borderRadius: 32, background: "linear-gradient(135deg, var(--card), var(--bg2))", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 30px 60px rgba(0,0,0,0.1)", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, rgba(255,138,0,0.1) 0%, transparent 60%)" }} />
                 <div style={{ textAlign: "center", zIndex: 1 }}>
                   <Mic size={80} style={{ color: "var(--orange)", marginBottom: 24, margin: "0 auto", opacity: 0.8 }} />
