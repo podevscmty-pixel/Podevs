@@ -108,6 +108,7 @@ export default function PodcastPage() {
             <p style={{ color: "var(--muted)" }}>No episodes found.</p>
           ) : (
             <div className="flex flex-col gap-6">
+              {episodes.map((ep, i) => (
                 <Reveal key={ep.id} delay={i * 0.1}>
                   <a 
                     href={ep.audio_url} 
@@ -147,6 +148,7 @@ export default function PodcastPage() {
                     </SpotlightCard>
                   </a>
                 </Reveal>
+              ))}
             </div>
           )}
         </div>
