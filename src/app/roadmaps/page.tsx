@@ -83,7 +83,7 @@ export default function RoadmapsPage() {
                     <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 32 }}>{map.description}</p>
                     
                     <div style={{ display: "flex", flexDirection: "column", gap: 16, flex: 1 }}>
-                      {map.steps && Array.isArray(map.steps) && map.steps.map((step, j) => (
+                      {map.steps && Array.isArray(map.steps) && (map.steps as any[]).map((step: any, j: number) => (
                         <div key={j} style={{ display: "flex", gap: 16 }}>
                           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
                             <div style={{ width: 28, height: 28, borderRadius: "50%", border: `1px solid ${map.accent_color || "var(--orange)"}`, color: map.accent_color || "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: "var(--bg)" }}>
