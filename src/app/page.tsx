@@ -115,7 +115,7 @@ function EventsPreview() {
                   </div>
                   {ev.image_url && (
                     <div style={{ position: "relative", width: "100%", height: 220, borderRadius: 12, overflow: "hidden", marginBottom: 20, background: "rgba(0,0,0,0.2)" }}>
-                      <img src={`${ev.image_url}?v=${new Date(ev.created_at).getTime()}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <img src={`${ev.image_url}?v=${ev.created_at ? new Date(ev.created_at).getTime() : '1'}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     </div>
                   )}
                   <div style={{ marginBottom: "20px" }}>
@@ -196,7 +196,7 @@ function OngoingEventHighlight() {
 
             {ongoingEvent.image_url && (
               <div style={{ position: "relative", width: "100%", maxWidth: 460, aspectRatio: "16/9", borderRadius: 20, overflow: "hidden", flexShrink: 0, boxShadow: "0 20px 40px rgba(0,0,0,0.3)", border: "1px solid rgba(255,138,0,0.2)", background: "rgba(0,0,0,0.3)" }}>
-                <img src={`${ongoingEvent.image_url}?v=${new Date(ongoingEvent.created_at).getTime()}`} alt={ongoingEvent.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img src={`${ongoingEvent.image_url}?v=${ongoingEvent.created_at ? new Date(ongoingEvent.created_at).getTime() : '1'}`} alt={ongoingEvent.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             )}
           </div>
