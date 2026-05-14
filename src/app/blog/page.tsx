@@ -44,12 +44,14 @@ export default function NewsletterPage() {
     e.preventDefault();
     if (email) {
       try {
-        const { error } = await supabase
-          .from('newsletter_subscribers')
-          .insert([{ email }]);
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
         
-        if (error && error.code !== '23505') { // Ignore duplicate email error
-          throw error;
+        if (!response.ok) {
+          throw new Error('Failed to subscribe');
         }
         
         setSubscribed(true);
