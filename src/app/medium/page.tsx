@@ -76,7 +76,7 @@ export default function MediumPage() {
                   <div style={{ borderBottom: i !== articles.length - 1 ? "1px solid var(--border)" : "none", paddingBottom: i !== articles.length - 1 ? 40 : 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                       <span style={{ fontSize: "0.85rem", color: "var(--subtle)" }}>
-                        {new Date(article.published_at).toLocaleDateString('en-US', { month: 'SHORT', day: '2-digit', year: 'numeric' }).toUpperCase()}
+                        {new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase()}
                       </span>
                       <span style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--subtle)" }} />
                       <span style={{ fontSize: "0.85rem", color: "var(--subtle)" }}>{article.read_time}</span>

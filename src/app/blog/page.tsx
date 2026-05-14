@@ -82,7 +82,7 @@ export default function NewsletterPage() {
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     <span className="tag" style={{ background: "var(--orange)", color: "#fff", border: "none" }}>LATEST ISSUE</span>
                     <span style={{ fontSize: "0.85rem", color: "var(--muted)", fontWeight: 600, display: "flex", alignItems: "center", gap: 6 }}>
-                      <Calendar size={14} /> {new Date(latestIssue.published_at).toLocaleDateString('en-US', { month: 'SHORT', day: '2-digit', year: 'numeric' }).toUpperCase()}
+                      <Calendar size={14} /> {new Date(latestIssue.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase()}
                     </span>
                   </div>
                   
@@ -130,7 +130,7 @@ export default function NewsletterPage() {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                       <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--orange)", background: "rgba(255,138,0,0.1)", padding: "4px 10px", borderRadius: 6 }}>{issue.tag}</span>
                       <span style={{ fontSize: "0.75rem", color: "var(--subtle)", fontWeight: 600 }}>
-                        {new Date(issue.published_at).toLocaleDateString('en-US', { month: 'SHORT', day: '2-digit', year: 'numeric' }).toUpperCase()}
+                        {new Date(issue.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase()}
                       </span>
                     </div>
                     
