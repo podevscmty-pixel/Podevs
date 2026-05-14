@@ -88,7 +88,7 @@ export default function MediumPage() {
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                       <span style={{ fontSize: "0.85rem", color: "var(--subtle)" }}>
-                        {new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase()}
+                        {article.published_at ? new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase() : 'PUBLISHED'}
                       </span>
                       <span style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--subtle)" }} />
                       <span style={{ fontSize: "0.85rem", color: "var(--subtle)" }}>{article.read_time}</span>

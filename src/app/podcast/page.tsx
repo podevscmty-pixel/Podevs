@@ -129,7 +129,7 @@ export default function PodcastPage() {
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 8 }}>
                           <span className="tag" style={{ background: "transparent", color: "var(--text)", border: "1px solid var(--border)" }}>Episode #{episodes.length - i}</span>
                           <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
-                            {new Date(ep.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
+                            {ep.published_at ? new Date(ep.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Recently'}
                           </span>
                           <span style={{ fontSize: "0.85rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}><Headphones size={12} /> {ep.duration}</span>
                         </div>

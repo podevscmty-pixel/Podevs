@@ -52,11 +52,180 @@ const testimonials = [
   { name: "Karthik S.", role: "Open Source Contributor", text: "The hackathons pushed me out of my comfort zone. I landed my first internship thanks to the portfolio I built here.", avatar: "KS" },
 ];
 
-const videos = [
+const videos_static = [
   { id: "v1", title: "Introduction to Web Development", views: "12K views · 2 weeks ago" },
   { id: "v2", title: "React Hooks Explained Simply", views: "8.4K views · 1 month ago" },
   { id: "v3", title: "Deploy Your First App on Vercel", views: "5.2K views · 2 months ago" },
 ];
+
+function InsightsPreview() {
+  const [latestArticle, setLatestArticle] = React.useState<any | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    async function fetchLatest() {
+      try {
+        const { data } = await supabase
+          .from('medium_articles')
+          .select('*')
+          .order('published_at', { ascending: false })
+          .limit(1);
+        if (data && data.length > 0) setLatestArticle(data[0]);
+      } catch (err) {
+        console.warn("Error fetching latest article:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLatest();
+  }, []);
+
+  if (loading || !latestArticle) return null;
+
+  return (
+    <Section style={{ padding: "var(--section-gap) 0" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
+          <div>
+            <Reveal><span className="section-label">Fresh Insights</span></Reveal>
+            <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>From our Medium</h2></Reveal>
+          </div>
+          <Reveal><Link href="/medium" className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 18px" }}>Read More →</Link></Reveal>
+        </div>
+        
+        <Link 
+          href={latestArticle.external_link || `/medium/${latestArticle.id}`} 
+          target={latestArticle.external_link?.startsWith('http') ? "_blank" : undefined}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <SpotlightCard className="p-8 md:p-10 border border-[var(--border)] hover:border-[var(--orange)] transition-colors">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 16 }}>
+              <span className="tag">{latestArticle.tag}</span>
+              <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
+                {latestArticle.published_at ? new Date(latestArticle.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Recently'}
+              </span>
+              <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>• {latestArticle.read_time}</span>
+            </div>
+            <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 12, lineHeight: 1.3 }}>{latestArticle.title}</h3>
+            <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 800 }}>{latestArticle.excerpt}</p>
+          </SpotlightCard>
+        </Link>
+      </div>
+    </Section>
+  );
+}
+
+function PodcastPreview() {
+  const [latestPodcast, setLatestPodcast] = React.useState<any | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    async function fetchLatest() {
+      try {
+        const { data } = await supabase
+          .from('podcasts')
+          .select('*')
+          .order('published_at', { ascending: false })
+          .limit(1);
+        if (data && data.length > 0) setLatestPodcast(data[0]);
+      } catch (err) {
+        console.warn("Error fetching latest podcast:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLatest();
+  }, []);
+
+  if (loading || !latestPodcast) return null;
+
+  return (
+    <Section style={{ padding: "var(--section-gap) 0" }}>
+      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 32, alignItems: "center" }}>
+          <div style={{ flex: 1, minWidth: 300 }}>
+            <Reveal><span className="section-label">Latest Podcast</span></Reveal>
+            <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 20 }}>{latestPodcast.title}</h2></Reveal>
+            <Reveal delay={0.1}><p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.7, marginBottom: 32 }}>{latestPodcast.description}</p></Reveal>
+            <Reveal delay={0.15}>
+              <Link 
+                href={latestPodcast.audio_url || `/podcast/${latestPodcast.id}`} 
+                target={latestPodcast.audio_url?.startsWith('http') ? "_blank" : undefined}
+                className="btn-primary"
+              >
+                Listen Now <ArrowRight size={16} />
+              </Link>
+            </Reveal>
+          </div>
+          <div style={{ width: "100%", maxWidth: 300, aspectRatio: "1/1", borderRadius: 24, background: "linear-gradient(135deg, var(--card), var(--bg2))", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+             <div style={{ textAlign: "center" }}>
+               <div style={{ fontSize: "2rem", fontWeight: 900, color: "var(--orange)" }}>PODEVS</div>
+               <div style={{ fontSize: "0.8rem", color: "var(--muted)", letterSpacing: "0.2em" }}>PODCAST</div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function YouTubeList() {
+  const [videos, setVideos] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    async function fetchVideos() {
+      try {
+        const { data } = await supabase
+          .from('youtube_videos')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(3);
+        if (data) setVideos(data);
+      } catch (err) {
+        console.warn("Error fetching home videos:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchVideos();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="card animate-pulse" style={{ height: 200, background: "var(--bg2)" }} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {videos.map((v, i) => (
+        <Reveal key={v.id} delay={i * 0.07}>
+          <a href={`https://youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>
+            <SpotlightCard style={{ overflow: "hidden", height: "100%" }}>
+              <div style={{ position: "relative", aspectRatio: "16/9", background: "var(--bg2)", overflow: "hidden" }}>
+                <img src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`} alt={v.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.3)" }}>
+                  <div style={{ width: 48, height: 48, borderRadius: "50%", background: "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5l10 5.5-10 5.5V2.5z" fill="#fff" /></svg>
+                  </div>
+                </div>
+              </div>
+              <div style={{ padding: "16px 18px" }}>
+                <p style={{ fontWeight: 600, fontSize: "0.9rem", marginBottom: 6, lineHeight: 1.4 }}>{v.title}</p>
+                <p style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{v.views_text}</p>
+              </div>
+            </SpotlightCard>
+          </a>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
 
 function EventsPreview() {
   const [upcomingEvents, setUpcomingEvents] = React.useState<any[]>([]);
@@ -488,6 +657,12 @@ export default function HomePage() {
 
       <div className="section-divider" />
 
+      {/* ── INSIGHTS & PODCAST PREVIEWS ───────────── */}
+      <InsightsPreview />
+      <PodcastPreview />
+
+      <div className="section-divider" />
+
       {/* YOUTUBE SECTION */}
       <Section style={{ padding: "var(--section-gap) 0" }}>
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
@@ -498,26 +673,8 @@ export default function HomePage() {
             </div>
             <Reveal><Link href="/media" className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 18px" }}>View All →</Link></Reveal>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {videos.map((v, i) => (
-              <Reveal key={v.id} delay={i * 0.07}>
-                <SpotlightCard style={{ overflow: "hidden" }}>
-                  <div style={{ position: "relative", aspectRatio: "16/9", background: "var(--bg2)", overflow: "hidden" }}>
-                    <Image src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`} alt={v.title} fill sizes="(max-width: 768px) 100vw, 33vw" style={{ objectFit: "cover" }} />
-                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.3)" }}>
-                      <div style={{ width: 48, height: 48, borderRadius: "50%", background: "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2.5l10 5.5-10 5.5V2.5z" fill="#fff" /></svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div style={{ padding: "16px 18px" }}>
-                    <p style={{ fontWeight: 600, fontSize: "0.9rem", marginBottom: 6 }}>{v.title}</p>
-                    <p style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{v.views}</p>
-                  </div>
-                </SpotlightCard>
-              </Reveal>
-            ))}
-          </div>
+          
+          <YouTubeList />
         </div>
       </Section>
 
