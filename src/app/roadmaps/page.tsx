@@ -2,54 +2,20 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Layout, Server, PenTool } from "lucide-react";
+import { Layout, Server, PenTool, Code, Smartphone, Database, Terminal } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
-const roadmaps = [
-  {
-    id: "frontend",
-    title: "Frontend Developer",
-    icon: <Layout size={24} />,
-    color: "rgba(59, 130, 246, 0.1)",
-    accent: "#3b82f6",
-    desc: "Master the art of building beautiful, interactive user interfaces.",
-    steps: [
-      { num: 1, name: "HTML & CSS", detail: "Semantics, Flexbox, Grid, Responsiveness." },
-      { num: 2, name: "JavaScript Fundamentals", detail: "ES6+, DOM Manipulation, Async/Await." },
-      { num: 3, name: "React.js", detail: "Hooks, Context, State Management." },
-      { num: 4, name: "Next.js & Tailwind", detail: "App Router, SSR, Utility-first CSS." },
-    ]
-  },
-  {
-    id: "backend",
-    title: "Backend Developer",
-    icon: <Server size={24} />,
-    color: "rgba(16, 185, 129, 0.1)",
-    accent: "#10b981",
-    desc: "Build scalable APIs, manage databases, and handle server logic.",
-    steps: [
-      { num: 1, name: "Node.js & Express", detail: "REST APIs, Middleware, Routing." },
-      { num: 2, name: "Databases (SQL & NoSQL)", detail: "PostgreSQL, MongoDB, ORMs (Prisma)." },
-      { num: 3, name: "Authentication", detail: "JWT, OAuth, Sessions." },
-      { num: 4, name: "Deployment & DevOps", detail: "Docker, AWS, CI/CD pipelines." },
-    ]
-  },
-  {
-    id: "design",
-    title: "UI/UX Designer",
-    icon: <PenTool size={24} />,
-    color: "rgba(236, 72, 153, 0.1)",
-    accent: "#ec4899",
-    desc: "Design user-centric experiences that look great and convert.",
-    steps: [
-      { num: 1, name: "Design Fundamentals", detail: "Color theory, Typography, Spacing." },
-      { num: 2, name: "Figma Mastery", detail: "Components, Auto Layout, Variables." },
-      { num: 3, name: "UX Research", detail: "User personas, wireframing, testing." },
-      { num: 4, name: "Prototyping", detail: "Micro-interactions, high-fidelity mockups." },
-    ]
-  }
-];
+const iconMap: Record<string, any> = {
+  Layout: <Layout size={24} />,
+  Server: <Server size={24} />,
+  PenTool: <PenTool size={24} />,
+  Code: <Code size={24} />,
+  Smartphone: <Smartphone size={24} />,
+  Database: <Database size={24} />,
+  Terminal: <Terminal size={24} />,
+};
 
 const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div
@@ -63,6 +29,26 @@ const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 );
 
 export default function RoadmapsPage() {
+  const [roadmaps, setRoadmaps] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    async function fetchRoadmaps() {
+      try {
+        const { data } = await supabase
+          .from('roadmaps')
+          .select('*')
+          .order('created_at', { ascending: true });
+        if (data) setRoadmaps(data);
+      } catch (err) {
+        console.error("Error fetching roadmaps:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchRoadmaps();
+  }, []);
+
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
       <section className="py-16 md:py-24">
@@ -74,44 +60,55 @@ export default function RoadmapsPage() {
               <p style={{ color: "var(--muted)", maxWidth: 500, margin: "0 auto", fontSize: "1.1rem" }}>Technical roadmaps designed to take you from beginner to professional. Follow the steps and start building.</p>
             </Reveal>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {roadmaps.map((map, i) => (
-              <Reveal key={map.id} delay={i * 0.1}>
-                <SpotlightCard className="p-8 md:p-10 h-full flex flex-col">
-                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
-                    <div style={{ width: 56, height: 56, borderRadius: 16, background: map.color, color: map.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      {map.icon}
-                    </div>
-                    <h2 style={{ fontSize: "1.4rem", fontWeight: 700 }}>{map.title}</h2>
-                  </div>
-                  <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 32 }}>{map.desc}</p>
-                  
-                  <div style={{ display: "flex", flexDirection: "column", gap: 16, flex: 1 }}>
-                    {map.steps.map((step, j) => (
-                      <div key={step.num} style={{ display: "flex", gap: 16 }}>
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-                          <div style={{ width: 28, height: 28, borderRadius: "50%", border: `1px solid ${map.accent}`, color: map.accent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: "var(--bg)" }}>
-                            {step.num}
-                          </div>
-                          {j !== map.steps.length - 1 && <div style={{ width: 1, flex: 1, background: "var(--border)", minHeight: 20 }} />}
-                        </div>
-                        <div style={{ paddingBottom: j !== map.steps.length - 1 ? 16 : 0, paddingTop: 2 }}>
-                          <h4 style={{ fontWeight: 600, fontSize: "0.95rem", marginBottom: 4 }}>{step.name}</h4>
-                          <p style={{ color: "var(--muted)", fontSize: "0.85rem", lineHeight: 1.5 }}>{step.detail}</p>
-                        </div>
+          
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="card animate-pulse" style={{ height: 400, background: "var(--bg2)" }} />
+              ))}
+            </div>
+          ) : roadmaps.length === 0 ? (
+            <p style={{ color: "var(--muted)", textAlign: "center" }}>No roadmaps available at the moment.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {roadmaps.map((map, i) => (
+                <Reveal key={map.id} delay={i * 0.1}>
+                  <SpotlightCard className="p-8 md:p-10 h-full flex flex-col">
+                    <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
+                      <div style={{ width: 56, height: 56, borderRadius: 16, background: map.bg_color_rgba || "rgba(255,138,0,0.1)", color: map.accent_color || "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        {iconMap[map.icon_name] || <Code size={24} />}
                       </div>
-                    ))}
-                  </div>
+                      <h2 style={{ fontSize: "1.4rem", fontWeight: 700 }}>{map.title}</h2>
+                    </div>
+                    <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 32 }}>{map.description}</p>
+                    
+                    <div style={{ display: "flex", flexDirection: "column", gap: 16, flex: 1 }}>
+                      {map.steps && Array.isArray(map.steps) && map.steps.map((step, j) => (
+                        <div key={j} style={{ display: "flex", gap: 16 }}>
+                          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                            <div style={{ width: 28, height: 28, borderRadius: "50%", border: `1px solid ${map.accent_color || "var(--orange)"}`, color: map.accent_color || "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, background: "var(--bg)" }}>
+                              {step.num}
+                            </div>
+                            {j !== map.steps.length - 1 && <div style={{ width: 1, flex: 1, background: "var(--border)", minHeight: 20 }} />}
+                          </div>
+                          <div style={{ paddingBottom: j !== map.steps.length - 1 ? 16 : 0, paddingTop: 2 }}>
+                            <h4 style={{ fontWeight: 600, fontSize: "0.95rem", marginBottom: 4 }}>{step.name}</h4>
+                            <p style={{ color: "var(--muted)", fontSize: "0.85rem", lineHeight: 1.5 }}>{step.detail}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
 
-                  <div style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
-                    <Link href="https://linkedin.com/company/podevs" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-                      Start this Path
-                    </Link>
-                  </div>
-                </SpotlightCard>
-              </Reveal>
-            ))}
-          </div>
+                    <div style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
+                      <Link href="https://linkedin.com/company/podevs" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+                        Start this Path
+                      </Link>
+                    </div>
+                  </SpotlightCard>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

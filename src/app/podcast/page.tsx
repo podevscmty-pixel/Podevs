@@ -3,12 +3,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Play, Mic, Headphones, ArrowRight } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-
-const episodes = [
-  { id: "1", title: "Building PODEVS: The Origin Story", duration: "45:20", date: "May 10, 2026", guest: "Founder", desc: "We sit down to discuss why PODEVS was started and the vision for the future of student-led ed-tech." },
-  { id: "2", title: "From Bootcamp to Senior Engineer", duration: "52:10", date: "April 28, 2026", guest: "Sneha M.", desc: "Sneha shares her journey transitioning from a non-CS background into a senior engineering role." },
-  { id: "3", title: "Mastering the Tech Interview", duration: "38:45", date: "April 15, 2026", guest: "Karthik S.", desc: "Actionable tips and strategies for passing technical interviews at top tech companies." },
-];
+import { supabase } from "@/lib/supabase";
 
 const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div
@@ -22,6 +17,28 @@ const Reveal = ({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 );
 
 export default function PodcastPage() {
+  const [episodes, setEpisodes] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    async function fetchEpisodes() {
+      try {
+        const { data } = await supabase
+          .from('podcasts')
+          .select('*')
+          .order('published_at', { ascending: false });
+        if (data) setEpisodes(data);
+      } catch (err) {
+        console.error("Error fetching podcasts:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEpisodes();
+  }, []);
+
+  const latestEpisode = episodes[0];
+
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
       {/* HERO SECTION */}
@@ -41,7 +58,15 @@ export default function PodcastPage() {
                   Real conversations with developers, designers, and founders. Learn the untold stories behind great careers and products.
                 </p>
                 <div className="flex flex-wrap gap-3 sm:gap-4">
-                  <button className="btn-primary" style={{ padding: "14px 24px", fontSize: "0.95rem" }}>
+                  <button 
+                    className="btn-primary" 
+                    style={{ padding: "14px 24px", fontSize: "0.95rem" }}
+                    onClick={() => {
+                      if (latestEpisode?.audio_url && latestEpisode.audio_url !== '#') {
+                        window.open(latestEpisode.audio_url, '_blank');
+                      }
+                    }}
+                  >
                     <Play size={18} fill="currentColor" /> Listen to Latest
                   </button>
                   <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: "14px 24px", fontSize: "0.95rem" }}>
@@ -73,33 +98,59 @@ export default function PodcastPage() {
             <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 40 }}>All Episodes</h2>
           </Reveal>
           
-          <div className="flex flex-col gap-6">
-            {episodes.map((ep, i) => (
-              <Reveal key={ep.id} delay={i * 0.1}>
-                <SpotlightCard className="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center">
-                  <div style={{ width: 64, height: 64, borderRadius: 16, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "var(--orange)", cursor: "pointer" }} className="hover:bg-[rgba(255,138,0,0.15)] transition-colors">
-                    <Play size={24} fill="currentColor" style={{ marginLeft: 4 }} />
-                  </div>
-                  
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 8 }}>
-                      <span className="tag" style={{ background: "transparent", color: "var(--text)", border: "1px solid var(--border)" }}>Episode {ep.id}</span>
-                      <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>{ep.date}</span>
-                      <span style={{ fontSize: "0.85rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}><Headphones size={12} /> {ep.duration}</span>
+          {loading ? (
+            <div className="flex flex-col gap-6">
+              {[1, 2].map((i) => (
+                <div key={i} className="animate-pulse" style={{ height: 120, background: "var(--bg2)", borderRadius: 16 }} />
+              ))}
+            </div>
+          ) : episodes.length === 0 ? (
+            <p style={{ color: "var(--muted)" }}>No episodes found.</p>
+          ) : (
+            <div className="flex flex-col gap-6">
+              {episodes.map((ep, i) => (
+                <Reveal key={ep.id} delay={i * 0.1}>
+                  <SpotlightCard className="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center">
+                    <div 
+                      onClick={() => {
+                        if (ep.audio_url && ep.audio_url !== '#') {
+                          window.open(ep.audio_url, '_blank');
+                        }
+                      }}
+                      style={{ width: 64, height: 64, borderRadius: 16, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "var(--orange)", cursor: "pointer" }} 
+                      className="hover:bg-[rgba(255,138,0,0.15)] transition-colors"
+                    >
+                      <Play size={24} fill="currentColor" style={{ marginLeft: 4 }} />
                     </div>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: 8 }}>{ep.title}</h3>
-                    <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>{ep.desc}</p>
-                  </div>
-                  
-                  <div style={{ alignSelf: "center" }}>
-                    <button className="btn-outline" style={{ padding: "10px 20px", borderRadius: 12 }}>
-                      Listen Now <ArrowRight size={14} />
-                    </button>
-                  </div>
-                </SpotlightCard>
-              </Reveal>
-            ))}
-          </div>
+                    
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 8 }}>
+                        <span className="tag" style={{ background: "transparent", color: "var(--text)", border: "1px solid var(--border)" }}>Episode #{episodes.length - i}</span>
+                        <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
+                          {new Date(ep.published_at).toLocaleDateString('en-US', { month: 'SHORT', day: '2-digit', year: 'numeric' })}
+                        </span>
+                        <span style={{ fontSize: "0.85rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}><Headphones size={12} /> {ep.duration}</span>
+                      </div>
+                      <h3 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: 8 }}>{ep.title}</h3>
+                      <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>{ep.description}</p>
+                    </div>
+                    
+                    <div style={{ alignSelf: "center" }}>
+                      <a 
+                        href={ep.audio_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn-outline" 
+                        style={{ padding: "10px 20px", borderRadius: 12, textDecoration: "none" }}
+                      >
+                        Listen Now <ArrowRight size={14} />
+                      </a>
+                    </div>
+                  </SpotlightCard>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>
