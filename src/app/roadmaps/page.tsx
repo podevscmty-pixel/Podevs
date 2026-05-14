@@ -100,7 +100,7 @@ export default function RoadmapsPage() {
                     </div>
 
                     <div style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
-                      <Link href="https://linkedin.com/company/podevs" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+                      <Link href={map.link || "#"} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
                         Start this Path
                       </Link>
                     </div>

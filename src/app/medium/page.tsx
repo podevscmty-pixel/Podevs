@@ -71,9 +71,22 @@ export default function MediumPage() {
             <p style={{ color: "var(--muted)" }}>No articles found.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-              {articles.map((article, i) => (
+                {articles.map((article, i) => (
                 <Reveal key={article.id} delay={i * 0.1}>
-                  <div style={{ borderBottom: i !== articles.length - 1 ? "1px solid var(--border)" : "none", paddingBottom: i !== articles.length - 1 ? 40 : 0 }}>
+                  <a 
+                    href={article.external_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="group" 
+                    style={{ 
+                      display: "block", 
+                      textDecoration: "none", 
+                      color: "inherit",
+                      borderBottom: i !== articles.length - 1 ? "1px solid var(--border)" : "none", 
+                      paddingBottom: i !== articles.length - 1 ? 40 : 0,
+                      marginBottom: 40
+                    }}
+                  >
                     <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                       <span style={{ fontSize: "0.85rem", color: "var(--subtle)" }}>
                         {new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase()}
@@ -84,20 +97,18 @@ export default function MediumPage() {
                       <span className="tag" style={{ fontSize: "0.7rem", padding: "2px 8px" }}>{article.tag}</span>
                     </div>
                     
-                    <h2 style={{ fontSize: "1.6rem", fontWeight: 800, lineHeight: 1.3, marginBottom: 12, fontFamily: "serif" }}>
-                      <a href={article.external_link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text)", textDecoration: "none" }} className="hover:text-[var(--orange)] transition-colors">
-                        {article.title}
-                      </a>
+                    <h2 style={{ fontSize: "1.6rem", fontWeight: 800, lineHeight: 1.3, marginBottom: 12, fontFamily: "serif" }} className="group-hover:text-[var(--orange)] transition-colors">
+                      {article.title}
                     </h2>
                     
                     <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.6, marginBottom: 20 }}>
                       {article.excerpt}
                     </p>
                     
-                    <a href={article.external_link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text)", fontSize: "0.9rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }} className="hover:text-[var(--orange)] transition-colors">
+                    <div style={{ color: "var(--text)", fontSize: "0.9rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }} className="group-hover:text-[var(--orange)] transition-colors">
                       Read on Medium <ArrowRight size={14} />
-                    </a>
-                  </div>
+                    </div>
+                  </a>
                 </Reveal>
               ))}
             </div>

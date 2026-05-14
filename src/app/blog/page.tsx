@@ -126,7 +126,7 @@ export default function NewsletterPage() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 20 }}>
               {pastIssues.map((issue, i) => (
                 <Reveal key={issue.id} delay={0.1 + (i * 0.05)}>
-                  <Link href={issue.read_link} className="card group" style={{ display: "block", padding: "32px", height: "100%", textDecoration: "none", transition: "all 0.3s ease" }}>
+                  <a href={issue.read_link} target="_blank" rel="noopener noreferrer" className="card group" style={{ display: "block", padding: "32px", height: "100%", textDecoration: "none", transition: "all 0.3s ease" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                       <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--orange)", background: "rgba(255,138,0,0.1)", padding: "4px 10px", borderRadius: 6 }}>{issue.tag}</span>
                       <span style={{ fontSize: "0.75rem", color: "var(--subtle)", fontWeight: 600 }}>
@@ -138,7 +138,11 @@ export default function NewsletterPage() {
                       {issue.title}
                     </h4>
                     <p style={{ color: "var(--muted)", fontSize: "0.9rem", lineHeight: 1.6 }}>{issue.excerpt}</p>
-                  </Link>
+                    
+                    <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 6, fontSize: "0.8rem", fontWeight: 700, color: "var(--orange)" }}>
+                      Read Issue <ArrowRight size={14} />
+                    </div>
+                  </a>
                 </Reveal>
               ))}
             </div>

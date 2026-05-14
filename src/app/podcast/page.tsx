@@ -108,47 +108,45 @@ export default function PodcastPage() {
             <p style={{ color: "var(--muted)" }}>No episodes found.</p>
           ) : (
             <div className="flex flex-col gap-6">
-              {episodes.map((ep, i) => (
                 <Reveal key={ep.id} delay={i * 0.1}>
-                  <SpotlightCard className="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center">
-                    <div 
-                      onClick={() => {
-                        if (ep.audio_url && ep.audio_url !== '#') {
-                          window.open(ep.audio_url, '_blank');
-                        }
-                      }}
-                      style={{ width: 64, height: 64, borderRadius: 16, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "var(--orange)", cursor: "pointer" }} 
-                      className="hover:bg-[rgba(255,138,0,0.15)] transition-colors"
-                    >
-                      <Play size={24} fill="currentColor" style={{ marginLeft: 4 }} />
-                    </div>
-                    
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 8 }}>
-                        <span className="tag" style={{ background: "transparent", color: "var(--text)", border: "1px solid var(--border)" }}>Episode #{episodes.length - i}</span>
-                        <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
-                          {new Date(ep.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
-                        </span>
-                        <span style={{ fontSize: "0.85rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}><Headphones size={12} /> {ep.duration}</span>
-                      </div>
-                      <h3 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: 8 }}>{ep.title}</h3>
-                      <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>{ep.description}</p>
-                    </div>
-                    
-                    <div style={{ alignSelf: "center" }}>
-                      <a 
-                        href={ep.audio_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="btn-outline" 
-                        style={{ padding: "10px 20px", borderRadius: 12, textDecoration: "none" }}
+                  <a 
+                    href={ep.audio_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ textDecoration: "none", color: "inherit", display: "block" }}
+                    className="group"
+                  >
+                    <SpotlightCard className="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center">
+                      <div 
+                        style={{ width: 64, height: 64, borderRadius: 16, background: "rgba(255,138,0,0.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "var(--orange)" }} 
+                        className="group-hover:bg-[rgba(255,138,0,0.15)] transition-colors"
                       >
-                        Listen Now <ArrowRight size={14} />
-                      </a>
-                    </div>
-                  </SpotlightCard>
+                        <Play size={24} fill="currentColor" style={{ marginLeft: 4 }} />
+                      </div>
+                      
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 8 }}>
+                          <span className="tag" style={{ background: "transparent", color: "var(--text)", border: "1px solid var(--border)" }}>Episode #{episodes.length - i}</span>
+                          <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
+                            {new Date(ep.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
+                          </span>
+                          <span style={{ fontSize: "0.85rem", color: "var(--muted)", display: "flex", alignItems: "center", gap: 4 }}><Headphones size={12} /> {ep.duration}</span>
+                        </div>
+                        <h3 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: 8 }} className="group-hover:text-[var(--orange)] transition-colors">{ep.title}</h3>
+                        <p style={{ color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.6 }}>{ep.description}</p>
+                      </div>
+                      
+                      <div style={{ alignSelf: "center" }}>
+                        <div 
+                          className="btn-outline" 
+                          style={{ padding: "10px 20px", borderRadius: 12 }}
+                        >
+                          Listen Now <ArrowRight size={14} />
+                        </div>
+                      </div>
+                    </SpotlightCard>
+                  </a>
                 </Reveal>
-              ))}
             </div>
           )}
         </div>
