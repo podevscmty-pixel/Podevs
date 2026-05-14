@@ -114,7 +114,7 @@ function EventsPreview() {
                     <span className="tag" style={{ marginTop: 2 }}>{ev.event_type}</span>
                   </div>
                   {ev.image_url && (
-                    <div className="relative w-full h-[180px] sm:h-[220px]" style={{ borderRadius: 12, overflow: "hidden", marginBottom: 20, background: "rgba(0,0,0,0.2)" }}>
+                    <div className="relative w-full aspect-video" style={{ borderRadius: 12, overflow: "hidden", marginBottom: 20, background: "rgba(0,0,0,0.2)" }}>
                       <img src={`${ev.image_url}?v=${ev.created_at ? new Date(ev.created_at).getTime() : '1'}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     </div>
                   )}
@@ -165,7 +165,7 @@ function OngoingEventHighlight() {
         <SpotlightCard className="p-8 md:p-12 border border-[var(--orange)] relative overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.05)" }}>
           <div style={{ position: "absolute", top: -50, right: -50, width: 200, height: 200, background: "radial-gradient(circle, rgba(255,138,0,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-          <div className="flex flex-col md:flex-row gap-10 items-center justify-between">
+          <div className="flex flex-col-reverse md:flex-row gap-10 items-center justify-between">
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
                 <span className="relative flex h-3 w-3">

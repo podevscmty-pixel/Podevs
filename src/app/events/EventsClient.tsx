@@ -75,7 +75,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
                 <Reveal key={ev.id} delay={i * 0.1}>
                   <SpotlightCard className="flex flex-col h-full border border-[var(--orange)] overflow-hidden" style={{ background: "rgba(255, 138, 0, 0.03)", padding: 0 }}>
                     {ev.image_url && (
-                      <div className="relative w-full h-[250px] sm:h-[320px] lg:h-[400px]" style={{ flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
+                      <div className="relative w-full aspect-video sm:aspect-[16/10] lg:h-[400px]" style={{ flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
                         <img src={`${ev.image_url}?v=${ev.created_at ? new Date(ev.created_at).getTime() : '1'}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.6) 100%)", pointerEvents: "none" }} />
                         <span className="tag" style={{ position: "absolute", top: 16, right: 16, background: "var(--orange)", color: "#fff", padding: "6px 14px", fontWeight: 700 }}>{ev.event_type}</span>
@@ -135,7 +135,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
               <Reveal key={ev.id} delay={i * 0.1}>
                 <SpotlightCard className="flex flex-col h-full overflow-hidden" style={{ padding: 0 }}>
                   {ev.image_url && (
-                    <div className="relative w-full h-[200px] sm:h-[240px] lg:h-[280px]" style={{ flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
+                    <div className="relative w-full aspect-[4/3] sm:aspect-video" style={{ flexShrink: 0, background: "rgba(0,0,0,0.1)" }}>
                       <img src={`${ev.image_url}?v=${ev.created_at ? new Date(ev.created_at).getTime() : '1'}`} alt={ev.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.3) 100%)", pointerEvents: "none" }} />
                     </div>
