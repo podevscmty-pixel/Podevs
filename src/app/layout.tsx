@@ -7,6 +7,7 @@ import { CustomCursor } from "@/components/ui/custom-cursor";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { Preloader } from "@/components/preloader";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import * as React from "react";
 import { Suspense } from "react";
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Navbar />
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
+          <WhatsAppButton />
         </ThemeProvider>
       </body>
     </html>

@@ -13,16 +13,16 @@ function TeamCard({ member, onClick }: { member: any; onClick: () => void }) {
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
-    <motion.div 
+    <motion.div
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={onClick}
       whileHover={{ y: -6, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className="card flex flex-col cursor-pointer overflow-hidden group"
-      style={{ 
-        borderRadius: 20, 
-        background: "var(--card)", 
+      style={{
+        borderRadius: 20,
+        background: "var(--card)",
         border: "1px solid var(--border)",
         transition: "box-shadow 0.4s ease"
       }}
@@ -67,7 +67,7 @@ export default function TeamPage() {
       try {
         const { data, error } = await supabase.from('team').select('*').order('created_at', { ascending: true });
         if (error) throw error;
-        
+
         if (data && data.length > 0) {
           const getPriority = (role: string = "") => {
             const r = role.toLowerCase();
@@ -80,7 +80,7 @@ export default function TeamPage() {
             if (r.includes('editor')) return 7;
             return 8; // Default for others
           };
-          
+
           const sortedData = [...data].sort((a, b) => {
             const pA = getPriority(a.role);
             const pB = getPriority(b.role);
@@ -88,7 +88,7 @@ export default function TeamPage() {
             // Alphabetical tie-breaker
             return (a.name || "").localeCompare(b.name || "");
           });
-          
+
           setTeamList(sortedData);
         } else {
           setTeamList(coreFallback);
@@ -113,7 +113,7 @@ export default function TeamPage() {
       document.body.style.overflow = "";
       document.body.style.paddingRight = "0px";
     }
-    return () => { 
+    return () => {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       document.body.style.paddingRight = "0px";
@@ -151,21 +151,21 @@ export default function TeamPage() {
         require('react-dom').createPortal(
           <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" }}>
             {/* Backdrop */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedMember(null)}
               style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(15px)" }}
             />
-            
+
             {/* Modal Content */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              style={{ 
+              style={{
                 position: "relative",
                 width: "100%",
                 maxWidth: 1000,
@@ -181,7 +181,7 @@ export default function TeamPage() {
               className="flex-col md:flex-row"
             >
               {/* Close Button */}
-              <button 
+              <button
                 onClick={() => setSelectedMember(null)}
                 style={{ position: "absolute", top: 20, right: 20, zIndex: 10, width: 40, height: 40, borderRadius: "50%", background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
                 className="hover:bg-white/10 transition-colors"
@@ -192,9 +192,9 @@ export default function TeamPage() {
               {/* Left: Image */}
               <div style={{ flex: "1 1 45%", position: "relative", minHeight: 300, background: "var(--bg2)" }}>
                 {selectedMember.image ? (
-                  <img 
-                    src={selectedMember.image} 
-                    alt={selectedMember.name} 
+                  <img
+                    src={selectedMember.image}
+                    alt={selectedMember.name}
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                 ) : (
@@ -203,12 +203,12 @@ export default function TeamPage() {
               </div>
 
               {/* Right: Info */}
-              <div style={{ 
-                flex: "1 1 55%", 
-                padding: "48px 40px", 
-                display: "flex", 
-                flexDirection: "column", 
-                gap: 24, 
+              <div style={{
+                flex: "1 1 55%",
+                padding: "48px 40px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 24,
                 overflowY: "auto",
                 background: "var(--card)",
                 minHeight: 0
@@ -237,9 +237,15 @@ export default function TeamPage() {
                       Instagram
                     </a>
                   )}
-                  <a href={`mailto:${selectedMember.mail}`} className="btn-outline" style={{ borderRadius: 14, padding: "10px 20px" }}>
+                  <a 
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${selectedMember.mail}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn-outline" 
+                    style={{ borderRadius: 14, padding: "10px 20px" }}
+                  >
                     <Mail size={18} />
-                    Email
+                    {selectedMember.mail}
                   </a>
                 </div>
               </div>
@@ -252,11 +258,11 @@ export default function TeamPage() {
       <section className="px-6 pb-24">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto" }}>
           <div className="card p-12 md:p-20 text-center relative overflow-hidden" style={{ borderRadius: 32, background: "var(--bg2)", border: "1px solid var(--border)" }}>
-             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "100%", background: "radial-gradient(circle at 50% 0%, rgba(255,138,0,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
-             <h2 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 16, position: "relative" }}>Join the Mission</h2>
-             <p style={{ color: "var(--muted)", marginBottom: 12, fontSize: "1.05rem", maxWidth: 440, margin: "0 auto 12px", position: "relative" }}>Want to help shape the future of student-led tech education?</p>
-             <p style={{ color: "var(--orange)", marginBottom: 32, fontSize: "0.9rem", fontWeight: 700, position: "relative" }}>podevs.cmty@gmail.com</p>
-             <Link href="/contact" className="btn-primary" style={{ position: "relative" }}>Get In Touch</Link>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "100%", background: "radial-gradient(circle at 50% 0%, rgba(255,138,0,0.03) 0%, transparent 70%)", pointerEvents: "none" }} />
+            <h2 style={{ fontSize: "2rem", fontWeight: 800, marginBottom: 16, position: "relative" }}>Join the Mission</h2>
+            <p style={{ color: "var(--muted)", marginBottom: 12, fontSize: "1.05rem", maxWidth: 440, margin: "0 auto 12px", position: "relative" }}>Want to help shape the future of student-led tech education?</p>
+            <p style={{ color: "var(--orange)", marginBottom: 32, fontSize: "0.9rem", fontWeight: 700, position: "relative" }}>podevs.cmty@gmail.com</p>
+            <Link href="/contact" className="btn-primary" style={{ position: "relative" }}>Get In Touch</Link>
           </div>
         </div>
       </section>

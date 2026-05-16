@@ -160,7 +160,18 @@ export default function ServicesPage() {
                   </div>
                   <div style={{ height: 1, background: "var(--border)", marginBottom: 24 }} />
                   <p style={{ fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.6, marginBottom: 32 }}>* Final pricing depends on project complexity. Contact us for a precise quote.</p>
-                  <Link href="/contact" className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>Book a Free Call</Link>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <Link href="/contact" className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>Book a Free Call</Link>
+                    <a 
+                      href="https://wa.me/919444889354?text=Hi%20PODEVS%2C%20I've%20estimated%20my%20project%20on%20your%20website%20and%20would%20like%20to%20discuss%20it!" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn-outline" 
+                      style={{ width: "100%", justifyContent: "center", border: "1px solid #25D366", color: "#25D366" }}
+                    >
+                      Chat on WhatsApp
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
