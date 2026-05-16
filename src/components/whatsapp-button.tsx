@@ -4,6 +4,9 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export const WhatsAppButton = () => {
+  // Temporarily disabled
+  return null;
+
   const phoneNumber = "919444889354";
   const message = encodeURIComponent("Hi PODEVS, I'm interested in your services!");
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
