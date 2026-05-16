@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 export function Preloader() {
   const [loading, setLoading] = useState(true);
@@ -36,22 +35,17 @@ export function Preloader() {
             justifyContent: "center", overflow: "hidden",
           }}
         >
-          {/* Background glow */}
-          <motion.div
-            animate={{ opacity: phase >= 2 ? 0.35 : 0.05, scale: phase >= 2 ? 1.4 : 0.8 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            style={{
-              position: "absolute", width: 500, height: 500,
-              background: "radial-gradient(circle, rgba(251,147,76,0.18) 0%, transparent 65%)",
-              borderRadius: "50%",
-            }}
-          />
+          {/* Logo area - scales down in landscape */}
+          <div style={{
+            position: "relative",
+            width: "min(130px, 25vh)",
+            height: "min(130px, 25vh)",
+            marginBottom: "min(36px, 4vh)",
+            flexShrink: 0,
+          }}>
 
-          {/* Logo area */}
-          <div style={{ position: "relative", width: 130, height: 130, marginBottom: 36 }}>
-
-            {/* Tracing ring - draws a circle outline around where the logo will appear */}
-            <svg viewBox="0 0 130 130" width={130} height={130}
+            {/* Tracing ring */}
+            <svg viewBox="0 0 130 130" width="100%" height="100%"
               style={{ position: "absolute", top: 0, left: 0 }}>
               <motion.circle
                 cx={65} cy={65} r={58}
@@ -68,7 +62,6 @@ export function Preloader() {
                   pathLength: { duration: 1.2, ease: "easeInOut" },
                   opacity: { duration: phase >= 2 ? 0.4 : 0.2 },
                 }}
-                style={{ filter: "drop-shadow(0 0 8px rgba(251,147,76,0.4))" }}
               />
             </svg>
 
@@ -80,17 +73,15 @@ export function Preloader() {
                 opacity: phase >= 2 ? 1 : 0,
               }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              style={{ position: "absolute", top: 0, left: 0, width: 130, height: 130 }}
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
             >
-              <Image
+              <img
                 src="/logo.svg"
                 alt="PODEVS Logo"
-                width={130}
-                height={130}
-                priority
                 style={{
+                  width: "100%",
+                  height: "100%",
                   objectFit: "contain",
-                  filter: "drop-shadow(0 0 20px rgba(251,147,76,0.35))",
                 }}
               />
             </motion.div>
@@ -117,7 +108,7 @@ export function Preloader() {
               animate={{ y: phase >= 3 ? 0 : 50, opacity: phase >= 3 ? 1 : 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                fontSize: "clamp(1.8rem, 6vw, 2.8rem)", fontWeight: 900,
+                fontSize: "clamp(1.2rem, min(6vw, 5vh), 2.8rem)", fontWeight: 900,
                 color: "#fff", letterSpacing: "-0.04em", margin: 0,
                 fontFamily: "var(--font-bruno), sans-serif",
               }}
@@ -132,8 +123,8 @@ export function Preloader() {
             animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : 16 }}
             transition={{ delay: 0.25, duration: 0.6, ease: "easeOut" }}
             style={{
-              marginTop: 10, color: "rgba(255,255,255,0.3)",
-              fontSize: "0.65rem", letterSpacing: "0.4em",
+              marginTop: "min(10px, 1.5vh)", color: "rgba(255,255,255,0.3)",
+              fontSize: "clamp(0.5rem, min(1.5vw, 1.5vh), 0.65rem)", letterSpacing: "0.4em",
               textTransform: "uppercase", fontWeight: 500,
             }}
           >
