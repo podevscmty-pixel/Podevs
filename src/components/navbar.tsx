@@ -22,7 +22,7 @@ const navLinks: NavLink[] = [
   { label: "Our Works", href: "/projects" },
   { label: "Events", href: "/events" },
   {
-    label: "Explore",
+    label: "Resources",
     subItems: [
       { label: "Roadmaps", href: "/roadmaps" },
       { label: "YouTube Media", href: "/media" },
