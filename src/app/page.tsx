@@ -59,60 +59,7 @@ const videos_static = [
 ];
 
 function InsightsPreview() {
-  const [latestArticle, setLatestArticle] = React.useState<any | null>(null);
-  const [loading, setLoading] = React.useState(true);
-
-  useEffect(() => {
-    async function fetchLatest() {
-      try {
-        const { data } = await supabase
-          .from('medium_articles')
-          .select('*')
-          .order('published_at', { ascending: false })
-          .limit(1);
-        if (data && data.length > 0) setLatestArticle(data[0]);
-      } catch (err) {
-        console.warn("Error fetching latest article:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchLatest();
-  }, []);
-
-  if (loading || !latestArticle) return null;
-
-  return (
-    <Section style={{ padding: "var(--section-gap) 0" }}>
-      <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
-          <div>
-            <Reveal><span className="section-label">Fresh Insights</span></Reveal>
-            <Reveal delay={0.05}><h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>From our Medium</h2></Reveal>
-          </div>
-          <Reveal><Link href="/medium" className="btn-outline" style={{ fontSize: "0.8rem", padding: "8px 18px" }}>Read More →</Link></Reveal>
-        </div>
-        
-        <Link 
-          href={latestArticle.external_link || `/medium/${latestArticle.id}`} 
-          target={latestArticle.external_link?.startsWith('http') ? "_blank" : undefined}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <SpotlightCard className="p-8 md:p-10 border border-[var(--border)] hover:border-[var(--orange)] transition-colors">
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center", marginBottom: 16 }}>
-              <span className="tag">{latestArticle.tag}</span>
-              <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
-                {latestArticle.published_at ? new Date(latestArticle.published_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : 'Recently'}
-              </span>
-              <span style={{ fontSize: "0.85rem", color: "var(--muted)" }}>• {latestArticle.read_time}</span>
-            </div>
-            <h3 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: 12, lineHeight: 1.3 }}>{latestArticle.title}</h3>
-            <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.6, maxWidth: 800 }}>{latestArticle.excerpt}</p>
-          </SpotlightCard>
-        </Link>
-      </div>
-    </Section>
-  );
+  return null;
 }
 
 function PodcastPreview() {

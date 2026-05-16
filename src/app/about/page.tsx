@@ -9,7 +9,6 @@ import Link from "next/link";
 const resources = [
   { icon: <Map size={20} />, title: "Tech Roadmaps", desc: "Structured paths from beginner to pro.", link: "/roadmaps", color: "#3b82f6" },
   { icon: <Code size={20} />, title: "YouTube Tutorials", desc: "Hands-on project builds and tech deep-dives.", link: "/media", color: "#FF0000" },
-  { icon: <BookOpen size={20} />, title: "Medium Blogs", desc: "Technical articles and community success stories.", link: "/medium", color: "#00ab6c" },
   { icon: <MessageCircle size={20} />, title: "PODEVS Podcast", desc: "Interviews with builders and industry experts.", link: "/podcast", color: "var(--orange)" },
 ];
 

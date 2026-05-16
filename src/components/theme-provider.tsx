@@ -12,20 +12,25 @@ interface ThemeContextType {
 const ThemeContext = React.createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Light mode temporarily disabled
   const [theme, setThemeState] = React.useState<Theme>("dark");
 
   React.useEffect(() => {
-    // Initial theme check
+    /* 
     const savedTheme = localStorage.getItem("theme") as Theme | null;
     const initialTheme = savedTheme || "dark";
     setThemeState(initialTheme);
     document.documentElement.classList.toggle("dark", initialTheme === "dark");
+    */
+    document.documentElement.classList.add("dark");
   }, []);
 
   const setTheme = (newTheme: Theme) => {
+    /*
     setThemeState(newTheme);
     localStorage.setItem("theme", newTheme);
     document.documentElement.classList.toggle("dark", newTheme === "dark");
+    */
   };
 
   return (

@@ -26,22 +26,22 @@ import { Cloud, Wrench, Palette, Zap } from "lucide-react";
 const addons = [
   { icon: <Cloud size={20} />, title: "Hosting Plans", body: "Reliable cloud hosting with 99.9% uptime. Starting from ₹199/month for static sites, ₹499/month for dynamic apps." },
   { icon: <Wrench size={20} />, title: "Maintenance & Updates", body: "Monthly maintenance packages including content updates, bug fixes, and performance optimization." },
-  { icon: <Palette size={20} />, title: "Design Only (Figma)", body: "Get a professional Figma design for your site or app. You implement, we design. Starting from ₹1,499." },
+  { icon: <Palette size={20} />, title: "UI/UX Design", body: "Get a professional Figma design for your site or app. You implement, we design. Starting from ₹1,499." },
   { icon: <Zap size={20} />, title: "Deployment Setup", body: "We set up CI/CD, configure your domain, and deploy your existing project. One-time fee starting at ₹499." },
 ];
 
 function EstimatorRow({ label, price, value, active, onClick }: { label: string; price: string; value: number; active: boolean; onClick: () => void }) {
   return (
-    <button 
+    <button
       onClick={onClick}
-      style={{ 
-        width: "100%", 
-        display: "flex", 
-        justifyContent: "space-between", 
-        alignItems: "center", 
-        padding: "16px 20px", 
-        borderRadius: 14, 
-        background: active ? "rgba(255,138,0,0.08)" : "rgba(255,255,255,0.02)", 
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "16px 20px",
+        borderRadius: 14,
+        background: active ? "rgba(255,138,0,0.08)" : "rgba(255,255,255,0.02)",
         border: active ? "1px solid var(--orange)" : "1px solid var(--border)",
         cursor: "pointer",
         textAlign: "left",
@@ -63,7 +63,7 @@ function EstimatorRow({ label, price, value, active, onClick }: { label: string;
 export default function ServicesPage() {
   const [selectedAddons, setSelectedAddons] = React.useState<number[]>([]);
   const basePrice = 2499;
-  
+
   const estimatorItems = [
     { id: 1, label: "Additional Pages", price: "₹699", value: 699 },
     { id: 2, label: "Custom Animations", price: "₹499", value: 499 },
@@ -130,20 +130,20 @@ export default function ServicesPage() {
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 24px" }}>
           <div className="card-static p-8 md:p-16 relative overflow-hidden">
             <div style={{ position: "absolute", top: 0, right: 0, width: "30%", height: "100%", background: "linear-gradient(90deg, transparent, rgba(255,138,0,0.03))", pointerEvents: "none" }} />
-            
+
             <div className="flex flex-col lg:flex-row gap-12 items-center">
               <div style={{ flex: 1 }}>
                 <span className="tag" style={{ marginBottom: 16 }}>Calculator</span>
                 <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 850, letterSpacing: "-0.02em", marginBottom: 16 }}>Estimate Your <span style={{ color: "var(--orange)" }}>Project</span></h2>
                 <p style={{ color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.7, marginBottom: 28, maxWidth: 460 }}>Choose the features you need and get a transparent estimate for your vision instantly.</p>
-                
+
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   {estimatorItems.map((item) => (
-                    <EstimatorRow 
-                      key={item.id} 
-                      label={item.label} 
-                      price={item.price} 
-                      value={item.value} 
+                    <EstimatorRow
+                      key={item.id}
+                      label={item.label}
+                      price={item.price}
+                      value={item.value}
                       active={selectedAddons.includes(item.value)}
                       onClick={() => toggleAddon(item.value)}
                     />
@@ -176,15 +176,15 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {addons.map((a) => (
               <div key={a.title} className="card p-6 md:p-8 flex gap-5 items-start">
-                <div style={{ 
-                  width: 40, 
-                  height: 40, 
-                  borderRadius: 10, 
-                  background: "rgba(255, 138, 0, 0.08)", 
+                <div style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  background: "rgba(255, 138, 0, 0.08)",
                   border: "1px solid rgba(255, 138, 0, 0.15)",
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center", 
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   color: "var(--orange)",
                   flexShrink: 0
                 }}>

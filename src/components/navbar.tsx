@@ -26,7 +26,7 @@ const navLinks: NavLink[] = [
     subItems: [
       { label: "Roadmaps", href: "/roadmaps" },
       { label: "YouTube Media", href: "/media" },
-      { label: "Medium Articles", href: "/medium" },
+      { label: "Newsletter", href: "/blog" },
       { label: "Podcast", href: "/podcast" },
     ]
   },
@@ -157,7 +157,7 @@ export default function Navbar() {
 
           {/* Actions */}
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
 
             <a
               href="https://linkedin.com/company/podevs"

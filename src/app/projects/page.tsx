@@ -51,7 +51,7 @@ export default function ProjectsPage() {
           .from('projects')
           .select('*')
           .order('created_at', { ascending: false });
-        
+
         if (error) throw error;
 
         if (data && data.length > 0) {
@@ -117,8 +117,8 @@ export default function ProjectsPage() {
       <section className="px-6 pb-20 md:pb-32">
         <div style={{ maxWidth: "var(--container)", margin: "0 auto", textAlign: "center" }}>
           <div className="card-static p-10 md:p-16">
-            <h2 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: 14 }}>Have a Project in Mind?</h2>
-            <p style={{ color: "var(--muted)", marginBottom: 28, fontSize: "1.05rem", maxWidth: 400, margin: "0 auto 28px" }}>We help students and startups bring their digital ideas to life.</p>
+            <h2 style={{ fontSize: "1.8rem", fontWeight: 800, marginBottom: 14 }}>Got any project ideas in mind?</h2>
+            <p style={{ color: "var(--muted)", marginBottom: 28, fontSize: "1.05rem", maxWidth: 400, margin: "0 auto 28px" }}>We help you develop and scale your ideas into reality.</p>
             <Link href="/services" className="btn-primary">View Our Services</Link>
           </div>
         </div>

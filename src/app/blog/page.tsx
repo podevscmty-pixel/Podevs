@@ -20,7 +20,6 @@ const Reveal = ({ children, delay = 0, y = 20 }: { children: React.ReactNode; de
 import { redirect } from "next/navigation";
 
 export default function NewsletterPage() {
-  redirect("/");
 
   const [email, setEmail] = React.useState("");
   const [subscribed, setSubscribed] = React.useState(false);

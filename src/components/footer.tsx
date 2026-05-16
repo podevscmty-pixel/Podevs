@@ -11,14 +11,14 @@ const col2 = [
   { label: "Events", href: "/events" },
   { label: "Podcast", href: "/podcast" },
   { label: "Media", href: "/media" },
-  { label: "Medium", href: "/medium" },
+  { label: "Newsletter", href: "/blog" },
   { label: "Join Us", href: "https://linkedin.com/company/podevs" },
 ];
 const col3 = [
   { label: "Web Development", href: "/services" },
   { label: "Deployment", href: "/services" },
   { label: "Hosting", href: "/services" },
-  { label: "Design (Figma)", href: "/services" },
+  { label: "UI/UX Design", href: "/services" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -83,8 +83,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div style={{ borderTop: "1px solid var(--border)", paddingTop: 32, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 20 }}>
-          <p style={{ fontSize: "0.85rem", color: "var(--muted)" }}>© {new Date().getFullYear()} PODEVS. Built for the builders.</p>
+        <div style={{ borderTop: "1px solid var(--border)", paddingTop: 32, display: "flex", justifyContent: "center", alignItems: "center", gap: 24, flexWrap: "wrap", textAlign: "center" }}>
+          <p style={{ fontSize: "0.85rem", color: "var(--muted)" }}>© 2026 Podevs. All rights reserved.</p>
           <div style={{ display: "flex", gap: 24 }}>
             <Link href="/privacy" style={{ fontSize: "0.85rem", color: "var(--subtle)" }} className="hover:text-[var(--text)] transition-colors">Privacy</Link>
             <Link href="/terms" style={{ fontSize: "0.85rem", color: "var(--subtle)" }} className="hover:text-[var(--text)] transition-colors">Terms</Link>
