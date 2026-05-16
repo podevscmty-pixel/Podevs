@@ -38,7 +38,25 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [mobileResourcesOpen, setMobileResourcesOpen] = React.useState(false);
+  const [desktopResourcesOpen, setDesktopResourcesOpen] = React.useState(false);
   const [scrollProgress, setScrollProgress] = React.useState(0);
+  const desktopDropdownRef = React.useRef<HTMLDivElement>(null);
+
+  // Close desktop dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (desktopDropdownRef.current && !desktopDropdownRef.current.contains(e.target as Node)) {
+        setDesktopResourcesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside as any);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside as any);
+    };
+  }, []);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -77,8 +95,9 @@ export default function Navbar() {
             {navLinks.map((l) => {
               if (l.subItems) {
                 return (
-                  <div key={l.label} className="relative group">
+                  <div key={l.label} ref={desktopDropdownRef} className="relative group">
                     <button
+                      onClick={() => setDesktopResourcesOpen(!desktopResourcesOpen)}
                       style={{
                         padding: "8px 12px",
                         fontSize: "0.85rem",
@@ -95,13 +114,21 @@ export default function Navbar() {
                       className="hover:text-[var(--text)]"
                     >
                       {l.label}
-                      <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
                     </button>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 p-2 flex flex-col gap-1">
+                    <div
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xl transition-all duration-200 p-2 flex flex-col gap-1"
+                      style={{
+                        opacity: desktopResourcesOpen ? 1 : undefined,
+                        visibility: desktopResourcesOpen ? "visible" : undefined,
+                        pointerEvents: desktopResourcesOpen ? "auto" : undefined,
+                      }}
+                      {...(!desktopResourcesOpen ? { className: "absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 p-2 flex flex-col gap-1" } : {})}
+                    >
                       {l.subItems.map((sub) => (
                         <Link
                           key={sub.href}
                           href={sub.href}
+                          onClick={() => setDesktopResourcesOpen(false)}
                           style={{
                             padding: "10px 12px",
                             fontSize: "0.85rem",
@@ -200,14 +227,21 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.04, duration: 0.2 }}
                   >
-                    <div style={{ padding: "12px 14px", fontSize: "0.95rem", fontWeight: 600, color: "var(--text)" }}>{l.label}</div>
-                    <div className="flex flex-col gap-2 pl-4 border-l border-[var(--border)] ml-4">
-                      {l.subItems.map(sub => (
-                        <Link key={sub.href} href={sub.href} style={{ padding: "8px 12px", borderRadius: 8, fontSize: "0.9rem", color: pathname === sub.href ? "var(--text)" : "var(--muted)", background: pathname === sub.href ? "var(--bg2)" : "transparent", display: "block" }}>
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
+                    <button
+                      onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
+                      style={{ padding: "12px 14px", fontSize: "0.95rem", fontWeight: 600, color: "var(--text)", background: "transparent", border: "none", cursor: "pointer", width: "100%", textAlign: "left", display: "block" }}
+                    >
+                      {l.label}
+                    </button>
+                    {mobileResourcesOpen && (
+                      <div className="flex flex-col gap-2 pl-4 border-l border-[var(--border)] ml-4">
+                        {l.subItems.map(sub => (
+                          <Link key={sub.href} href={sub.href} style={{ padding: "8px 12px", borderRadius: 8, fontSize: "0.9rem", color: pathname === sub.href ? "var(--text)" : "var(--muted)", background: pathname === sub.href ? "var(--bg2)" : "transparent", display: "block" }}>
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </motion.div>
                 );
               }
