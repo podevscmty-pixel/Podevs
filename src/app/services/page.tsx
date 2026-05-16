@@ -26,7 +26,7 @@ import { Cloud, Wrench, Palette, Zap } from "lucide-react";
 const addons = [
   { icon: <Cloud size={20} />, title: "Hosting Plans", body: "Reliable cloud hosting with 99.9% uptime. Starting from ₹199/month for static sites, ₹499/month for dynamic apps." },
   { icon: <Wrench size={20} />, title: "Maintenance & Updates", body: "Monthly maintenance packages including content updates, bug fixes, and performance optimization." },
-  { icon: <Palette size={20} />, title: "UI/UX Design", body: "Get a professional Figma design for your site or app. You implement, we design. Starting from ₹1,499." },
+  { icon: <Palette size={20} />, title: "UI/UX Design", body: "Get a professional design for your site or app. You implement, we design. Starting from ₹1,499." },
   { icon: <Zap size={20} />, title: "Deployment Setup", body: "We set up CI/CD, configure your domain, and deploy your existing project. One-time fee starting at ₹499." },
 ];
 
