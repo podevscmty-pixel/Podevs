@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Layout, Database, Server, Terminal, PenTool, BookOpen, MessageCircle, Users, Smartphone, Heart, Target, Eye, Book, Zap, Map } from "lucide-react";
+import { ArrowRight, Code, Layout, Database, Server, Terminal, PenTool, BookOpen, MessageCircle, Users, Smartphone, Heart, Target, Eye, Book, Zap, Map, Mail } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import Link from "next/link";
 
@@ -10,6 +10,7 @@ const resources = [
   { icon: <Map size={20} />, title: "Tech Roadmaps", desc: "Structured paths from beginner to pro.", link: "/roadmaps", color: "#3b82f6" },
   { icon: <Code size={20} />, title: "YouTube Tutorials", desc: "Hands-on project builds and tech deep-dives.", link: "/media", color: "#FF0000" },
   { icon: <MessageCircle size={20} />, title: "PODEVS Podcast", desc: "Interviews with builders and industry experts.", link: "/podcast", color: "var(--orange)" },
+  { icon: <Mail size={20} />, title: "Newsletter", desc: "Subscribe to get tech guides and community updates.", link: "/blog", color: "#10b981" },
 ];
 
 const stats = [

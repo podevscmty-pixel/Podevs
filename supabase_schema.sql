@@ -178,8 +178,3 @@ INSERT INTO roadmaps (id, title, description, icon_name, accent_color, bg_color_
 ('frontend', 'Frontend Developer', 'Master the art of building beautiful, interactive user interfaces.', 'Layout', '#3b82f6', 'rgba(59, 130, 246, 0.1)', '[{"num": 1, "name": "HTML & CSS", "detail": "Semantics, Flexbox, Grid, Responsiveness."}, {"num": 2, "name": "JavaScript Fundamentals", "detail": "ES6+, DOM Manipulation, Async/Await."}]'),
 ('backend', 'Backend Developer', 'Build scalable APIs, manage databases, and handle server logic.', 'Server', '#10b981', 'rgba(16, 185, 129, 0.1)', '[{"num": 1, "name": "Node.js & Express", "detail": "REST APIs, Middleware, Routing."}, {"num": 2, "name": "Databases (SQL & NoSQL)", "detail": "PostgreSQL, MongoDB, ORMs (Prisma)."}]');
 
--- Sample Data for YouTube
-INSERT INTO youtube_videos (id, title, views_text, is_featured) VALUES
-('dQw4w9WgXcQ', 'Build a Portfolio Website in 60 Minutes', '12K views · 3 weeks ago', true),
-('9bZkp7q19f0', 'React Hooks Explained Simply', '8.4K views · 1 month ago', false),
-('FTQbiNvZqaY', 'Deploy Your First App on Vercel', '5.2K views · 2 months ago', false);

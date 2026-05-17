@@ -52,12 +52,6 @@ const testimonials = [
   { name: "Community Member", role: "Open Source Enthusiast", text: "The events pushed me out of my comfort zone. I started building a real portfolio thanks to the community here.", avatar: "CM" },
 ];
 
-const videos_static = [
-  { id: "v1", title: "Introduction to Web Development", views: "12K views · 2 weeks ago" },
-  { id: "v2", title: "React Hooks Explained Simply", views: "8.4K views · 1 month ago" },
-  { id: "v3", title: "Deploy Your First App on Vercel", views: "5.2K views · 2 months ago" },
-];
-
 function InsightsPreview() {
   return null;
 }
