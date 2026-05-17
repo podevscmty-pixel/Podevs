@@ -237,6 +237,12 @@ export default function TeamPage() {
                       Instagram
                     </a>
                   )}
+                  {(selectedMember as any).portfolio && (
+                    <a href={(selectedMember as any).portfolio} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ borderRadius: 14, padding: "10px 20px" }}>
+                      <Globe size={18} />
+                      Portfolio
+                    </a>
+                  )}
                   <a 
                     href={`https://mail.google.com/mail/?view=cm&fs=1&to=${selectedMember.mail}`} 
                     target="_blank" 

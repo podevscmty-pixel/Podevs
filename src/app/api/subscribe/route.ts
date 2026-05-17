@@ -8,14 +8,14 @@ export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
-    console.log('API Route hit with email:', email);
+
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
     // 1. Save to Supabase
-    console.log('Attempting Supabase insert...');
+
     const { error: supabaseError } = await supabase
       .from('newsletter_subscribers')
       .insert([{ email }]);
@@ -24,10 +24,10 @@ export async function POST(req: Request) {
       console.error('Supabase error:', supabaseError);
       return NextResponse.json({ error: 'Failed to save subscriber' }, { status: 500 });
     }
-    console.log('Supabase insert successful (or duplicate ignored)');
+
 
     // 2. Send Welcome Email via Resend
-    console.log('Attempting Resend email send with key:', process.env.RESEND_API_KEY?.substring(0, 5) + '...');
+
     const { data, error: resendError } = await resend.emails.send({
       from: 'PODEVS <onboarding@resend.dev>',
       to: [email],
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     if (resendError) {
       console.error('Resend error:', resendError);
     } else {
-      console.log('Resend email sent successfully:', data);
+
     }
 
     return NextResponse.json({ success: true, data });

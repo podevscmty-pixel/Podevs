@@ -42,14 +42,14 @@ const pillars = [
 const benefits = [
   { icon: <Zap size={20} />, title: "100% Free to Start", desc: "No paywalls. No hidden costs. Just pure learning." },
   { icon: <Target size={20} />, title: "Project-Based Learning", desc: "Build real projects, not just watch tutorials." },
-  { icon: <Users size={20} />, title: "Peer Community", desc: "Collaborate with 2,000+ driven students." },
+  { icon: <Users size={20} />, title: "Peer Community", desc: "Collaborate with 100+ driven students." },
   { icon: <Award size={20} />, title: "Industry-Ready Skills", desc: "Learn what companies actually hire for." },
 ];
 
 const testimonials = [
-  { name: "Arjun R.", role: "CS Student, VIT", text: "PODEVS changed my perspective on learning. The workshops are practical and the community is incredibly supportive.", avatar: "AR" },
-  { name: "Sneha M.", role: "Full-Stack Dev", text: "I went from zero coding experience to deploying my first app in 3 weeks. The roadmaps here are gold.", avatar: "SM" },
-  { name: "Karthik S.", role: "Open Source Contributor", text: "The hackathons pushed me out of my comfort zone. I landed my first internship thanks to the portfolio I built here.", avatar: "KS" },
+  { name: "Community Member", role: "CS Student", text: "PODEVS changed my perspective on learning. The workshops are practical and the community is incredibly supportive.", avatar: "CM" },
+  { name: "Community Member", role: "Aspiring Developer", text: "I went from zero coding experience to deploying my first app in weeks. The roadmaps here are gold.", avatar: "CM" },
+  { name: "Community Member", role: "Open Source Enthusiast", text: "The events pushed me out of my comfort zone. I started building a real portfolio thanks to the community here.", avatar: "CM" },
 ];
 
 const videos_static = [
@@ -535,7 +535,7 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 0.08}>
+              <Reveal key={i} delay={i * 0.08}>
                 <SpotlightCard style={{ padding: "32px 28px", display: "flex", flexDirection: "column", gap: 20 }}>
                   <div style={{ display: "flex", gap: 4 }}>{[...Array(5)].map((_, j) => <Star key={j} size={14} fill="var(--orange)" stroke="var(--orange)" />)}</div>
                   <p style={{ color: "var(--muted)", fontSize: "0.9rem", lineHeight: 1.75, flex: 1, fontStyle: "italic" }}>"{t.text}"</p>
@@ -634,7 +634,7 @@ export default function HomePage() {
               <div style={{ position: "relative", zIndex: 1 }}>
                 <span className="tag" style={{ marginBottom: 20 }}>The Smile of Education</span>
                 <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 16, marginTop: 16 }}>Ready to Start Your Builder Journey?</h2>
-                <p style={{ color: "var(--muted)", fontSize: "1rem", marginBottom: 36, maxWidth: 460, margin: "0 auto 36px", lineHeight: 1.7 }}>Join 2,000+ students already learning, building, and launching with PODEVS — completely free to start.</p>
+                <p style={{ color: "var(--muted)", fontSize: "1rem", marginBottom: 36, maxWidth: 460, margin: "0 auto 36px", lineHeight: 1.7 }}>Join 100+ students already learning, building, and launching with PODEVS — completely free to start.</p>
                 <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
                   <a href="https://linkedin.com/company/podevs" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ textDecoration: "none" }}>Join Us on LinkedIn <ArrowRight size={15} /></a>
                   <Link href="/about" className="btn-outline">Learn About Us</Link>
