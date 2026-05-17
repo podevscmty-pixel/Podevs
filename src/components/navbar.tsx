@@ -116,13 +116,16 @@ export default function Navbar() {
                       {l.label}
                     </button>
                     <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xl transition-all duration-200 p-2 flex flex-col gap-1"
+                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xl transition-all duration-200 p-2 flex flex-col gap-1 ${
+                        !desktopResourcesOpen 
+                          ? "opacity-0 invisible group-hover:opacity-100 group-hover:visible" 
+                          : ""
+                      }`}
                       style={{
                         opacity: desktopResourcesOpen ? 1 : undefined,
                         visibility: desktopResourcesOpen ? "visible" : undefined,
                         pointerEvents: desktopResourcesOpen ? "auto" : undefined,
                       }}
-                      {...(!desktopResourcesOpen ? { className: "absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 p-2 flex flex-col gap-1" } : {})}
                     >
                       {l.subItems.map((sub) => (
                         <Link

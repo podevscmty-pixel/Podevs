@@ -100,7 +100,7 @@ export default function RoadmapDetailPage({ params }: { params: Promise<{ id: st
           </div>
           
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ textAlign: "right", className: "hidden sm:block" }}>
+            <div style={{ textAlign: "right" }} className="hidden sm:block">
               <div style={{ fontSize: "0.75rem", color: "var(--muted)", fontWeight: 600 }}>PROGRESS</div>
               <div style={{ fontSize: "0.85rem", fontWeight: 700, color: progressPercent === 100 ? "#10b981" : "var(--orange)" }}>{progressPercent}%</div>
             </div>
@@ -129,7 +129,7 @@ export default function RoadmapDetailPage({ params }: { params: Promise<{ id: st
           <div style={{ 
             position: "absolute", top: 0, bottom: 0, left: "50%", 
             width: 4, transform: "translateX(-50%)", 
-            background: "var(--border)", zHeight: 0 
+            background: "var(--border)", zIndex: 0 
           }} className="sm:left-[50%] left-6">
             <motion.div 
               initial={{ height: 0 }}
